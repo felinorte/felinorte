@@ -1,5 +1,6 @@
 {
     "name": "felinorte",
+    "description": "Portal de adopciones de felinorte.",
     "version": "0.0.1",
     "private": true,
     "main": "app.js",
@@ -11,6 +12,7 @@
         "test:integration": "mocha --recursive test/integration"
     },
     "dependencies": {
+        "mongodb": "2.2.26",
         "array": "0.4.3",
         "express": "^4.13.3",
         "serve-favicon": "^2.3.0",
