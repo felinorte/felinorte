@@ -8,7 +8,7 @@ module.exports = function(app) {
 };
 
 router.get('/', function(req, res, next) {
-    Article.find({ _id: '59095005c17952595e28cdf5' }, function(err, articles) {
+    Article.find({}, function(err, articles) {
         if (err) return next(err);
         console.log(articles.title);
         res.render('index', {
