@@ -35,26 +35,16 @@ router.get('/gato/:id', function(req, res, next) {
     });
 });
 
-// Añadir nuevo gato
-// TODO: Implementar
-router.get('/admin/gatos/new', function(req, res, next) {
-    res.end();
-});
-
-// Editar gato
-// TODO: Implementar
-router.get('/admin/gatos/:id/edit', function(req, res, next) {
-    res.end();
-});
 
 // POST Editar gato
 // TODO: Implementar
-router.post('/admin/gatos/:id/edit', function(req, res, next) {
-    res.end();
-});
-
-// POST Eliminar gato
-// TODO: Implementar
-router.delete('/admin/gatos/:id/delete', function(req, res, next) {
-    res.end();
+router.post('/admin/gatos/new', function(req, res) {
+    Cat.create({ nombre: req.body.name }, function(err) {
+        if (err) return console.log(err);
+        
+        console.log('Gato correctamente creado: ');
+        console.log('Nombre: ' + req.body.name);
+        
+        res.redirect('/');
+    });
 });

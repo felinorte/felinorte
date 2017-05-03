@@ -3,3 +3,7 @@ extends templates/default
 block content
   h1= title
   p Welcome to #{title}
+  
+  form(action='/admin/gatos/new' method='POST')
+    h3 Nombre
+    input(type='text' name='name')
