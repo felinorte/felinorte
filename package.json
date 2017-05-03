@@ -2,6 +2,7 @@
   "name": "felinorte",
   "description": "Portal de adopciones de felinorte.",
   "version": "0.0.1",
+  "author": "AJKW",
   "private": true,
   "main": "app.js",
   "scripts": {
