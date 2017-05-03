@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-
+// Modelo de la base de datos
 var Cat = mongoose.model('Cat');
 
 
