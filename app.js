@@ -1,9 +1,3 @@
-/**
-  Integrantes del grupo:
-  - José Polo
-  - Wilson Tovar
-*/
-
 var express = require('express');
 var config = require('./config/config');
 var glob = require('glob');
