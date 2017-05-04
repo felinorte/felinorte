@@ -33,3 +33,7 @@ router.get('/admin/gatos/nuevo', function(req, res, next){
     title: 'Agregar nuevo gato - felinorte'
   });
 });
+
+/* POST Login admin */
+router.post('/admin/login', function(req, res, next){
+});
