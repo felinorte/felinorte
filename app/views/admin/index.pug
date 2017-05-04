@@ -3,53 +3,37 @@ extends default
 block content
   
   div#page-wrapper
-  
-    // Top Bar Start
-    div.topbar
-      
-      // LOGO
-      div.topbar-left
-        div
-          a(href="#" class="logo")
-            img(src="/images/logo.png" alt="logo" class="logo-lg")
-            img(src="/images/logo_sm.png" alt="logo" class="logo-sm hidden")
-      
-      // Top navbar
-      div(class="navbar navbar-default" role="navigation")
-        div.container
-          div
-            
-            // Mobile menu button
-            div.pull-left
-              button(type="button" class="button-menu-mobile visible-xs visible-sm")
-                i(class="fa fa-bars")
-              span.clearfix
-            
-            // Top nav left menu
-            ul(class="nav navbar-nav hidden-sm hidden-xs top-navbar-items")
-              li
-                a Acerca de
-              li
-                a Ayuda
-            
-            // Top nav Right menu
-            ul(class="nav navbar-nav navbar-right top-navbar-items-right pull-right")
-              li.hidden-xs
-                form(role="search" class="navbar-left app-search pull-left")
-                  input(type="text" placeholder="Search..." class="form-control")
-                  a
-                    i(class="fa fa-search")
-              li(class="dropdown top-menu-item-xs")
-                a(href="" class="dropdown-toggle menu-right-item profile" data-toggle="dropdown" aria-expanded="true")
-                  img(src="assets/images/users/avatar-1.jpg" alt="user-img" class="img-circle")
-                ul.dropdown-menu
-                  li.divider
-
+    
+    // Barra superior
+    include _topbar 
 
     // Page content start
     div.page-contentbar
-    
-      // left navigation start
-      aside.sidebar-navigation
-        div.scrollbar-wrapper
-          div
+      
+      // Navegación lateral
+      include _navigation
+      
+      // START PAGE CONTENT
+      div#page-right-content
+        div.container
+          div.row
+            div.col-sm-12
+              div(class="card-box widget-inline")
+                div.row
+                
+                  div(class="col-lg-3 col-sm-6")
+                    div(class="widget-inline-box text-center")
+                      h3.m-t-10 #[i(class="text-primary material-icons" style="vertical-align: top;") track_changes] #[b(data-plugin="counterup")] 20
+                      p.text-muted Gatos
+                  div(class="col-lg-3 col-sm-6")
+                    div(class="widget-inline-box text-center")
+                      h3.m-t-10 #[i(class="text-primary material-icons" style="vertical-align: top;") track_changes] #[b(data-plugin="counterup")] 20
+                      p.text-muted Colonias
+                  div(class="col-lg-3 col-sm-6")
+                    div(class="widget-inline-box text-center")
+                      h3.m-t-10 #[i(class="text-primary material-icons" style="vertical-align: top;") track_changes] #[b(data-plugin="counterup")] 20
+                      p.text-muted Procesos de adopción
+                  div(class="col-lg-3 col-sm-6")
+                    div(class="widget-inline-box text-center")
+                      h3.m-t-10 #[i(class="text-primary material-icons" style="vertical-align: top;") track_changes] #[b(data-plugin="counterup")] 20
+                      p.text-muted Usuarios
