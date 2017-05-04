@@ -3,18 +3,33 @@ extends default
 block content
   
   div#page-wrapper
-    
-    // Barra superior
-    include _topbar 
+  
+    include _topbar
 
     // Page content start
     div.page-contentbar
-      
-      // Navegación lateral
-      include _navigation
+        
+      // left navigation start
+      aside.sidebar-navigation
+        div.scrollbar-wrapper
+          div
+            button(type="button" class="button-menu-mobile btn-mobile-view visible-xs visible-sm")
+              i(class="mdi mdi-close")
+            // User Detail box
+            div.user-details
+              div.pull-left
+                img(src="/images/users/avatar-1.jpg" alt="" class="thumb-md img-circle")
+              div.user-info
+                a Stanley Jones
+                p(class="text-muted m-0") Administrador
+            
+            // Left Menu Start
+            ul(class="metisMenu nav" id="side-menu")
+              li
+                a(href="") #[i(class="ti-home")] Panel
       
       // START PAGE CONTENT
-      div#page-right-content
+      div(id="page-right-content" style="min-height: 500px;")
         div.container
           div.row
             div.col-sm-12
@@ -37,3 +52,40 @@ block content
                     div(class="widget-inline-box text-center")
                       h3.m-t-10 #[i(class="text-primary material-icons" style="vertical-align: top;") track_changes] #[b(data-plugin="counterup")] 20
                       p.text-muted Usuarios
+          
+          div.row
+            div.col-lg-12
+              div.card-box
+                h4.m-t-0 Procesos de adopción
+                div.table-responsive
+                  table(class="table table-hover mails m-0 table table-actions-bar")
+                    thead
+                      tr
+                        th(style="min-width: 90px;")
+                          div(class="checkbox checkbox-primary checkbox-single m-r-15")
+                            input(id="action-checkbox" type="checkbox")
+                            label(for="action-checkbox")
+                        th(style="max-width: 20px;") ID
+                        th Nombre
+                        th Correo electrónico
+                        th Fecha inicio
+                        th Estado
+                    tbody
+                      tr
+                        td
+                          div(class="checkbox checkbox-primary m-r-15")
+                            input(id="checkbox2" type="checkbox")
+                            label(for="checkbox2")
+                          img(src="/images/users/avatar-2.jpg" alt="contact-img" title="contact-img" class="img-circle thumb-sm")
+                        td FEL234
+                        td Wilson Tovar
+                        td
+                          a(href="#" class="text-muted") twilson@uninorte.edu.co
+                        td 13/01/2015
+                        td Terminado
+                       
+                       
+        div.footer
+          div
+            <strong>felinorte</strong> - Copyright &copy; 2017
+                        
