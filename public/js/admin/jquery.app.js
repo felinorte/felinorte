@@ -1,11 +1,4 @@
-
-/**
-* Theme: SimpleAdmin Template
-* Author: Coderthemes
-* Main Js File
-*
-*/
-
+/* JS Principal */
 
 (function ($) {
 
