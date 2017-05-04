@@ -15,7 +15,11 @@ var CatSchema = new Schema({
   peso: Number,
   raza: String,
   color: String,
-  sexo: String
+  sexo: {
+    type: String,
+    required: true
+  },
+  detalles: String
 });
 
 CatSchema.virtual('date')
