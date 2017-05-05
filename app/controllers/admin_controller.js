@@ -29,7 +29,7 @@ router.get('/admin/gatos', function(req, res, next) {
 
 /* GET Crear nuevo gato */
 router.get('/admin/gatos/nuevo', function(req, res, next){
-  res.render('admin/gatos/new', {
+  res.render('admin/gatos/new.pug', {
     title: 'Agregar nuevo gato - felinorte'
   });
 });
