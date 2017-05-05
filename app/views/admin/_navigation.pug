@@ -1,13 +1,18 @@
 ul(class="metisMenu nav" id="side-menu")
   li
-    a(href="") #[i(class="ti-new-window")] Panel
+    a(href="/admin") #[i(class="ti-new-window")] Panel
   li
     a(href="javascript: void(0);") #[i(class="ti-medall")] Gatos #[span(class="fa arrow")]
     ul(class="nav-second-level nav" aria-expanded="true")
-      li #[a Añadir nuevo]
-      li #[a Buscar]
       li #[a Ver todos]
+      li #[a(href="/admin/gatos/nuevo") Añadir]
   li
-    a(href="") #[i(class="ti-home")] Colonias
+    a(href="javascript: void(0);") #[i(class="ti-home")] Colonias #[span(class="fa arrow")]
+    ul(class="nav-second-level nav" aria-expanded="true")
+      li #[a Ver todas]
+      li #[a Añadir]
   li
-    a(href="") #[i(class="ti-user")] Usuarios
+    a(href="javascript: void(0);") #[i(class="ti-user")] Usuarios
+    ul(class="nav-second-level nav" aria-expanded="true")
+      li #[a Ver todos]
+      li #[a Añadir]
