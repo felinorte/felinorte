@@ -29,6 +29,14 @@ block content
       // 
       div#page-right-content
         div.container
+        
+          div(class="alert alert-icon alert-success alert-dismissible fade in" id="notificacion" role="alert")
+            button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+              span(aria-hidden="true") x
+            i(class="mdi mdi-check-all")
+            strong Well done! 
+            p You successfully read this important alertmessage.
+            
           div.row
             div.col-sm-12
               h4(class="header-title m-t-0 m-b-20") Agregar nuevo gato
@@ -45,7 +53,7 @@ block content
                 div.col-md-6
                   div.form-group
                     label(for="userName") Nombre
-                    input(type="text" name="nombre" parsley-trigger="change" placeholder="Enter user name" class="form-control" required="true")
+                    input(type="text" name="colonia" parsley-trigger="change" placeholder="Enter user name" class="form-control" required="true")
                 div.col-md-6
                   div.form-group
                     label(for="fechaNacimiento") Fecha de nacimiento
@@ -67,7 +75,7 @@ block content
                     label(for="example-input1-group1") Peso
                     div(class="input-group")
                       span.input-group-addon #[i(class="mdi mdi-basket-fill")]
-                      input(type="text" id="example-input3-group1" name="example-input3-group1" class="form-control" placeholder=".." required="true")
+                      input(type="text" id="example-input3-group1" name="peso" class="form-control" placeholder=".." required="true")
                       span.input-group-addon Kgs
                     
                             
