@@ -25,14 +25,12 @@ router.get('/gatos', function(req, res, next) {
 // POST Crear gato
 // TODO: Implementar
 router.post('/gato/new', function(req, res) {
-  Cat.create({
-    nombre: req.body.name
-  }, function(err) {
+
+  var cat = new Cat({
+    
+  });
+
+  cat.save(function(err) {
     if (err) return console.log(err);
-
-    console.log('Gato correctamente creado: ');
-    console.log('Nombre: ' + req.body.name);
-
-    res.redirect('/admin/gatos');
   });
 });
