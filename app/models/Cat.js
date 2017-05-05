@@ -7,9 +7,7 @@ var CatSchema = new Schema({
     type: Date,
     required: true
   },
-  colony_id: {
-    
-  },
+  colony_id: String,
   sexo: String,
   raza: String,
   peso: Number

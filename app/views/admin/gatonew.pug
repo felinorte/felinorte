@@ -35,25 +35,28 @@ block content
           // end row
         // end container
         
-        form(action="" method="POST" class="form-validation" novalidate)
+        form(method="POST" action="/gato/new" class="form-validation" novalidate)
         
           div.col-lg-7
             div.card-box
               h4(class="m-t-0 header-title") Información básica
-              p(class="text-muted font-13 m-b-10") Ingrese la información básica del gato.
               
               div.row
                 div.col-md-6
                   div.form-group
                     label(for="userName") Nombre
-                    input(type="text" name="nick" parsley-trigger="change" required placeholder="Enter user name" class="form-control" id="userName")
+                    input(type="text" name="nombre" parsley-trigger="change" placeholder="Enter user name" class="form-control" required="true")
                 div.col-md-6
                   div.form-group
                     label(for="fechaNacimiento") Fecha de nacimiento
                     div
                       div.input-group
-                        input(type="text" class="form-control" placeholder="mm/dd/yyyy" id="datepicker-autoclose")
+                        input(type="text" class="form-control" placeholder="mm/dd/yyyy" name="fecha_nacimiento" id="datepicker-autoclose" required="true")
                         span(class="input-group-addon bg-custom b-0") #[i(class="mdi mdi-calendar text-white")]
+                div.col-md-7
+                  div.form-group
+                    label(for="colonia") Colonia
+                    div
               
               br
               h4(class="m-t-0 header-title") Información biológica
@@ -64,7 +67,7 @@ block content
                     label(for="example-input1-group1") Peso
                     div(class="input-group")
                       span.input-group-addon #[i(class="mdi mdi-basket-fill")]
-                      input(type="text" id="example-input3-group1" name="example-input3-group1" class="form-control" placeholder="..")
+                      input(type="text" id="example-input3-group1" name="example-input3-group1" class="form-control" placeholder=".." required="true")
                       span.input-group-addon Kgs
                     
                             
@@ -83,10 +86,13 @@ block content
               
               div.form-group
                 labe(class="control-label") Seleccione la fotografía del gato
-                input(type="file" class="filestyle" data-buttonname="btn-default")
-            
-            
-        
+                input(type="file" class="filestyle" data-buttonname="btn-default" required="true")
+          
+          div.col-lg-12
+            div.col-lg-10
+            div(class="col-lg-2 text-right")
+              button(class="btn btn-primary btn-bordered left" type="submit") Guardar
+        // end form
         div.footer
           div
             <strong>felinorte</strong> - Copyright &copy; 2017
