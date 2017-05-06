@@ -1,14 +1,17 @@
-var express = require('express');
-var glob = require('glob');
+var express = require('express'),
+    glob = require('glob');
 
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var compress = require('compression');
-var methodOverride = require('method-override');
+var flash = require('express-flash-notification'),
+    favicon = require('serve-favicon'),
+    logger = require('morgan'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    compress = require('compression'),
+    methodOverride = require('method-override');
 
 module.exports = function(app, config) {
+  
+  
   var env = process.env.NODE_ENV || 'development';
   app.locals.ENV = env;
   app.locals.ENV_DEVELOPMENT = env == 'development';
@@ -61,6 +64,9 @@ module.exports = function(app, config) {
       title: 'error'
     });
   });
+  
+  // mensajes / notificaciones
+  app.use(flash(app));
 
   return app;
 };

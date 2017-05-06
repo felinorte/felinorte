@@ -24,4 +24,11 @@ router.get('/gatos', function(req, res, next) {
 
 // POST Crear gato
 // TODO: Implementar
-router.post('/gato/new', function(req, res){});
+router.post('/gato/new', function(req, res) {
+  Cat.create({
+    colony_id: req.body.colonia,
+    fecha_nacimiento: req.body.fecha_nacimiento
+  }, function(err) {
+    if (err) return console.log(err);
+  });
+});
