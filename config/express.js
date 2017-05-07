@@ -8,9 +8,9 @@ var favicon = require('serve-favicon'),
   compress = require('compression'),
   methodOverride = require('method-override');
 
-var passport = require('passport'),
+var passport = require('passport'), // Sistema de usuarios
   session = require('express-session'),
-  flash = require('connect-flash');
+  flash = require('connect-flash'); // Mensajes de información / error
 
 module.exports = function(app, config) {
 
@@ -31,23 +31,24 @@ module.exports = function(app, config) {
   app.use(bodyParser.urlencoded({
     extended: true
   }));
+  
   app.use(cookieParser());
   app.use(compress());
   // app.use(express.static(config.root + '/public'));
   app.use(methodOverride());
 
   app.use(flash()); // Usa connect-flash to render messages
-  
+
   /* Configuraciones de passport */
   require('../config/passport')(passport); // pass passport for configuration
 
-  //Necesario para passport
+  /* Necesario para passport */
   app.use(session({
     secret: 'fjafkn3f39h2fs'
   }));
   app.use(passport.initialize());
   app.use(passport.session()); //app.use(passport.authenticate('session')); es equivalente
-  
+
   /* Controladores (Rutas) */
   var controllers = glob.sync(config.root + '/app/controllers/*.js');
   controllers.forEach(function(controller) {
@@ -78,7 +79,7 @@ module.exports = function(app, config) {
       error: {},
       title: 'error'
     });
-  }); 
+  });
 
 
   return app;

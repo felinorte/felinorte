@@ -1,3 +1,4 @@
+// Dirección de acceso a la base de datos
 var uri = 'mongodb://root:lilofa98@cluster0-shard-00-00-bz6ai.mongodb.net:27017,cluster0-shard-00-01-bz6ai.mongodb.net:27017,cluster0-shard-00-02-bz6ai.mongodb.net:27017/felinorte?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin';
 
 var path = require('path');
@@ -11,7 +12,7 @@ var config = {
             name: 'felinorte'
         },
         port: process.env.PORT || 3000,
-        db: uri //Dirección de la base de datos
+        db: uri
     },
 
     test: {

@@ -1,6 +1,9 @@
+/* 
+  Modelo del usuario administrador 
+*/
+
 var mongoose = require('mongoose');
 
-/**Modelo del administrador*/
 var AdminSchema = new mongoose.Schema({
   mail: {
     type: String,
@@ -18,8 +21,9 @@ var AdminSchema = new mongoose.Schema({
     min: 0
   },
   lastAcces: {
-  type: Date, 
-  default: Date.now},  
+    type: Date,
+    default: Date.now
+  },
 });
 
 mongoose.model('Admin', AdminSchema);

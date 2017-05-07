@@ -1,4 +1,6 @@
-/** Modelo de Colonia */
+/*
+  Modelo de Colonia 
+*/
 
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema;

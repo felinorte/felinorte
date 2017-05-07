@@ -1,6 +1,6 @@
 var express = require('express'),
-    router = express.Router(),
-    mongoose = require('mongoose');
+  router = express.Router(),
+  mongoose = require('mongoose');
 
 /* Modelo de la base de datos */
 var Cat = mongoose.model('Cat');
@@ -28,6 +28,14 @@ router.post('/gato/new', function(req, res) {
     colony_id: req.body.colonia,
     fecha_nacimiento: req.body.fecha_nacimiento
   }, function(err) {
-    if (err) return console.log(err);
+    // Si sucede algún error
+    if (err) {
+      req.flash('error', '¡No se ha podido crear el gato!'); // Enviar un mensaje de error
+      res.redirect('/gatos')
+      return console.log(err); // Escribir en consola el error
+    }
+
+    
+    res.redirect('/gatos');
   });
 });

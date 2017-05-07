@@ -73,6 +73,16 @@ background: #36465E;
   margin: auto;
   left: 0; right: 0;
 }
+.trollboca{
+	 background: #36465E;
+	position: absolute;
+	 height: 15px; width: 15px;
+  border-radius: 0 0 50% 50%;
+  top: 50px;
+	 margin: auto;
+  left: 0; right: 0;
+	
+}
 
 .container:hover .cat .mouth{
   height: 15px; width: 15px;
@@ -94,6 +104,18 @@ background: #36465E;
 .container:hover .message{
   opacity: 1;
 }
+.trolmensaje{
+	 background: #FFFFFF;
+  height: 40px;
+  width: 100px;
+  padding 5:px;
+  bottom: auto; top: 20px;
+  transition: opacity 0.5s;
+  -webkit-transition: opacity 0.5s;
+	opacity: 1;
+	
+}
+
 
 .message p {
 	font-family: Helvetica, Verdana, sans-serif;

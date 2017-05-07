@@ -1,6 +1,6 @@
 /* Modelo de Gato */
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+  Schema = mongoose.Schema;
 
 var CatSchema = new Schema({
   fecha_nacimiento: {
