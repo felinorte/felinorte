@@ -1,16 +1,14 @@
 var mongoose = require('mongoose');
 
-/* Modelo del usuario */
-var UserSchema = new mongoose.Schema({
-  id: String,
-  token :String,
+/**Modelo del administrador*/
+var AdminSchema = new mongoose.Schema({
   mail: {
     type: String,
     trim: true
   },
   pass: String,
   name: {
-    nombre: String,
+    nombres: String,
     apellidos: String
   },
   empleo: String,
@@ -18,7 +16,10 @@ var UserSchema = new mongoose.Schema({
     type: Number,
     trim: true,
     min: 0
-  }
+  },
+  lastAcces: {
+  type: Date, 
+  default: Date.now},  
 });
 
-mongoose.model('User', UserSchema);
+mongoose.model('Admin', AdminSchema);

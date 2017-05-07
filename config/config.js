@@ -11,7 +11,7 @@ var config = {
             name: 'felinorte'
         },
         port: process.env.PORT || 3000,
-        db: uri
+        db: uri //Dirección de la base de datos
     },
 
     test: {

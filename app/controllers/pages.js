@@ -9,9 +9,15 @@ module.exports = function(app) {
 };
 
 router.get('/', function(req, res, next) {
-    res.render('index', {
-        title: '¡Bienvenido! - felinorte'
+    res.render('preload', {
+        title: 'Cargando... - felinorte'
     });
+});
+
+router.get('/home', function(req, res){
+  res.render('index', {
+    title: '¡Bienvenido! - felinorte'
+  });
 });
 
 // Página de contacto

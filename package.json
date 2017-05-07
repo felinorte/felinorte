@@ -24,10 +24,10 @@
     "morgan": "^1.6.1",
     "pug": "2.0.0-rc.1",
     "serve-favicon": "^2.3.0",
-    "express-flash": "0.0.2",
     "express-session": "1.15.2",
     "passport": "0.3.2",
-    "bcrypt-nodejs": "0.0.3"
+    "connect-flash" : "~0.1.1",     
+    "bcrypt-nodejs" : "latest"
   },
   "devDependencies": {
     "chai": "^3.5.0",

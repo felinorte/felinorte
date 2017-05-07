@@ -1,17 +1,19 @@
 var express = require('express'),
-    glob = require('glob');
+  glob = require('glob');
 
-var flash = require('express-flash-notification'),
-    favicon = require('serve-favicon'),
-    logger = require('morgan'),
-    cookieParser = require('cookie-parser'),
-    bodyParser = require('body-parser'),
-    compress = require('compression'),
-    methodOverride = require('method-override');
+var favicon = require('serve-favicon'),
+  logger = require('morgan'),
+  cookieParser = require('cookie-parser'),
+  bodyParser = require('body-parser'),
+  compress = require('compression'),
+  methodOverride = require('method-override');
+
+var passport = require('passport'),
+  session = require('express-session'),
+  flash = require('connect-flash');
 
 module.exports = function(app, config) {
-  
-  
+
   var env = process.env.NODE_ENV || 'development';
   app.locals.ENV = env;
   app.locals.ENV_DEVELOPMENT = env == 'development';
@@ -34,9 +36,22 @@ module.exports = function(app, config) {
   // app.use(express.static(config.root + '/public'));
   app.use(methodOverride());
 
+  app.use(flash()); // Usa connect-flash to render messages
+  
+  /* Configuraciones de passport */
+  require('../config/passport')(passport); // pass passport for configuration
+
+  //Necesario para passport
+  app.use(session({
+    secret: 'fjafkn3f39h2fs'
+  }));
+  app.use(passport.initialize());
+  app.use(passport.session()); //app.use(passport.authenticate('session')); es equivalente
+  
+  /* Controladores (Rutas) */
   var controllers = glob.sync(config.root + '/app/controllers/*.js');
   controllers.forEach(function(controller) {
-    require(controller)(app);
+    require(controller)(app, passport);
   });
 
   app.use(function(req, res, next) {
@@ -63,10 +78,8 @@ module.exports = function(app, config) {
       error: {},
       title: 'error'
     });
-  });
-  
-  // mensajes / notificaciones
-  app.use(flash(app));
+  }); 
+
 
   return app;
 };

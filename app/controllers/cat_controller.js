@@ -1,6 +1,6 @@
-var express = require('express');
-var router = express.Router();
-var mongoose = require('mongoose');
+var express = require('express'),
+    router = express.Router(),
+    mongoose = require('mongoose');
 
 /* Modelo de la base de datos */
 var Cat = mongoose.model('Cat');
@@ -20,7 +20,6 @@ router.get('/gatos', function(req, res, next) {
     });
   });
 });
-
 
 // POST Crear gato
 // TODO: Implementar
