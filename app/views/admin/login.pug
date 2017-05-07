@@ -8,6 +8,14 @@ block content
         div.col-sm-12
         
           div.wrapper-page
+            - if (messages.info)
+              div(class="alert alert-icon alert-danger alert-dismissible fade in" role="alert")
+                button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+                  span(aria-hidden="true") x
+                i(class="mdi mdi-block-helper")
+                strong ¡Error!
+                p #{messages.loginMessage}
+                  
             div(class='m-t-40 card-box')
               div.text-center
                 h2(class="text-uppercase m-t-0 m-b-30")

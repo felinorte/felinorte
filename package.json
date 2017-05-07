@@ -6,7 +6,7 @@
   "private": true,
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "nodemon app.js",
     "test": "NODE_ENV=test mocha --recursive test",
     "test:coverage": "nyc npm test",
     "test:unit": "mocha --recursive test/middleware test/models test/routes",
@@ -26,8 +26,9 @@
     "serve-favicon": "^2.3.0",
     "express-session": "1.15.2",
     "passport": "0.3.2",
-    "connect-flash" : "~0.1.1",     
-    "bcrypt-nodejs" : "latest"
+    "connect-flash": "~0.1.1",
+    "bcrypt-nodejs": "latest",
+    "express-flash": "0.0.2"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -37,7 +38,6 @@
     "gulp-nodemon": "^2.0.2",
     "gulp-plumber": "^1.0.0",
     "mocha": "^3.0.2",
-    "nodemon": "^1.11.0",
     "nyc": "^10.0.0",
     "supertest": "^2.0.0"
   }

@@ -15,6 +15,7 @@ module.exports = function(app) {
 
 /* GET Login del panel de administración */
 router.get('/admin/login', function(req, res, next) {
+  // req.flash('info', 'Mensaje de logueo');
   res.render('admin/login', {
     title: 'Entrar - Panel de administración'
   });

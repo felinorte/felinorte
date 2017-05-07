@@ -1,0 +1,15 @@
+doctype
+html
+  head
+    include ../admin/_head
+    include ../headload
+    title Entrar - felinorte
+  body
+    h1 Entrar
+    - if (messages.info)
+      div(class="alert alert-icon alert-danger alert-dismissible fade in" role="alert")
+        button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+          span(aria-hidden="true") x
+        i(class="mdi mdi-block-helper")
+        strong ¡Error!
+        p #{messages.info}

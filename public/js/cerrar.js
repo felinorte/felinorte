@@ -9,7 +9,13 @@
 			window.open("/home", "_self")
 		} else {
 			time = time + 100;
-			if (time == 2300) {
+			if (time == 2500) {
+				
+				document.getElementById("boca").classList.remove("mouth");
+				document.getElementById("boca").classList.add("trollboca");
+				document.getElementById("mensaje").classList.add("trolmensaje");
+			
+				console.log("entro")
 				cont.style.animation = "fadeout 1s ease";
 			}
 		}

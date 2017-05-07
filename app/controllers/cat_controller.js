@@ -10,7 +10,7 @@ module.exports = function(app) {
 };
 
 /* Ver todos los gatos */
-router.get('/gatos', function(req, res, next) {
+router.get('/gatos', function(req, res) {
   Cat.find({}, function(err, cats) {
     if (err) return next(err);
 
@@ -30,12 +30,12 @@ router.post('/gato/new', function(req, res) {
   }, function(err) {
     // Si sucede algún error
     if (err) {
-      req.flash('error', '¡No se ha podido crear el gato!'); // Enviar un mensaje de error
-      res.redirect('/gatos')
+      req.flash('error', '¡No se ha podido agregar el gato!'); // Enviar un mensaje de error
+      res.redirect('/admin/gatos/nuevo')
       return console.log(err); // Escribir en consola el error
     }
 
-    
-    res.redirect('/gatos');
+    req.flash('info', 'Gato agregado exitosamente...');
+    res.redirect('/admin/gatos/nuevo');
   });
 });

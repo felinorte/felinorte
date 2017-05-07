@@ -10,7 +10,7 @@ var favicon = require('serve-favicon'),
 
 var passport = require('passport'), // Sistema de usuarios
   session = require('express-session'),
-  flash = require('connect-flash'); // Mensajes de información / error
+  flash = require('express-flash'); // Mensajes de información / error
 
 module.exports = function(app, config) {
 
@@ -31,23 +31,16 @@ module.exports = function(app, config) {
   app.use(bodyParser.urlencoded({
     extended: true
   }));
-  
+
   app.use(cookieParser());
   app.use(compress());
   // app.use(express.static(config.root + '/public'));
   app.use(methodOverride());
 
-  app.use(flash()); // Usa connect-flash to render messages
-
-  /* Configuraciones de passport */
-  require('../config/passport')(passport); // pass passport for configuration
-
-  /* Necesario para passport */
   app.use(session({
-    secret: 'fjafkn3f39h2fs'
-  }));
-  app.use(passport.initialize());
-  app.use(passport.session()); //app.use(passport.authenticate('session')); es equivalente
+    secret: 'lilofa9812naeflk3n0f34hnf34uahd9w8'
+  })); // session secret
+  app.use(flash(app));
 
   /* Controladores (Rutas) */
   var controllers = glob.sync(config.root + '/app/controllers/*.js');
@@ -81,6 +74,10 @@ module.exports = function(app, config) {
     });
   });
 
+  // required for passport
+  require('../config/passport')(passport); // pass passport for configuration
+  app.use(passport.initialize());
+  app.use(passport.session());
 
   return app;
 };
