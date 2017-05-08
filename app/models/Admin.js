@@ -5,25 +5,24 @@
 var mongoose = require('mongoose');
 
 var AdminSchema = new mongoose.Schema({
+  id: String,
+  token: String,
   mail: {
     type: String,
     trim: true
   },
-  pass: String,
   name: {
-    nombres: String,
-    apellidos: String
-  },
-  empleo: String,
-  age: {
-    type: Number,
-    trim: true,
-    min: 0
+    nombre: String,
+    apellido: String
   },
   lastAcces: {
     type: Date,
     default: Date.now
   },
+  adminType: {
+    type: boolean,
+    default: false
+  }
 });
 
 mongoose.model('Admin', AdminSchema);

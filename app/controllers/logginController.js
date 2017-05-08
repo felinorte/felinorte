@@ -7,17 +7,17 @@ module.exports = function(app) {
 };
 
 //SignUpInPanel --Panel del SignUp-In
-router.get('/home/signUpInPanel', function(req, res, next){
+router.get('/home/portales', function(req, res, next){
   res.render('everyBody/signUpInPanel');
 });
 
 //Login --Iniciar Seción
-router.get('/home/signUpInPanel/login', function(req, res, next) {
-  res.render('admin/login', {message: req.flash('info', 'WhatEver')});
+router.get('/home/login', function(req, res, next) {
+  res.render('everyBody/login', {message: req.flash('info', 'WhatEver')});
 });
 
 //SingUp --Registrarse
-router.get('/home/signUpInPanel/signup', function(req, res, next) {
+router.get('/home/signup', function(req, res, next) {
   res.render('everyBody/signup', {message: req.flash('info', 'WhatEver')});
 });
 
