@@ -6,7 +6,7 @@
   "private": true,
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "npm app.js",
     "test": "NODE_ENV=test mocha --recursive test",
     "test:coverage": "nyc npm test",
     "test:unit": "mocha --recursive test/middleware test/models test/routes",
