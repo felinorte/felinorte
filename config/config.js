@@ -4,14 +4,14 @@ var uri = 'mongodb://root:lilofa98@cluster0-shard-00-00-bz6ai.mongodb.net:27017,
 var path = require('path');
 var rootPath = path.normalize(__dirname + '/..');
 var env = process.env.NODE_ENV || 'development';
-
+var puerto=8080;
 var config = {
     development: {
         root: rootPath,
         app: {
             name: 'felinorte'
         },
-        port: process.env.PORT || 3000,
+        port: process.env.PORT || puerto,
         db: uri
     },
 
@@ -20,7 +20,7 @@ var config = {
         app: {
             name: 'felinorte'
         },
-        port: process.env.PORT || 3000,
+        port: process.env.PORT || puerto,
         db: uri
     },
 
@@ -29,7 +29,7 @@ var config = {
         app: {
             name: 'felinorte'
         },
-        port: process.env.PORT || 3000,
+        port: process.env.PORT || puerto,
         db: uri
     }
 };

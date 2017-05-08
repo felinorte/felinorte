@@ -9,7 +9,7 @@ module.exports = function(app) {
   app.use('/', router);
 };
 
-/* Ver todos los gatos */
+/* GET Ver todos los gatos */
 router.get('/gatos', function(req, res) {
   Cat.find({}, function(err, cats) {
     if (err) return next(err);
@@ -21,21 +21,7 @@ router.get('/gatos', function(req, res) {
   });
 });
 
-// POST Crear gato
-// TODO: Implementar
-router.post('/gato/new', function(req, res) {
-  Cat.create({
-    colony_id: req.body.colonia,
-    fecha_nacimiento: req.body.fecha_nacimiento
-  }, function(err) {
-    // Si sucede algún error
-    if (err) {
-      req.flash('error', '¡No se ha podido agregar el gato!'); // Enviar un mensaje de error
-      res.redirect('/admin/gatos/')
-      return console.log(err); // Escribir en consola el error
-    }
-
-    req.flash('info', 'Gato agregado exitosamente...');
-    res.redirect('/admin/gatos/');
-  });
+/* POST Adoptar gato */
+router.post('/adoptar/:id', function(req, res){
+  
 });

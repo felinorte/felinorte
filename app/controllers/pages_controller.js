@@ -33,3 +33,9 @@ router.get('/contacto', function(req, res, next) {
         title: '¡Contáctanos! - felinorte'
     });
 });
+
+/* Redirecciones */
+router.get('/entrar', function(req, res){ res.redirect('/login'); });
+router.get('/registro', function(req, res){ res.redirect('/signup'); });
+router.get('/perfil', function(req, res){ res.redirect('/profile'); });
+router.get('/salir', function(req, res){ res.redirect('/logout'); });

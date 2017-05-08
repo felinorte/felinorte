@@ -20,7 +20,7 @@ var AdminSchema = new mongoose.Schema({
     default: Date.now
   },
   adminType: {
-    type: boolean,
+    type: Boolean,
     default: false
   }
 });

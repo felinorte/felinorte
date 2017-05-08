@@ -1,7 +1,6 @@
 extends default
 
-block content
-  
+block content  
   div#page-wrapper
   
     include _topbar
@@ -37,11 +36,11 @@ block content
                 
                   div(class="col-lg-3 col-sm-6")
                     div(class="widget-inline-box text-center")
-                      h3.m-t-10 #[i(class="text-primary material-icons" style="vertical-align: top;") pets] #[b(data-plugin="counterup")] #{numero_gatos}
+                      h3.m-t-10 #[i(class="text-primary material-icons" style="vertical-align: top;") pets] #[b(data-plugin="counterup")] #{ncats}
                       p.text-muted Gatos
                   div(class="col-lg-3 col-sm-6")
                     div(class="widget-inline-box text-center")
-                      h3.m-t-10 #[i(class="text-primary material-icons" style="vertical-align: top;") home] #[b(data-plugin="counterup")] 100
+                      h3.m-t-10 #[i(class="text-primary material-icons" style="vertical-align: top;") home] #[b(data-plugin="counterup")] #{ncolonies}
                       p.text-muted Colonias
                   div(class="col-lg-3 col-sm-6")
                     div(class="widget-inline-box text-center")
@@ -49,7 +48,7 @@ block content
                       p.text-muted Procesos de adopción
                   div(class="col-lg-3 col-sm-6")
                     div(class="widget-inline-box text-center")
-                      h3.m-t-10 #[i(class="text-primary material-icons" style="vertical-align: top;") account_circle] #[b(data-plugin="counterup")] 35
+                      h3.m-t-10 #[i(class="text-primary material-icons" style="vertical-align: top;") account_circle] #[b(data-plugin="counterup")] #{nusers}
                       p.text-muted Usuarios
           
           div.row
