@@ -35,9 +35,21 @@ router.get('/admin', function(req, res) {
 
 /* GET Ver todos los gatos */
 router.get('/admin/gatos', function(req, res, next) {
-  res.render('admin/gatos', {
-    title: 'Administrar gatos - felinorte'
+  Cat.find({}, function(err, cats) {
+    if (err) {
+      console.log(err);
+
+      req.flash('errorGatos', 'Hubo un error, por favor, intente más tarde.');
+      res.redirect('/admin');
+    }
+  
+    res.render('admin/gatos', {
+      title: 'Administrar gatos - felinorte',
+      cats: cats
+    });
+
   });
+
 });
 
 /* GET Crear nuevo gato */

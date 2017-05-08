@@ -1,0 +1,50 @@
+div(id="add-contact" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-contactLabel" aria-hidden="true")
+  form(method="POST" action="/gato/new" class="form-validation" novalidate)
+    div.modal-dialog
+      div.modal-content
+        div.modal-header
+          button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+          h4(class="modal-title" id="add-contactLabel") Añadir gato
+
+        div.modal-body
+          div.card-box
+            h5(class="m-t-0 header-title") Información básica
+
+            div.row
+              div.col-md-5
+                div.form-group
+                  label(for="userName") Nombre
+                  input(type="text" name="colonia" parsley-trigger="change" placeholder="Enter user name" class="form-control" required="true")
+              div.col-md-5
+                div.form-group
+                  label(for="fechaNacimiento") Fecha de nacimiento
+                  div
+                    div.input-group
+                      input(type="text" class="form-control" placeholder="mm/dd/yyyy" name="fecha_nacimiento" id="datepicker-autoclose" required="true")
+                      span(class="input-group-addon bg-custom b-0") #[i(class="mdi mdi-calendar text-white")]
+
+              div.col-md-7
+                div.form-group
+                  label(for="colonia") Colonia
+                  div
+
+            h5(class="m-t-0 header-title") Información biológica
+            div.row
+              div.col-md-4
+                div.form-group
+                  label(for="example-input1-group1") Peso
+                  div(class="input-group")
+                    span.input-group-addon #[i(class="mdi mdi-basket-fill")]
+                    input(type="text" id="example-input3-group1" name="peso" class="form-control" placeholder=".." required="true")
+                    span.input-group-addon Kgs
+            h5(class="m-t-0 header-title") Fotografía
+            div.row
+              div.col-md-8
+                div.form-group
+                  labe(class="control-label") Seleccione la fotografía del gato
+                  input(type="file" class="filestyle" data-buttonname="btn-default" required="true")
+
+        div.modal-footer
+          button(type="button" class="btn btn-default " data-dismiss="modal") Cancelar
+          button(type="submit" class="btn btn-primary ") Guardar
+        

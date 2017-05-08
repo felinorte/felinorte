@@ -31,11 +31,11 @@ router.post('/gato/new', function(req, res) {
     // Si sucede algún error
     if (err) {
       req.flash('error', '¡No se ha podido agregar el gato!'); // Enviar un mensaje de error
-      res.redirect('/admin/gatos/nuevo')
+      res.redirect('/admin/gatos/')
       return console.log(err); // Escribir en consola el error
     }
 
     req.flash('info', 'Gato agregado exitosamente...');
-    res.redirect('/admin/gatos/nuevo');
+    res.redirect('/admin/gatos/');
   });
 });

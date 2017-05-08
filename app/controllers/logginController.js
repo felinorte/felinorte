@@ -6,14 +6,39 @@ module.exports = function(app) {
   app.use('/', router);
 };
 
-router.get('/home/login', function(req, res, next) {
-  res.render('everyBody/login', {message: req.flash('info', 'WhatEver')});
+//SignUpInPanel --Panel del SignUp-In
+router.get('/home/signUpInPanel', function(req, res, next){
+  res.render('everyBody/signUpInPanel');
 });
 
-router.get('/home/singup', function(req, res, next) {
-  res.render('everyBody/singup', {message: req.flash('info', 'WhatEver')});
+//Login --Iniciar Seción
+router.get('/home/signUpInPanel/login', function(req, res, next) {
+  res.render('admin/login', {message: req.flash('info', 'WhatEver')});
 });
 
-router.get('/home/profile', function(req,res,next){
-  res.render('everyBody/profile', {message: req.flash('info', 'WhatEver')});
+//SingUp --Registrarse
+router.get('/home/signUpInPanel/signup', function(req, res, next) {
+  res.render('everyBody/signup', {message: req.flash('info', 'WhatEver')});
 });
+
+//Profile --Perfil del usuario de la seción
+router.get('/home/profile',isLoggedIn, function(req,res,next){
+  res.render('everyBody/profile', {message: req.flash('info', 'WhatEver')},{
+    user: req.User}); // Obtiene el usuario de la seción
+});
+
+//LogOut --Cerrar seción
+router.get('/home/logout', function(req, res, next){
+  req.logout();
+  res.redirect('/home');
+});
+
+//Ver si el usuario está loggeado
+function isLoggedIn(res, req, next){
+  //Si está autenticado inicia seción
+  if(req.isAuthenticated())
+    return next();
+  
+  //Sino
+  res.redirect('/home');
+}
