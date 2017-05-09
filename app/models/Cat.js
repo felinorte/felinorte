@@ -5,6 +5,11 @@ var mongoose = require('mongoose'),
 var Colony = require('./Colony');
 
 var CatSchema = new Schema({
+  foto: String,
+  nombre: {
+    type: String,
+    required: true
+  },
   fecha_nacimiento: {
     type: Date,
     required: true
@@ -16,7 +21,11 @@ var CatSchema = new Schema({
   },
   sexo: String,
   raza: String,
-  peso: Number
+  peso: Number,
+  tipo_personalidad: String,
+  sociable: Boolean,
+  observaciones: String
+  
 });
 
 /* Método para buscar la colonia a la que pertenece el gato */

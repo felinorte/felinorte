@@ -22,9 +22,7 @@ router.get('/', function(req, res, next) {
 
 /* GET Página de inicio */
 router.get('/home', function(req, res){
-  res.render('index', {
-    title: '¡Bienvenido! - felinorte'
-  });
+  res.render('soon');
 });
 
 /* GET Página de contacto */

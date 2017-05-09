@@ -27,6 +27,20 @@ block content
       
       // START PAGE CONTENT
       div(id="page-right-content" style="min-height: 500px;")
+        - if (messages.info)
+          div(class="alert alert-icon alert-success alert-dismissible fade in" role="alert")
+            button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+              span(aria-hidden="true") x
+            i(class="mdi mdi-check-all")
+            strong Info...
+            p #{messages.info}
+        - if (messages.error)
+          div(class="alert alert-icon alert-danger alert-dismissible fade in" role="alert")
+            button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+              span(aria-hidden="true") x
+            i(class="mdi mdi-block-error")
+            strong ¡Error!
+            p #{messages.error}
         div.container            
           div.row
                   

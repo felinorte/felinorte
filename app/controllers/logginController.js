@@ -1,9 +1,24 @@
 var mongoose = require('mongoose');
 var express = require('express');
 var router = express.Router();
+var passport = require('passport');
 
 module.exports = function(app) {
   app.use('/', router);
+   
+  //Ensambla la autenticación y el signUp
+  app.post('/signup', passport.authenticate('local-signup',{
+    succesRedirect: '/profile',
+    failureRedirect: '/login',
+    failureFlash: true
+  }));
+  
+  //Ensambla la autenticaión y el login
+  app.post('/login', passport.authenticate('local-login',{
+    succesRedirect: '/profile',
+    failureRedirect: '/login',
+    failureFlash: true
+  }));
 };
 
 /* GET */
@@ -26,12 +41,17 @@ router.get('/signup', function(req, res) {
 });
 
 /* GET Perfil de usuario de la sesión */
-router.get('/profile', isLoggedIn, function(req, res) {
+router.get('/profile', function(req, res) {
   res.render('everyBody/profile', {
     message: req.flash('info', 'WhatEver')
   }, {
     user: req.User
   }); // Obtiene el usuario de la seción
+});
+
+/* GET Fin */
+router.get('/fin', function(req, res) {
+  res.render('everyBody/advice');
 });
 
 /* GET Cerrar sesión */

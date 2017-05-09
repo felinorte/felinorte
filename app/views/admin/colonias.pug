@@ -1,0 +1,77 @@
+extends default
+
+block content
+  div#page-wrapper
+    
+    include _topbar
+    
+    // Page content start
+    div.page-contentbar
+        
+      // left navigation start
+      aside.sidebar-navigation
+        div.scrollbar-wrapper
+          div
+            button(type="button" class="button-menu-mobile btn-mobile-view visible-xs visible-sm")
+              i(class="mdi mdi-close")
+            // User Detail box
+            div.user-details
+              div.pull-left
+                img(src="https://scontent.xx.fbcdn.net/v/t31.0-8/s960x960/17493155_1427647903947280_1316763995182102963_o.jpg?oh=2ce49976e48e991fcc90683ee9dc6270&oe=59B5DD10" alt="" class="thumb-md img-circle")
+              div.user-info
+                a Wilson Tovar
+                p(class="text-muted m-0") Administrador
+            
+            // Left Menu Start
+            include _navigation
+            
+    // PAGE CLONIAS START
+    div#page-right-content
+      - if (messages.info)
+        div(class="alert alert-icon alert-success alert-dismissible fade in" role="alert")
+          button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+            span(aria-hidden="true") x
+          i(class="mdi mdi-check-all")
+          strong ¡Éxito!
+          p #{messages.info}
+      - if (messages.error)
+        div(class="alert alert-icon alert-danger alert-dismissible fade in" role="alert")
+          button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+            span(aria-hidden="true") x
+          i(class="mdi mdi-block-error")
+          strong ¡Error!
+          p #{messages.error}
+      
+      div.container
+        div.row
+          div.col-sm-12
+            h4(class="m-t-0 header-title") Colonias
+            
+            div(class="table-responsive m-b-20")
+              
+              table(id="datatable" class="table table-striped table-bordered")
+                thead
+                  tr
+                    th ID
+                    th Lugar
+                    th # de gatos
+                // end thead
+                
+                tbody
+                  tr
+                    td #[a(href="") ]
+                    td 
+                    td 5
+                // end tbody
+              // end table
+            // end class="table-responsive m-b-20"
+          // end col-sm-12
+        // end row
+        
+        div.row
+          div(class="col-sm-12 text-center")
+            button(class="btn btn-primary btn-rounded btn-lg m-b-30" data-toggle="modal" data-target="#add-colony") Añadir colonia
+      // end container
+    // end page-right-content
+    
+  include _modalNuevaColonia   

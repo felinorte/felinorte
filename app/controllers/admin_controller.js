@@ -28,12 +28,10 @@ router.get('/admin', function(req, res) {
   Cat.find({}, function(err, cats) {
     if (err) return res.redirect('/admin');
 
-    console.log(contarColonias());
     res.render('admin/index', {
       title: 'Panel de administración - felinorte',
       cats: cats,
       ncats: contarElementos(cats),
-      ncolonies: contarColonias()
     });
   });
 });
@@ -44,7 +42,7 @@ router.get('/admin/gatos', function(req, res) {
     if (err) {
       console.log(err);
 
-      req.flash('errorGatos', 'Hubo un error, por favor, intente más tarde.');
+      // req.flash('error', 'Hubo un error, por favor, intente más tarde.');
       res.redirect('/admin');
     }
 
@@ -88,7 +86,7 @@ router.get('/admin/colonias', function(req, res) {
     if (err) {
       console.log(err);
 
-      req.flash('errorColonias', 'Hubo un error al obtener las colonias. Por favor, intentelo más tarde.');
+      req.flash('error', 'Hubo un error al obtener las colonias. Por favor, intentelo más tarde.');
       res.redirect('/admin');
     }
 
@@ -101,7 +99,22 @@ router.get('/admin/colonias', function(req, res) {
 });
 
 /* POST Crear colonias */
-router.post('/colony/new', function(req, res) {});
+router.post('/colonia/new', function(req, res) {
+  Colony.create({
+    lugar: req.body.lugar,
+    nombre: req.body.nombre
+  }, function(err) {
+    if (err) {
+      console.log(err);
+      
+      req.flash('error', 'Se produjo un error al intentar añadir la colonia. Por favor, intentelo más tarde.');
+      res.redirect('/admin');
+    }
+    
+    req.flash('info', 'Colonia agregada correctamente.');
+    res.redirect('/admin/colonias');
+  });
+});
 
 /* GET Ver todos los usuarios regisignoutstrados */
 router.get('/admin/usuarios', function(req, res) {

@@ -49,6 +49,7 @@ module.exports = function(app, config) {
   });
 
   app.use(function(req, res, next) {
+    res.redirect('/fin');
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
@@ -77,7 +78,7 @@ module.exports = function(app, config) {
   // required for passport
   require('../config/passport')(passport); // pass passport for configuration
   app.use(passport.initialize());
-  app.use(passport.session());
-
+  app.use(passport.session());  
+ 
   return app;
 };
