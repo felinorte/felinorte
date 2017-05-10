@@ -14,10 +14,9 @@ var CatSchema = new Schema({
     type: Date,
     required: true
   },
-  colony: String, // Nombre de la colonia
-  colony_id: { // ID de la colonia
+  colony: {
     type: Schema.ObjectId,
-    ref: 'Colony'
+    ref: "Colony"
   },
   sexo: String,
   raza: String,

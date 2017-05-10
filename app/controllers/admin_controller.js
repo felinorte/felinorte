@@ -42,15 +42,29 @@ router.get('/admin/gatos', function(req, res) {
     if (err) {
       console.log(err);
 
-      // req.flash('error', 'Hubo un error, por favor, intente más tarde.');
-      res.redirect('/admin');
+      req.flash('error', 'Hubo un error, por favor, intente más tarde.');
+      return res.redirect('/admin');
     }
 
-    res.render('admin/gatos', {
-      title: 'Administrar gatos - felinorte',
-      cats: cats
-    });
+    Colony.populate(cats, {
+      path: "colony"
+    }, function(err, cats) {
+      if (err) {
+        console.log(err);
 
+        req.flash('error', 'Hubo un error, por favor, intente más tarde.');
+        return res.redirect('/admin');
+      }
+
+      Colony.find({}, function(err, colonies) {
+        res.render('admin/gatos', {
+          title: 'Administrar gatos - felinorte',
+          cats: cats,
+          colonies: colonies
+        });
+      });
+
+    });
   });
 
 });
@@ -65,7 +79,7 @@ router.get('/admin/gatos/nuevo', function(req, res) {
 /* POST Crear gato */
 router.post('/gato/new', function(req, res) {
   Cat.create({
-    colony_id: req.body.colonia,
+    nombre: req.body.nombre,
     fecha_nacimiento: req.body.fecha_nacimiento
   }, function(err) {
     // Si sucede algún error
@@ -91,6 +105,7 @@ router.get('/admin/colonias', function(req, res) {
     }
 
     res.render('admin/colonias', {
+      colonies: colonies,
       title: 'Administrar colonias - felinorte'
     });
   });
@@ -110,7 +125,7 @@ router.post('/colony/new', function(req, res) {
       req.flash('error', '¡No se ha podido crear la colonia! Por favor, intentelo más tarde.'); // Enviar un mensaje de error
       return res.redirect('/admin/colonias');
     }
-  
+
     // Si ya hay una colonia con ese nombre
     if (c > 0) {
       req.flash('error', '¡La colonia que está intentando crear ya existe!'); // Enviar un mensaje de error
@@ -149,8 +164,4 @@ function contarElementos(lista) {
   });
 
   return i;
-}
-// Generar ID de los gatos
-function genIDGato() {
-
 }

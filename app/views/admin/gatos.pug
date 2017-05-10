@@ -68,8 +68,8 @@ block content
                       i(class="mdi mdi-information-outline member-star text-muted" title="No adoptado")
 
                     div
-                      h4.m-b-5 #{"#" + cat.nombre}
-                      p(class="text-muted") #{ cat.colony } #[span | ] #{cat.sexo}
+                      h4.m-b-5 #{cat.nombre}
+                      p(class="text-muted") #{ cat.colony.name } #[span | ] #{cat.sexo}
               
       div.row
         div(class="col-sm-12 text-center")

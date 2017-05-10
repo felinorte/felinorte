@@ -52,15 +52,16 @@ block content
               table(id="datatable" class="table table-striped table-bordered")
                 thead
                   tr
-                    th ID
-                    th Lugar
+                    // th ID
+                    th Nombre
                     th # de gatos
                 // end thead
                 
                 tbody
+                each colony in colonies
                   tr
-                    td #[a(href="") ]
-                    td 
+                    // td #[a(href="") ]
+                    td #{colony.name}
                     td 5
                 // end tbody
               // end table
