@@ -4,6 +4,7 @@ var router = express.Router();
 var passport = require('passport');
 
 module.exports = function(app) {
+  require("../config/passport");
   app.use('/', router);
    
   //Ensambla la autenticación y el signUp

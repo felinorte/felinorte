@@ -78,6 +78,24 @@ router.get('/admin/gatos/nuevo', function(req, res) {
 
 /* POST Crear gato */
 router.post('/gato/new', function(req, res) {
+  
+  var cat = new Cat({
+    nombre: req.body.nombre,
+    fecha_nacimiento: req.body.fecha_nacimiento
+  });
+  
+  cat.save(function(err){
+    if (err) {
+      req.flash('error', '¡No se ha podido agregar el gato!'); // Enviar un mensaje de error
+      res.redirect('/admin/gatos/')
+      return console.log(err); // Escribir en consola el error
+    }
+    
+    req.flash('info', 'Gato agregado exitosamente...');
+    res.redirect('/admin/gatos/');
+  });
+  
+  /*
   Cat.create({
     nombre: req.body.nombre,
     fecha_nacimiento: req.body.fecha_nacimiento
@@ -91,7 +109,7 @@ router.post('/gato/new', function(req, res) {
 
     req.flash('info', 'Gato agregado exitosamente...');
     res.redirect('/admin/gatos/');
-  });
+  }); */
 });
 
 /* GET Ver todas las colonias */

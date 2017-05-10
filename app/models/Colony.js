@@ -11,7 +11,7 @@ var ColonySchema = new Schema({
     required: true
   },
   cats: [{
-    type: Schema.Types.ObjectId,
+    type: Schema.ObjectId,
     ref: 'Cat'
   }]
 });
