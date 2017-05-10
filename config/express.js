@@ -38,7 +38,7 @@ module.exports = function(app, config) {
   app.use(methodOverride());
 
   app.use(session({
-    secret: 'lilofa9812naeflk3n0f34hnf34uahd9w8383438i38ybchdgdkddiklss65x2sdjjsdlsjd'
+    secret: '7eb60f0a6acc337a7e3423b05adcba3528cd7462'
   })); // session secret
   app.use(flash(app));
 

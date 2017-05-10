@@ -1,5 +1,5 @@
 div(id="add-colony" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-contactLabel" aria-hidden="true")
-  form(method="POST" action="/colonia/new" class="form-validation" novalidate)
+  form(method="POST" action="/colony/new" class="form-validation" novalidate)
     div.modal-dialog
       div.modal-content
         div.modal-header
@@ -7,18 +7,10 @@ div(id="add-colony" class="modal fade" tabindex="-1" role="dialog" aria-labelled
           h4(class="modal-title" id="add-contactLabel") Añadir colonia
 
         div.modal-body
-          div.card-box
-            h5(class="m-t-0 header-title") Información básica
-
-            div.row
-              div.col-md-5
-                div.form-group
-                  label(for="userName") Nombre
-                  input(type="text" name="nombre" parsley-trigger="change" placeholder="Nombre de la colonia" class="form-control" required="true")
-              div.col-md-5
-                div.form-group
-                  label(for="fechaNacimiento") Lugar
-                  input(type="text" name="lugar" parsley-trigger="change" placeholder="Zona donde se ubica la colonia" class="form-control" required="true")
+          div.row
+            div.form-group
+              label(for="userName") Nombre
+              input(type="text" name="nombre" parsley-trigger="change" placeholder="Nombre de la colonia" class="form-control" required="true")
 
         div.modal-footer
           button(type="button" class="btn btn-default " data-dismiss="modal") Cancelar

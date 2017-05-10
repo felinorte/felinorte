@@ -10,10 +10,6 @@ var ColonySchema = new Schema({
     type: String,
     required: true
   },
-  location: {
-    type: String,
-    required: true
-  },
   cats: [{
     type: Schema.Types.ObjectId,
     ref: 'Cat'

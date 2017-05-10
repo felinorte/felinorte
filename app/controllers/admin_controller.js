@@ -99,21 +99,40 @@ router.get('/admin/colonias', function(req, res) {
 });
 
 /* POST Crear colonias */
-router.post('/colonia/new', function(req, res) {
-  Colony.create({
-    lugar: req.body.lugar,
-    nombre: req.body.nombre
-  }, function(err) {
+router.post('/colony/new', function(req, res) {
+  // Busco las colonias con el mismo nombre
+  Colony.count({
+    name: req.body.nombre
+  }, function(err, c) {
+    // Si hay algún error
     if (err) {
       console.log(err);
-      
-      req.flash('error', 'Se produjo un error al intentar añadir la colonia. Por favor, intentelo más tarde.');
-      res.redirect('/admin');
+      req.flash('error', '¡No se ha podido crear la colonia! Por favor, intentelo más tarde.'); // Enviar un mensaje de error
+      return res.redirect('/admin/colonias');
     }
-    
-    req.flash('info', 'Colonia agregada correctamente.');
-    res.redirect('/admin/colonias');
+  
+    // Si ya hay una colonia con ese nombre
+    if (c > 0) {
+      req.flash('error', '¡La colonia que está intentando crear ya existe!'); // Enviar un mensaje de error
+      return res.redirect('/admin/colonias');
+    }
+
+    // Creo la nueva colonia
+    Colony.create({
+      name: req.body.nombre
+    }, function(err) {
+      // Si hay algún error
+      if (err) {
+        console.log(err); // Escribir en consola el error
+        req.flash('error', '¡No se ha podido crear la colonia! Por favor, intentelo más tarde.'); // Enviar un mensaje de error
+        return res.redirect('/admin/colonias/');
+      }
+
+      req.flash('info', 'Colonia agregada exitosamente...');
+      res.redirect('/admin/colonias/');
+    });
   });
+
 });
 
 /* GET Ver todos los usuarios regisignoutstrados */
@@ -130,4 +149,8 @@ function contarElementos(lista) {
   });
 
   return i;
+}
+// Generar ID de los gatos
+function genIDGato() {
+
 }
