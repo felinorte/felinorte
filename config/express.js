@@ -14,6 +14,8 @@ var passport = require('passport'), // Sistema de usuarios
 
 module.exports = function(app, config) {
 
+  require('../config/passport')(passport); // pass passport for configuration
+
   var env = process.env.NODE_ENV || 'development';
   app.locals.ENV = env;
   app.locals.ENV_DEVELOPMENT = env == 'development';
@@ -45,15 +47,13 @@ module.exports = function(app, config) {
   app.use(flash());
 
   // required for passport
-  require('../config/passport')(passport); // pass passport for configuration
   app.use(passport.initialize());
   app.use(passport.session());
 
-  require('./login')(app, passport);
   /* Controladores (Rutas) */
   var controllers = glob.sync(config.root + '/app/controllers/*.js');
   controllers.forEach(function(controller) {
-    require(controller)(app);
+    require(controller)(app, passport);
   });
 
   app.use(function(req, res, next) {
@@ -82,8 +82,6 @@ module.exports = function(app, config) {
       title: 'error'
     });
   });
-
-
 
   return app;
 };
