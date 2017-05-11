@@ -34,7 +34,6 @@ module.exports = function(passport) {
     });
 
     /* REGISTRO LOCAL */
-
     passport.use('local-signup', new LocalStrategy({
         usernameField : 'email',
         passwordField : 'password',
@@ -80,7 +79,6 @@ module.exports = function(passport) {
 
 
     /* LOGIN LOCAL */
-
     passport.use('local-login', new LocalStrategy({
         usernameField : 'email',
         passwordField : 'password',

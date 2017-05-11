@@ -22,9 +22,7 @@ var app = express();
 /* Configuraciones */
 module.exports = require('./config/express')(app, config);
 
-var port = process.env.PORT || config.port;
-
 /* Servidor */
-app.listen(port, function() {
-  console.log('Express server listening on port ' + port);
+app.listen(config.port, function() {
+  console.log('Express server listening on port ' + config.port);
 });
