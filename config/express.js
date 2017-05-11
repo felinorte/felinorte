@@ -44,6 +44,11 @@ module.exports = function(app, config) {
   })); // session secret
   app.use(flash());
 
+  // required for passport
+  require('../config/passport')(passport); // pass passport for configuration
+  app.use(passport.initialize());
+  app.use(passport.session());
+
   /* Controladores (Rutas) */
   var controllers = glob.sync(config.root + '/app/controllers/*.js');
   controllers.forEach(function(controller) {
@@ -77,10 +82,7 @@ module.exports = function(app, config) {
     });
   });
 
-  // required for passport
-  require('../config/passport')(passport); // pass passport for configuration
-  app.use(passport.initialize());
-  app.use(passport.session());
+
 
   return app;
 };
