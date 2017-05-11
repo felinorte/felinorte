@@ -6,7 +6,11 @@ module.exports = function(app, passport) {
     });
 
     /* POST Entrar a la cuenta */
-    // app.post('/login', do all our passport stuff here);
+    app.post('/login', passport.authenticate('local-login', {
+        successRedirect : '/admin',
+        failureRedirect : '/login',
+        failureFlash : true // allow flash messages
+    }));
 
     /* GET Registro */
     app.get('/signup', function(req, res) {
