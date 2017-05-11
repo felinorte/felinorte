@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "array": "0.4.3",
+<<<<<<< HEAD
     "bcrypt-nodejs": "latest",
     "body-parser": "^1.13.3",
     "compression": "^1.5.2",
@@ -22,16 +23,33 @@
     "express": "^4.13.3",
     "express-flash": "0.0.2",
     "express-session": "1.15.2",
+=======
+    "body-parser": "^1.13.3",
+    "compression": "^1.5.2",
+    "cookie-parser": "^1.3.3",
+    "express": "^4.13.3",
+>>>>>>> 873f93ddcbe855f04afb69f952bc29637181210f
     "glob": "^6.0.4",
     "method-override": "^2.3.0",
     "mongoose": "^4.1.2",
     "morgan": "^1.6.1",
+<<<<<<< HEAD
     "multer": "^1.3.0",
     "passport": "0.3.2",
     "passport-google-oauth": "latest",
     "passport-local": "^1.0.0",
     "pug": "2.0.0-rc.1",
     "serve-favicon": "^2.3.0"
+=======
+    "pug": "2.0.0-rc.1",
+    "serve-favicon": "^2.3.0",
+    "express-session": "1.15.2",
+    "passport": "0.3.2",
+    "connect-flash": "~0.1.1",
+    "bcrypt-nodejs": "latest",
+    "express-flash": "0.0.2",
+    "passport-google-oauth": "latest"
+>>>>>>> 873f93ddcbe855f04afb69f952bc29637181210f
   },
   "devDependencies": {
     "chai": "^3.5.0",

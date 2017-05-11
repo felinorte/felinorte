@@ -1,6 +1,9 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
+<<<<<<< HEAD
 var passport = require('passport');
+=======
+>>>>>>> 873f93ddcbe855f04afb69f952bc29637181210f
 
 /* Modelo del usuario */
 var UserSchema = new mongoose.Schema({
@@ -36,10 +39,15 @@ var UserSchema = new mongoose.Schema({
     name: String,
     email: String    
   } 
+<<<<<<< HEAD
   
 });
 
 
+=======
+});
+
+>>>>>>> 873f93ddcbe855f04afb69f952bc29637181210f
 /* Generar el hash de la contraseña */
 UserSchema.methods.generateHash = function(password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
