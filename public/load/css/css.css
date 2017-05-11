@@ -1,0 +1,214 @@
+body,html {
+  
+  height:100%;
+}
+
+div, ul , li {
+    display: block; position: absolute;
+    margin: auto; padding: 0;
+    top: 0; bottom: 0; left: 0; right:0;
+   
+}
+
+span, li{ font-family: 'Petit Formal Script', cursive; text-align: center; }
+
+.container{
+  background: #36465E;
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  border: 8px solid #fff;
+  overflow: hidden;
+}
+
+
+.cat {
+  background: #fff;
+  height: 60%;
+  top: auto;
+  bottom: 0;
+  width: 120px;
+  z-index: 0;
+}
+
+.cat:before, .cat:after {
+    width: 0;
+    height: 0;
+    top: -18px;
+    position: absolute;
+    content: "";
+}
+
+.cat:before{
+    border-left: 0px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 20px solid  #fff;
+    left: 0;
+}
+
+.cat:after{
+    border-right: 0px solid transparent;
+    border-left: 20px solid transparent;
+    border-bottom: 20px solid  #fff;
+    right: 0;
+}
+
+.cat .eyes{
+  position: absolute;
+  height: 15px; width: 15px;
+background: #36465E;
+  border-radius: 100%;
+  top: 30px;
+}
+
+.cat .eyes.left{ left: 18px; }
+.cat .eyes.right{  right: 18px; }
+
+.cat .mouth{
+  position: absolute;
+  height: 5px; width: 70%;
+ background: #36465E;
+  border-radius: 0 0 30% 30%;
+  top: 55px;
+  margin: auto;
+  left: 0; right: 0;
+}
+
+.container:hover .cat .mouth{
+  height: 15px; width: 15px;
+  border-radius: 0 0 50% 50%;
+  top: 50px;
+}
+
+.message{
+  background: #FFFFFF;
+  height: 40px;
+  width: 100px;
+  padding 5:px;
+  bottom: auto; top: 20px;
+  transition: opacity 0.5s;
+  -webkit-transition: opacity 0.5s;
+  opacity:0;
+}
+
+.container:hover .message{
+  opacity: 1;
+}
+
+.message p {
+	font-family: Helvetica, Verdana, sans-serif;
+  font-size: 0.85em;
+	text-align: center;
+}
+
+.message:after {
+    width: 0;
+    height: 0;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    border-top: 10px solid #FFFFFF;
+    bottom: -10px;
+    right: 30px;
+    position: absolute;
+    content: "";
+}
+
+
+.signature {
+	position: fixed;
+	margin: auto;
+	bottom: 0;
+	top: auto;
+	width: 100%;
+}
+
+.signature p{
+	text-align: center;
+	font-family: Helvetica, Arial, Sans-Serif;
+	font-size: 0.85em;
+}
+
+.signature .much-heart{
+	display: inline-block;
+	position: relative;
+	margin: 0 4px;
+	height: 10px;
+	width: 10px;
+	background: #AC1D3F;
+	border-radius: 4px;
+	-ms-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.signature .much-heart::before, 
+.signature .much-heart::after {
+	  display: block;
+  content: '';
+  position: absolute;
+  margin: auto;
+  height: 10px;
+  width: 10px;
+  border-radius: 5px;
+  background: #AC1D3F;
+  top: -4px;
+}
+
+.signature .much-heart::after {
+	bottom: 0;
+	top: auto;
+	left: -4px;
+}
+
+.signature a {
+	color: #333;
+	text-decoration: none;
+	font-weight: bold;
+}
+@keyframes preloader{
+  90%{
+width: 100%;
+opacity: 1;
+
+  }
+100%{
+width: 100%;
+opacity: 0;
+
+
+}
+
+
+
+
+}
+
+@keyframes mensaje{
+
+100%{
+opacity: 1;
+
+}
+
+}
+@keyframes boca{
+100%{
+height: 15px; width: 15px;
+  border-radius: 0 0 50% 50%;
+  top: 50px;
+
+}
+
+
+
+}
+
+@keyframes fadeout{
+
+ from{
+  opacity: 1;
+ }
+to{
+  opacity: 0;
+}
+}

@@ -1,0 +1,104 @@
+extends default
+
+block content  
+  div#page-wrapper
+  
+    include _topbar
+
+    // Page content start
+    div.page-contentbar
+        
+      // left navigation start
+      aside.sidebar-navigation
+        div.scrollbar-wrapper
+          div
+            button(type="button" class="button-menu-mobile btn-mobile-view visible-xs visible-sm")
+              i(class="mdi mdi-close")
+            // User Detail box
+            div.user-details
+              div.pull-left
+                img(src="https://scontent.xx.fbcdn.net/v/t31.0-8/s960x960/17493155_1427647903947280_1316763995182102963_o.jpg?oh=2ce49976e48e991fcc90683ee9dc6270&oe=59B5DD10" alt="" class="thumb-md img-circle")
+              div.user-info
+                a Wilson Tovar
+                p(class="text-muted m-0") Administrador
+            
+            // Left Menu Start
+            include _navigation
+      
+      // START PAGE CONTENT
+      div(id="page-right-content" style="min-height: 500px;")
+        - if (messages.info)
+          div(class="alert alert-icon alert-success alert-dismissible fade in" role="alert")
+            button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+              span(aria-hidden="true") x
+            i(class="mdi mdi-check-all")
+            strong Info...
+            p #{messages.info}
+        - if (messages.error)
+          div(class="alert alert-icon alert-danger alert-dismissible fade in" role="alert")
+            button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+              span(aria-hidden="true") x
+            i(class="mdi mdi-block-error")
+            strong ¡Error!
+            p #{messages.error}
+        div.container            
+          div.row
+                  
+            div.col-sm-12
+              div(class="card-box widget-inline")
+                div.row
+                
+                  div(class="col-lg-3 col-sm-6")
+                    div(class="widget-inline-box text-center")
+                      h3.m-t-10 #[i(class="text-primary material-icons" style="vertical-align: top;") pets] #[b(data-plugin="counterup")] #{ncats}
+                      p.text-muted Gatos
+                  div(class="col-lg-3 col-sm-6")
+                    div(class="widget-inline-box text-center")
+                      h3.m-t-10 #[i(class="text-primary material-icons" style="vertical-align: top;") home] #[b(data-plugin="counterup")] #{ncolonies}
+                      p.text-muted Colonias
+                  div(class="col-lg-3 col-sm-6")
+                    div(class="widget-inline-box text-center")
+                      h3.m-t-10 #[i(class="text-primary material-icons" style="vertical-align: top;") description] #[b(data-plugin="counterup")] 1
+                      p.text-muted Procesos de adopción
+                  div(class="col-lg-3 col-sm-6")
+                    div(class="widget-inline-box text-center")
+                      h3.m-t-10 #[i(class="text-primary material-icons" style="vertical-align: top;") account_circle] #[b(data-plugin="counterup")] #{nusers}
+                      p.text-muted Usuarios
+          
+          div.row
+            div.col-lg-12
+              div.card-box
+                h4.m-t-0 Procesos de adopción
+                div.table-responsive
+                  table(class="table table-hover mails m-0 table table-actions-bar")
+                    thead
+                      tr
+                        th(style="min-width: 90px;")
+                          div(class="checkbox checkbox-primary checkbox-single m-r-15")
+                            input(id="action-checkbox" type="checkbox")
+                            label(for="action-checkbox")
+                        th(style="max-width: 20px;") ID
+                        th Nombre
+                        th Correo electrónico
+                        th Fecha inicio
+                        th Estado
+                    tbody
+                      tr
+                        td
+                          div(class="checkbox checkbox-primary m-r-15")
+                            input(id="checkbox2" type="checkbox")
+                            label(for="checkbox2")
+                          img(src="https://scontent.xx.fbcdn.net/v/t1.0-9/14183915_10208997577791207_2178186576038298670_n.jpg?oh=f681c316af2eb0f22520aba7e558a97b&oe=598AEC7C" alt="contact-img" title="contact-img" class="img-circle thumb-sm")
+                        td
+                          a FEL234
+                        td Wilson Tovar
+                        td
+                          a(href="#" class="text-muted") twilson@uninorte.edu.co
+                        td 13/01/2015
+                        td Terminado
+                       
+                       
+        div.footer
+          div
+            <strong>felinorte</strong> - Copyright &copy; 2017
+                        
