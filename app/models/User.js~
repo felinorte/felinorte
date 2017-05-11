@@ -5,11 +5,11 @@ var passport = require('passport');
 /* Modelo del usuario */
 var UserSchema = new mongoose.Schema({
   local:{
-    email: {
+    mail: {
       type: String,
       trim: true
     },
-    password: String, // Contraseña, si se registró localmente en la página
+    pass: String, // Contraseña, si se registró localmente en la página
     name: {
       nombre: String,
       apellidos: String
@@ -17,25 +17,26 @@ var UserSchema = new mongoose.Schema({
     empleo: String,
     age: {
       type: Number,
-      trim: true
+      trim: true,
+      min: 18,
     },
     fechaNacimiento: Date
-  },
-
+  },  
+  
   google: {
     id: String,
     token: String,
     name: String,
-    email: String
+    email: String   
   },
-
+  
   facebook: {
     id: String,
     token: String,
     name: String,
-    email: String
-  }
-
+    email: String    
+  } 
+  
 });
 
 /* Generar el hash de la contraseña */

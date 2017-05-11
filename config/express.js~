@@ -49,11 +49,10 @@ module.exports = function(app, config) {
   app.use(passport.initialize());
   app.use(passport.session());
 
-  require('./login')(app, passport);
   /* Controladores (Rutas) */
   var controllers = glob.sync(config.root + '/app/controllers/*.js');
   controllers.forEach(function(controller) {
-    require(controller)(app);
+    require(controller)(app, passport);
   });
 
   app.use(function(req, res, next) {
