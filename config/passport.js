@@ -21,18 +21,6 @@ module.exports = function(passport) {
         });
     });
 
-    // "Serializar" admin
-    passport.serializeAdmin(function(admin, done){
-        done(null, admin.id);
-    });
-
-    // "Des-serializar" el admin
-    passport.deserializeAdmin(function(id, done){
-        Admin.findById(id, function(err, admin){
-            done(err, admin);
-        });
-    });
-
     /* REGISTRO LOCAL */
     passport.use('local-signup', new LocalStrategy({
         usernameField : 'email',
