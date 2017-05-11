@@ -17,20 +17,12 @@ var Admin = mongoose.model('Admin');
 
 module.exports = function(passport) {
 
-<<<<<<< HEAD
   // Requerido para hacer persistenctes las sesiones
-=======
-  //Requerido para hacer persistenctes las sesiones
->>>>>>> 873f93ddcbe855f04afb69f952bc29637181210f
   passport.serializeUser(function(user, done) {
       done(null, user.id);
     }),
 
-<<<<<<< HEAD
-    passport.deserializeUser(function(id, done) {
-=======
   passport.deserializeUser(function(id, done) {
->>>>>>> 873f93ddcbe855f04afb69f952bc29637181210f
       User.findById(id, function(err, user) {
         done(err, user.id)
       });
@@ -51,11 +43,7 @@ module.exports = function(passport) {
             if (err) {
               return done(err);
             }
-<<<<<<< HEAD
 
-=======
-            
->>>>>>> 873f93ddcbe855f04afb69f952bc29637181210f
             if (user) {
               return done(null, false, req.flash('signupMessage', 'Ese email ya esá registrado.'));
             } else {
@@ -83,43 +71,23 @@ module.exports = function(passport) {
         User.findOne({
           'local.email': email
         }, function(err, user) {
-<<<<<<< HEAD
-          // Si hay error retorna el error
-          if (err)
-            return done(err);
 
-          // Si no encuentra el usuario
-=======
           //Si hay error retorna el error
           if (err)
             return done(err);
 
           //Si no encuentra el usuario
->>>>>>> 873f93ddcbe855f04afb69f952bc29637181210f
           if (!user) {
             return done(null, false, req.flash('loginMessage', 'Usuario no registrado.'));
           }
 
-<<<<<<< HEAD
           // Si la contraseña está errada
-=======
-          //Si la contraseña está errada
->>>>>>> 873f93ddcbe855f04afb69f952bc29637181210f
           if (!user.validPassword(password)) {
             return done(null, false, req.flash('loginMessage', 'Email o contraseña invalidos.'));
           }
 
-<<<<<<< HEAD
-          // Si todo está bien
-          return done(null, user);
-        });
-      }));
-  
-  return module.exports.passport;
-=======
           //Si todo está bien
           return done(null, user);
         });
       }));
->>>>>>> 873f93ddcbe855f04afb69f952bc29637181210f
 };

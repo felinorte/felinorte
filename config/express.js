@@ -38,17 +38,11 @@ module.exports = function(app, config) {
   app.use(methodOverride());
 
   app.use(session({
-<<<<<<< HEAD
     secret: '7eb60f0a6acc337a7e3423b05adcba3528cd7462',
     resave: false,
     saveUninitialized: true
   })); // session secret
   app.use(flash());
-=======
-    secret: '7eb60f0a6acc337a7e3423b05adcba3528cd7462'
-  })); // session secret
-  app.use(flash(app));
->>>>>>> 873f93ddcbe855f04afb69f952bc29637181210f
 
   /* Controladores (Rutas) */
   var controllers = glob.sync(config.root + '/app/controllers/*.js');
@@ -86,7 +80,7 @@ module.exports = function(app, config) {
   // required for passport
   require('../config/passport')(passport); // pass passport for configuration
   app.use(passport.initialize());
-  app.use(passport.session());  
- 
+  app.use(passport.session());
+
   return app;
 };
