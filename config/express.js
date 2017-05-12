@@ -1,20 +1,20 @@
-var express = require('express'),
-  glob = require('glob');
+var express = require('express');
+var glob = require('glob');
 
-var favicon = require('serve-favicon'),
-  logger = require('morgan'),
-  cookieParser = require('cookie-parser'),
-  bodyParser = require('body-parser'),
-  compress = require('compression'),
-  methodOverride = require('method-override');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var compress = require('compression');
+var methodOverride = require('method-override');
 
-var passport = require('passport'), // Sistema de usuarios
-  session = require('express-session'),
-  flash = require('express-flash'); // Mensajes de información / error
+var passport = require('passport'); // Sistema de usuarios
+var session = require('express-session');
+var flash = require('express-flash'); // Mensajes de información / error
 
 module.exports = function(app, config) {
 
-  require('../config/passport')(passport); // pass passport for configuration
+  
 
   var env = process.env.NODE_ENV || 'development';
   app.locals.ENV = env;
@@ -27,6 +27,8 @@ module.exports = function(app, config) {
   app.set('views', config.root + '/app/views');
   app.set('view engine', 'pug');
 
+  require('../config/passport')(passport); // pass passport for configuration
+  
   // app.use(favicon(config.root + '/public/img/favicon.ico'));
   app.use(logger('dev'));
   app.use(bodyParser.json());
@@ -38,17 +40,16 @@ module.exports = function(app, config) {
   app.use(compress());
   // app.use(express.static(config.root + '/public'));
   app.use(methodOverride());
-
+  
   app.use(session({
     secret: '7eb60f0a6acc337a7e3423b05adcba3528cd7462',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
   })); // session secret
-  app.use(flash());
-
   // required for passport
   app.use(passport.initialize());
   app.use(passport.session());
+  app.use(flash());
 
   /* Controladores (Rutas) */
   var controllers = glob.sync(config.root + '/app/controllers/*.js');
@@ -57,8 +58,7 @@ module.exports = function(app, config) {
   });
 
   app.use(function(req, res, next) {
-    res.redirect('/fin');
-    var err = new Error('Not Found');
+    var err = new Error('Not Found' + req.user);
     err.status = 404;
     next(err);
   });

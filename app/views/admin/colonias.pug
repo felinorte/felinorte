@@ -47,25 +47,27 @@ block content
           div.col-sm-12
             h4(class="m-t-0 header-title") Colonias
             
-            div(class="table-responsive m-b-20")
-              
-              table(id="datatable" class="table table-striped table-bordered")
-                thead
-                  tr
-                    // th ID
-                    th Nombre
-                    th # de gatos
-                // end thead
-                
-                tbody
-                each colony in colonies
-                  tr
-                    // td #[a(href="") ]
-                    td #{colony.name}
-                    td 5
-                // end tbody
-              // end table
-            // end class="table-responsive m-b-20"
+            - if (colonies)
+              - console.log(colonies)
+              div(class="table-responsive m-b-20")
+
+                table(id="datatable" class="table table-striped table-bordered")
+                  thead
+                    tr
+                      // th ID
+                      th Nombre
+                      th # de gatos
+                  // end thead
+
+                  tbody
+                  each colony in colonies
+                    tr
+                      // td #[a(href="") ]
+                      td #{colony.name}
+                      td 5
+                  // end tbody
+                // end table
+              // end class="table-responsive m-b-20"
           // end col-sm-12
         // end row
         

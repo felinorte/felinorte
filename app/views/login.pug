@@ -1,0 +1,11 @@
+extends templates/default
+
+block content
+  - if (message)
+    h1 message.error
+  form(action="/login" method="POST")
+    label Correo
+    input(name="email")
+    label Contraseña
+    input(name="password")
+    button(type="submit") Entrar
