@@ -169,8 +169,18 @@ router.post('/colony/new', function(req, res) {
 });
 
 /* GET Ver todos los usuarios regisignoutstrados */
+// TODO Terminar
 router.get('/admin/usuarios', function(req, res) {
-
+  User.find({}, function(err, users){
+    if (err) {
+      console.log(err);
+      
+      req.flash('error', 'Ha ocurrido un problema, por favor, intentelo de nuevo.');
+      res.redirect('/admin');
+    }
+    
+    res.end()
+  });
 });
 
 /* Funciones */
