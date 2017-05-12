@@ -41,11 +41,11 @@ router.get('/signup', function(req, res) {
 });
  
 /* GET Perfil de usuario de la sesión */
-router.get('/profile', function(req, res) {
+router.get('/profile',isLoggedIn, function(req, res) {
   res.render('everyBody/profile', {
     message: req.flash('info', 'WhatEver')
   }, {
-    user: req.User
+    user: req.user
   }); // Obtiene el usuario de la seción
 });
  
@@ -61,10 +61,11 @@ router.get('/logout', function(req, res) {
 });
  
 /* Ver si hay un usuario logueado */
-function isLoggedIn(res, req, next) {
-  if (req.isAuthenticated())
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated())    
     return next();
- 
+   
   // Si no lo está, redirigir a la página inicio de sesión
+  console.log("No autenticado");
   res.redirect('/login');
 }
