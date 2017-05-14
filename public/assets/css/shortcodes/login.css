@@ -344,3 +344,22 @@ Login Form
     opacity: 0;
   }
 }
+
+.card-wrapper.alter {
+  position: absolute;
+  top: 40px;
+  right: -70px;
+  z-index: 10;
+  width: 140px;
+  height: 140px;
+  background: none;
+  border-radius: 100%;
+  box-shadow: none;
+  padding: 0;
+  -webkit-transition: .3s ease;
+  transition: .3s ease;
+  /* Toggle */
+  /* Title */
+  /* Input */
+  /* Button */
+}
