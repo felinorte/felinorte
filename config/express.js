@@ -12,9 +12,7 @@ var passport = require('passport'); // Sistema de usuarios
 var session = require('express-session');
 var flash = require('express-flash'); // Mensajes de información / error
 
-module.exports = function(app, config) {
-
-  
+module.exports = function(app, config) {  
 
   var env = process.env.NODE_ENV || 'development';
   app.locals.ENV = env;

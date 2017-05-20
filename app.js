@@ -2,7 +2,7 @@ var express = require('express');
 var config = require('./config/config');
 var glob = require('glob');
 var mongoose = require('mongoose');
-
+var formidable = require('express-form-data');
 /* Conexión a la base de datos */
 mongoose.connect(config.db);
 var db = mongoose.connection;
@@ -21,7 +21,7 @@ var app = express();
 
 /* Configuraciones */
 module.exports = require('./config/express')(app, config);
-
+app.use(formidable.parse({keepExtensions: true}));
 var port = process.env.PORT || config.port;
 
 /* Servidor */
