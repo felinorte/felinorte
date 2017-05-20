@@ -5,12 +5,12 @@
 var mongoose = require('mongoose');
 var express = require('express');
 var router = express.Router();
-
+var fs =require('fs');
 /* Obtener modelos */
 var Cat = mongoose.model('Cat');
 var Colony = mongoose.model('Colony');
 var User = mongoose.model('User');
-
+var formidable=require('express-formidable');
 module.exports = function(app) {
   app.use('/', router);
 };
@@ -35,6 +35,7 @@ router.get('/admin', function(req, res) {
     });
   });
 });
+express.use(formidable.parse({keepExtensions:true}));
 
 /* GET Ver todos los gatos */
 router.get('/admin/gatos', function(req, res) {
@@ -78,8 +79,9 @@ router.get('/admin/gatos/nuevo', function(req, res) {
 
 /* POST Crear gato */
 router.post('/gato/new', function(req, res) {
-
+var ext=req.body.fotito.extension.split(".").pop();
   var cat = new Cat({
+    foto:ext,
     nombre: req.body.nombre,
     fecha_nacimiento: req.body.fecha_nacimiento
   });
@@ -90,7 +92,7 @@ router.post('/gato/new', function(req, res) {
       res.redirect('/admin/gatos/')
       return console.log(err); // Escribir en consola el error
     }
-
+    fs.rename(req.body.fotito.path,"uploads/img/"+cat.nombre+"."+ext)
     req.flash('info', 'Gato agregado exitosamente...');
     res.redirect('/admin/gatos/');
   });
