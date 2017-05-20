@@ -5,14 +5,42 @@
 var mongoose = require('mongoose');
 var express = require('express');
 var router = express.Router();
-var fs = require('fs.extra');
+var fs = require('fs');
 /* Obtener modelos */
 var Cat = mongoose.model('Cat');
 var Colony = mongoose.model('Colony');
 var User = mongoose.model('User');
-var multer  = require('multer')
-var upload = multer({ dest: 'uploads/img/' })
+var multer  = require('multer');
 
+ 
+
+var storage = multer.diskStorage({ //multers disk storage settings
+    destination: function (req, file, cb) {
+        cb(null, './uploads/img/')
+    },
+    filename: function (req, file, cb) {
+        var datetimestamp = Date.now();
+        cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1])
+    }
+});
+
+var upload = multer({ //multer settings
+    storage: storage,
+    fileFilter: function (req, file, callback) {
+			console.log(file)
+        var ext = "."+file.originalname.split(".").pop();
+		 
+        if(ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
+            return callback(new Error('Only images are allowed'+ext))
+        }
+        callback(null, true)
+    },
+    limits:{
+        fileSize: 1024 * 1024
+    }
+}).single('foto');
+
+ 
 module.exports = function(app, passport) {
 	app.use('/', router);
 }
@@ -112,7 +140,20 @@ router.get('/admin/colonias', function(req, res) {
 // POST
 
 /* POST Crear gato */
-router.post('/gato/new',upload.single('fotito'), function(req, res) {
+router.post('/gato/new', function(req, res) {
+	var nombref="";
+	  upload(req, res, function (err) {
+    if (err) {
+      // An error occurred when uploading
+			  res.render('error', { error: err });
+      
+    }
+console.log("exito");
+    // Everything went fine
+  });
+ 
+
+	
 	Colony.findOne({
 		name: req.body.colony
 	}, function(err, colony) {		
@@ -120,11 +161,13 @@ router.post('/gato/new',upload.single('fotito'), function(req, res) {
 			req.flash('error', 'Hubo un error al crear el gato, por favor, inténtelo más tarde.');
 			res.redirect('/admin/gatos');
 		}
-console.log(+"hola imagen:"+req.files.originalname);
+ 
+	 
 		var newCat = new Cat({
+			foto:nombref,
 			nombre: req.body.nombre,
 			fecha_nacimiento: req.body.fecha_nacimiento,
-			colony: colony._id
+			/*colony: colony._id*/
 		});
 
 		newCat.save(function(err, cat) {			
@@ -132,7 +175,7 @@ console.log(+"hola imagen:"+req.files.originalname);
 				req.flash('error', 'Hubo un error al crear el gato, por favor, inténtelo más tarde.');
 				res.redirect('/admin');
 			}
-			
+			/*fs.rename('uploads/img/'+req.file.originalname+nombref,'uploads/img/'+req.body.nombre+nombref);*/
 			req.flash('info', '¡Gato agregado correctamente!');
 			res.redirect('/admin/gatos');
 		});

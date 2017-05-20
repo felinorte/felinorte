@@ -62,17 +62,15 @@ block content
 
                 div.clearfix
                   div.member-card
-                    span(class="user-badge bg-warning") En proceso
                     div(class="thumb-xl member-thumb m-b-10 center-block")
                       img(src="http://r.ddmcdn.com/s_f/o_1/cx_462/cy_245/cw_1349/ch_1349/w_720/APL/uploads/2015/06/caturday-shutterstock_149320799.jpg" class="img-circle img-thumbnail" alt="profile-image")
-                      i(class="mdi mdi-information-outline member-star text-muted" title="No adoptado")
 
                     div
-                      h4.m-b-5 #{cat.nombre}
-                      p(class="text-muted") #{ cat.nombre } #[span | ] #{cat.sexo}
+                      h4.m-b-5 #{}
+                      p(class="text-muted") #{} #[span | ] #{}
               
       div.row
         div(class="col-sm-12 text-center")
-          button(class="btn btn-primary btn-rounded btn-lg m-b-30" data-toggle="modal" data-target="#add-contact") Añadir gato
+          // button(class="btn btn-primary btn-rounded btn-lg m-b-30" data-toggle="modal" data-target="#add-contact") Añadir gato
                     
   include _modalNuevoGato 
