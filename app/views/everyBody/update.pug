@@ -1,0 +1,92 @@
+extends ../admin/default
+
+block content
+  
+  div#page-wrapper
+    
+    include _topBar   
+    // Page content start
+    div.page-contentbar
+        
+      // left navigation start
+      aside.sidebar-navigation
+        div.scrollbar-wrapper
+          div
+            button(type="button" class="button-menu-mobile btn-mobile-view visible-xs visible-sm")
+              i(class="mdi mdi-close")
+            // User Detail box
+            div.user-details
+              div.pull-left
+                img(src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male-128.png" alt="" class="thumb-md img-circle")
+              - if(user.google)
+                div.user-info              
+                    a #{user.google.name}
+                    p(class="text-muted m-0") #{user.local.userType}
+              - else
+                div.user-info              
+                    a #{user.local.name}
+                    p(class="text-muted m-0") #{user.local.userType}
+            
+            // Left Menu Start
+            ul(class="metisMenu nav" id="side-menu")
+              li
+                a(href="/profile") #[i(class="ti-home")] Inicio
+              li
+                a(href="/profile/update") #[i(class="ti-id-badge")] Actualizar datos
+              li
+                a(href="/home") #[i(class="ti-layout-list-thumb-alt")] Procesos de adopción  
+    
+    // START PAGE CONTENT
+    div(id="page-right-content" style="min-height: 500px;")
+      - if (messages.info)
+            div(class="alert alert-icon alert-success alert-dismissible fade in" role="alert")
+              button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+                span(aria-hidden="true") x
+              i(class="mdi mdi-check-all")
+              strong ¡Éxito!
+              p #{messages.info}
+      - if (messages.error)
+            div(class="alert alert-icon alert-danger alert-dismissible fade in" role="alert")
+              button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+                span(aria-hidden="true") x
+              i(class="mdi mdi-block-error")
+              strong ¡Error!
+              p #{messages.error}
+    
+      div.container
+        div.row
+          div.col-sm-12
+            h4(class="m-t-0 header-title") Datos
+        <form action="/profile/update" method="post" style="padding: 0% 25%;">
+            <div class="form-group" style="margin: auto; padding: 0px 0px 0px 0px;">          
+                <label for="inputName1" style="text-align: left;">Nombres:</label>          
+                <input type="text" class="form-control" id="inputName1" placeholder="Jhon" name="firstname" value="#{user.local.name.nombre}" required>
+            </div>
+            <div class="form-group" style="margin: auto; padding: 20px 0px 0px 0px;">
+                <label for="inputName2" style="text-align: left;">Apellidos:</label>
+                <input type="text" class="form-control" id="inputName2" placeholder="Doe" name="lastname" value="#{user.local.name.apellidos}" required>
+            </div>        
+            <div class="form-group" style="margin: 0px; padding: 20px 0px 0px 0px;">
+                <label for="inputEmail3" class="col-sm-2 control-label" style="text-align: left;">Email:</label>
+                <input type="email" class="form-control" id="inputEmail3" placeholder="john@doe.com" name="email" value="#{user.local.email}" required>
+            </div>
+            <div class="form-group" style="margin: 0px; padding: 20px 0px 0px 0px;">
+                <label for="inputPassword3" class="col-sm-2 control-label" style="text-align: left;">Contraseña:</label>
+                <input type="password" class="form-control" id="inputPassword3" placeholder="*******" name="password" required>
+            </div>
+            <div class="form-group" style="margin: auto; padding: 20px 0px 0px 0px;">
+                <label for="inputDate1" class="col-sm-2 control-label" style="text-align: left;">Cumpleaños:</label>
+                <input type="date" class="form-control" id="inputDate1" placeholder="dd/mm/yyyy" name="birthdate" value="#{user.local.fechaNacimiento}" required>
+            </div>
+            <div lass="form-group" style="margin: auto; padding: 20px 0px 0px 0px;">
+                <label for="inputText" class="col-sm-2 control-label" style="text-align: left;">Ocupación:</label>
+                <input type="text" class="form-control" id="inputText" placeholder="Estudiante" name="ocupacion" value="#{user.local.ocupacion}" required>
+            </div>
+            <div class="form-inline" style="padding: 20px 0px 10px 0px; text-align: center;">
+                <button type="submit" class="btn btn-primary">Guardar</button>              
+            </div>
+        </form>
+      div.footer
+        div
+            <strong>felinorte</strong> - Copyright &copy; 2017        
+        

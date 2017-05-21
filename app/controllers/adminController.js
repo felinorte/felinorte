@@ -59,7 +59,7 @@ module.exports = function(app, passport) {
 // GET
 
 /* GET Ver todos los usuarios registrados */
-router.get('/admin/usuarios', function(req, res) {
+router.get('/admin/usuarios',isLoggedIn,isAdmin, function(req, res) {
     User.find({}, function(err, users) {
         if (err) {
             req.flash('error', 'Ha ocurrido un problema, por favor, intentelo de nuevo.');
@@ -71,14 +71,14 @@ router.get('/admin/usuarios', function(req, res) {
 });
 
 /* GET Login del panel de administración */
-router.get('/admin/login', function(req, res) {
+router.get('/admin/login',isLoggedIn,isAdmin, function(req, res) {
     res.render('admin/login', {
         title: 'Entrar - Panel de administración'
     });
 });
 
 /* GET Dashboard de administración */
-router.get('/admin', function(req, res) {
+router.get('/admin',isLoggedIn,isAdmin, function(req, res) {
     Cat.count({}, function(err, cats) {
         if (err) res.redirect('/');
 
@@ -100,7 +100,7 @@ router.get('/admin', function(req, res) {
 });
 
 /* GET Ver todos los gatos */
-router.get('/admin/gatos', function(req, res) {
+router.get('/admin/gatos',isLoggedIn,isAdmin, function(req, res) {
     Cat.find({}, function(err, cats) {
         if (err) {
             req.flash('error', 'Hubo un error, por favor, intente más tarde.');
@@ -129,7 +129,7 @@ router.get('/admin/gatos', function(req, res) {
 });
 
 /* GET Crear nuevo gato */
-router.get('/admin/gatos/nuevo', function(req, res) {
+router.get('/admin/gatos/nuevo',isLoggedIn,isAdmin, function(req, res) {
     res.render('admin/gatoNew', {
         title: 'Agregar nuevo gato - felinorte'
     });
@@ -156,7 +156,7 @@ router.get('/admin/colonias', function(req, res) {
 // POST
 
 /* POST Crear gato */
-router.post('/gato/new', function(req, res) {
+router.post('/gato/new',isLoggedIn,isAdmin, function(req, res) {
     var nombref = "";
     //funcion que activa el upload 
     upload(req, res, function(err) {
@@ -203,7 +203,7 @@ router.post('/gato/new', function(req, res) {
 });
 
 /* POST Crear colonias */
-router.post('/colony/new', function(req, res) {
+router.post('/colony/new',isLoggedIn,isAdmin, function(req, res) {
     // Busco las colonias con el mismo nombre
     Colony.count({
         name: req.body.nombre
@@ -250,4 +250,16 @@ function contarElementos(lista) {
     });
 
     return i;
+}
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated())
+    return next();
+  res.redirect('/');
+}
+
+function isAdmin(req, res , next){
+    if(req.user.local.userType == "admin")
+        return next();
+    res.redirect('/home');
 }

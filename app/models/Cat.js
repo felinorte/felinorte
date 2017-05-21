@@ -23,6 +23,7 @@ var CatSchema = new Schema({
   peso: Number,
   tipo_personalidad: String,
   sociable: Boolean,
+  adoptable: Boolean,
   observaciones: String
 });
 

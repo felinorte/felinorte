@@ -1,40 +1,90 @@
-<!-- views/profile.ejs -->
-<!Doctype html>
-<html>
-  <head>
-    <title>Perfil</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-  </head>
-  <body style="padding-top:80px; word-wrap:break-word;">
-    <div class="container">
+extends ../admin/default
 
-      <div class="page-header text-center">
-        <h1><span class="fa fa-anchor"></span> Profile Page</h1>
-        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
-      </div>
+block content
+  
+  div#page-wrapper
+    
+    include _topBar
+    
+    // Page content start
+    div.page-contentbar
+        
+      // left navigation start
+      aside.sidebar-navigation
+        div.scrollbar-wrapper
+          div
+            button(type="button" class="button-menu-mobile btn-mobile-view visible-xs visible-sm")
+              i(class="mdi mdi-close")
+            // User Detail box
+            div.user-details
+              div.pull-left
+                img(src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male-128.png" alt="" class="thumb-md img-circle")
+              - if(user.google)
+                div.user-info              
+                    a #{user.google.name}
+                    p(class="text-muted m-0") #{user.local.userType}
+              - else
+                div.user-info              
+                    a #{user.local.name} 
+                    p(class="text-muted m-0") #{user.local.userType}
+            
+            // Left Menu Start
+            ul(class="metisMenu nav" id="side-menu")
+              li
+                a(href="/profile") #[i(class="ti-home")] Inicio
+              li
+                a(href="/profile/update") #[i(class="ti-id-badge")] Actualizar datos
+              li
+                a(href="/home") #[i(class="ti-layout-list-thumb-alt")] Procesos de adopción  
+    
+    // START PAGE CONTENT
+    div#page-right-content
+      - if (messages.info)
+        div(class="alert alert-icon alert-success alert-dismissible fade in" role="alert")
+          button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+            span(aria-hidden="true") x
+          i(class="mdi mdi-check-all")
+          strong ¡Éxito!
+          p #{messages.info}
+      - if (messages.error)
+        div(class="alert alert-icon alert-danger alert-dismissible fade in" role="alert")
+          button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+            span(aria-hidden="true") x
+          i(class="mdi mdi-block-error")
+          strong ¡Error!
+          p #{messages.error}
+    
+      div.container
+        div.row
+          div.col-sm-12
+            h4(class="m-t-0 header-title") Gatos de Felinorte
+        
+        - if(!messages.error)
+            div.row
+              each cat in cats
+                div.col-md-4
+                  div(class="text-center card-box")
+                    div(class="dropdown pull-right")
+                      a(href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false")
+                        h3(class="m-0 text-muted") #[i(class="mdi mdi-dots-horizontal")]
 
-      <div class="row">
+                      ul(class="dropdown-menu" role="menu")
+                        li #[a Ver]
+                        li #[a Adoptar]
 
-        <!-- LOCAL INFORMATION -->
-        <div class="col-sm-6">
-          <div class="well">
-            <h3><span class="fa fa-user"></span> Local</h3>
-
-            <p>
-              <strong>id</strong>: #{ user._id }
-              <a id="id"></a>
-              <strong>email</strong>: #{ user.local.email }
-              <a id="email"></a>
-              <strong>password</strong>: #{ user.local.password }
-              <a id="password"></a>
-            </p>
-
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </body>
-</html>
+                    div.clearfix
+                      div.member-card
+                        - if(!cat.adoptable)
+                          span(class="user-badge bg-warning") En proceso
+                        div(class="thumb-xl member-thumb m-b-10 center-block")
+                          img(src="http://r.ddmcdn.com/s_f/o_1/cx_462/cy_245/cw_1349/ch_1349/w_720/APL/uploads/2015/06/caturday-shutterstock_149320799.jpg" class="img-circle img-thumbnail" alt="profile-image")
+                          - if(cat.adoptable == 'true')
+                            i(class="mdi mdi-information-outline member-star text-muted" title="No adoptado")
+                          - if(cat.adoptable == 'false')
+                            i(class="mdi mdi-information member-star text-muted" title="Adoptado")
+                        div
+                          h4.m-b-5 #{cat.nombre}
+                          p(class="text-muted") #{ cat.nombre } #[span | ] #{cat.sexo}  
+        div.footer
+            div
+                <strong>felinorte</strong> - Copyright &copy; 2017

@@ -4,9 +4,12 @@
 /* Estrategias */
 var mongoose = require('mongoose');
 var LocalStrategy = require('passport-local').Strategy;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 /* Modelos */
 var User = mongoose.model('User');
+
+var configAuth = require('./auth');
 
 module.exports = function(passport) {
 
@@ -83,5 +86,38 @@ module.exports = function(passport) {
         return done(null, user);
       });
 
+    }));
+    
+    passport.use(new GoogleStrategy({
+        clientID: configAuth.googleAuth.clientID,
+        clientSecret: configAuth.googleAuth.clientSecret,
+        callbackURL: configAuth.googleAuth.callbackURL,
+    }, 
+    function(token, refreshToken, profile, done){
+        //El proceso no iniciará hasta que se obtengan datos de regreso de google
+        process.nextTick(function(){
+            User.findOne({'google.id': profile.id}, function(err, user){
+                if(err)
+                    return done(err);
+                
+                if(user){
+                    //inicia Sesión si un usuario es encontrado;
+                    return done(null, user);
+                }else{
+                    //Crea el usuario si no lo encontró
+                    var newUser = new User();
+                    newUser.google.id = profile.id;
+                    newUser.google.token = token;
+                    newUser.google.name = profile.displayName;
+                    newUser.google.email = profile.emails[0].value; //Extrae el primer email
+                    newUser.local.userType = "user";
+                    newUser.save(function(err){
+                        if(err)
+                            throw err;
+                        return done(null, newUser);
+                    });
+                }
+            });
+        });
     }));
 };

@@ -19,7 +19,9 @@ var UserSchema = new mongoose.Schema({
       type: Number,
       trim: true
     },
-    fechaNacimiento: Date
+    fechaNacimiento: Date,
+    ocupacion: String,
+    userType: String
   },
 
   google: {
@@ -28,14 +30,6 @@ var UserSchema = new mongoose.Schema({
     name: String,
     email: String
   },
-
-  facebook: {
-    id: String,
-    token: String,
-    name: String,
-    email: String
-  }
-
 });
 
 /* Generar el hash de la contraseña */
