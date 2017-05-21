@@ -10,6 +10,7 @@ var express = require('express'),
 
 /* Modelo de la base de datos */
 var Cat = mongoose.model('Cat');
+var ruta="./uploads/img/";
 
 module.exports = function(app) {
   /* GET Ver todos los gatos */
@@ -19,7 +20,8 @@ module.exports = function(app) {
 
       res.render('cats_index', {
         title: 'Ver todos los gatos - felinorte',
-        cats: cats
+        cats: cats,
+        rutas:ruta
       });
     });
   });

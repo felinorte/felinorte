@@ -1,0 +1,34 @@
+// Top Bar Start
+div.topbar
+      
+    // LOGO
+    div.topbar-left
+      div
+        a(href="#" class="logo")
+          img(src="http://www.uninorte.edu.co/Uninorte/images/topbar_un/headerlogo_un.png" alt="logo" class="logo-lg")
+          img(src="http://www.ssintegra.com/images/uninorte.png" alt="logo" class="logo-sm hidden")
+      
+    // Top navbar
+    div(class="navbar navbar-default" role="navigation")
+      div.container
+        div
+            
+          // Mobile menu button
+          div.pull-left
+            button(type="button" class="button-menu-mobile visible-xs visible-sm")
+              i(class="fa fa-bars")
+            span.clearfix
+           
+          // Top nav left menu
+          ul(class="nav navbar-nav hidden-sm hidden-xs top-navbar-items")
+            li
+              a(class="btn") Acerca de
+            li
+              a(class="btn") Ayuda
+            
+          // Top nav Right menu
+          ul(class="nav navbar-nav navbar-right top-navbar-items-right pull-right")
+            li.hidden-xs
+              form(role="search" class="navbar-left app-search pull-left")
+                a(href='/logout' class="btn btn-danger") #[i(class="ti-power-off")] Salir
+                
