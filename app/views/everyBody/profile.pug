@@ -40,19 +40,19 @@ block content
     // START PAGE CONTENT
     div#page-right-content
       - if (messages.info)
-        div(class="alert alert-icon alert-success alert-dismissible fade in" role="alert")
-          button(type="button" class="close" data-dismiss="alert" aria-label="Close")
-            span(aria-hidden="true") x
-          i(class="mdi mdi-check-all")
-          strong ¡Éxito!
-          p #{messages.info}
+          div(class="alert alert-icon alert-success alert-dismissible fade in" role="alert")
+            button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+              span(aria-hidden="true") x
+            i(class="mdi mdi-check-all")
+            strong ¡Éxito!
+            p #{messages.info}
       - if (messages.error)
-        div(class="alert alert-icon alert-danger alert-dismissible fade in" role="alert")
-          button(type="button" class="close" data-dismiss="alert" aria-label="Close")
-            span(aria-hidden="true") x
-          i(class="mdi mdi-block-error")
-          strong ¡Error!
-          p #{messages.error}
+          div(class="alert alert-icon alert-danger alert-dismissible fade in" role="alert")
+            button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+              span(aria-hidden="true") x
+            i(class="mdi mdi-block-error")
+            strong ¡Error!
+            p #{messages.error}
     
       div.container
         div.row
@@ -74,14 +74,14 @@ block content
 
                     div.clearfix
                       div.member-card
-                        - if(!cat.adoptable)
-                          span(class="user-badge bg-warning") En proceso
+                        - if(cat.adoptable)
+                            span(class="user-badge bg-warning") Adoptable
                         div(class="thumb-xl member-thumb m-b-10 center-block")
                           img(src="http://r.ddmcdn.com/s_f/o_1/cx_462/cy_245/cw_1349/ch_1349/w_720/APL/uploads/2015/06/caturday-shutterstock_149320799.jpg" class="img-circle img-thumbnail" alt="profile-image")
-                          - if(cat.adoptable == 'true')
-                            i(class="mdi mdi-information-outline member-star text-muted" title="No adoptado")
-                          - if(cat.adoptable == 'false')
-                            i(class="mdi mdi-information member-star text-muted" title="Adoptado")
+                          - if(cat.adoptable)
+                              i(class="mdi mdi-information-outline member-star text-muted" title="Disponible")
+                          - else
+                              i(class="mdi mdi-information member-star text-muted" title="No disponible")
                         div
                           h4.m-b-5 #{cat.nombre}
                           p(class="text-muted") #{ cat.nombre } #[span | ] #{cat.sexo}  

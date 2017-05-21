@@ -24,7 +24,12 @@ router.get('/', function(req, res, next) {
 router.get('/home', function(req, res){
   res.render('index');
 });
-
+router.get('/sobregatos', function(req, res){
+  res.render('sobregatos');
+});
+router.get('/nosotros', function(req, res){
+  res.render('sobrenosotros');
+});
 /* GET Página de contacto */
 router.get('/contacto', function(req, res, next) {
     res.render('contact', {
