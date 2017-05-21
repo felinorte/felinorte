@@ -44,7 +44,7 @@ module.exports = function(passport) {
 
           //Revisa si hay un usuario con ese email          
           if (user) {
-            return done(null, false, req.flash('error', '¡Oye! El correo electrónico ya está registrado.'));
+            return done(null, false, req.flash('error', '¡Oops! Este correo electrónico ya está registrado.'));
           } else {
             //Si no hay usuario con ese email
             var newUser = new User();
@@ -52,6 +52,7 @@ module.exports = function(passport) {
             newUser.local.password = newUser.generateHash(password);
             newUser.local.name.nombre = req.body.firstname;
             newUser.local.name.apellidos = req.body.lastname;
+            newUser.local.userType = "user";
             
             //Guarda el usuaio
             newUser.save(function(err) {
@@ -80,10 +81,10 @@ module.exports = function(passport) {
           return done(err);
 
         if (!user)
-          return done(null, false, req.flash('error', 'El usuario no existe.'));
+          return done(null, false, req.flash('error', 'Este usuario no existe.'));
 
         if (!user.validPassword(password))
-          return done(null, false, req.flash('error', '¡Oye! La contraseña que escribiste es incorrecta.'));
+          return done(null, false, req.flash('error', '¡Oops! La contraseña que escribiste es incorrecta.'));
 
         return done(null, user);
       });

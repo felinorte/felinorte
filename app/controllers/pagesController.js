@@ -42,6 +42,8 @@ router.get('/entrar', function(req, res){ res.redirect('/login'); });
 router.get('/registro', function(req, res){ res.redirect('/signup'); });
 router.get('/perfil', function(req, res){ res.redirect('/profile'); });
 router.get('/salir', function(req, res){ res.redirect('/logout'); });
+router.get('/uploads', function(req, res){ res.redirect('/') });
+router.get('/uploads/img', function(req, res){ res.redirect('/') });
 
 router.get('/favicon.ico', function(req, res){
   res.end();

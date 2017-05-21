@@ -20,11 +20,11 @@ block content
               div.pull-left
                 img(src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male-128.png" alt="" class="thumb-md img-circle")
               - if(user.google)
-                div.user-info              
+                  div.user-info              
                     a #{user.google.name}
                     p(class="text-muted m-0") #{user.local.userType}
               - else
-                div.user-info              
+                  div.user-info              
                     a #{user.local.name} 
                     p(class="text-muted m-0") #{user.local.userType}
             

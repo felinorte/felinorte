@@ -19,11 +19,11 @@ block content
               div.pull-left
                 img(src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male-128.png" alt="" class="thumb-md img-circle")
               - if(user.google)
-                div.user-info              
+                  div.user-info              
                     a #{user.google.name}
                     p(class="text-muted m-0") #{user.local.userType}
               - else
-                div.user-info              
+                  div.user-info              
                     a #{user.local.name}
                     p(class="text-muted m-0") #{user.local.userType}
             
@@ -81,6 +81,10 @@ block content
             <div lass="form-group" style="margin: auto; padding: 20px 0px 0px 0px;">
                 <label for="inputText" class="col-sm-2 control-label" style="text-align: left;">Ocupación:</label>
                 <input type="text" class="form-control" id="inputText" placeholder="Estudiante" name="ocupacion" value="#{user.local.ocupacion}" required>
+            </div>
+            <div class="form-group" style="margin: auto; padding: 20px 0px 0px 0px;">
+              <label class="control-label">Seleccionar foto</label>
+              <input id="input-1" type="file" class="file">
             </div>
             <div class="form-inline" style="padding: 20px 0px 10px 0px; text-align: center;">
                 <button type="submit" class="btn btn-primary">Guardar</button>              
