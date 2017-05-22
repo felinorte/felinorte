@@ -59,7 +59,7 @@ module.exports = function(app, passport) {
 // GET
 
 /* GET Ver todos los usuarios registrados */
-router.get('/admin/usuarios',isLoggedIn,isAdmin, function(req, res) {
+router.get('/admin/usuarios', isLoggedIn, isAdmin, function(req, res) {
     User.find({}, function(err, users) {
         if (err) {
             req.flash('error', 'Ha ocurrido un problema, por favor, intentelo de nuevo.');
@@ -71,23 +71,23 @@ router.get('/admin/usuarios',isLoggedIn,isAdmin, function(req, res) {
 });
 
 /* GET Login del panel de administración */
-router.get('/admin/login',isLoggedIn,isAdmin, function(req, res) {
+router.get('/admin/login', isLoggedIn, isAdmin, function(req, res) {
     res.render('admin/login', {
         title: 'Entrar - Panel de administración'
     });
 });
 
 /* GET Dashboard de administración */
-router.get('/admin',isLoggedIn,isAdmin, function(req, res) {
+router.get('/admin', isLoggedIn, isAdmin, function(req, res) {
     Cat.count({}, function(err, cats) {
         if (err) res.redirect('/');
 
-        Colony.count({}, function(err, colonies){
+        Colony.count({}, function(err, colonies) {
             if (err) res.redirect('/');
-            
-            User.count({}, function(err, users){
+
+            User.count({}, function(err, users) {
                 if (err) res.redirect('/');
-                
+
                 res.render('admin/index', {
                     title: 'Panel de administración - felinorte',
                     cats: cats,
@@ -100,7 +100,7 @@ router.get('/admin',isLoggedIn,isAdmin, function(req, res) {
 });
 
 /* GET Ver todos los gatos */
-router.get('/admin/gatos',isLoggedIn,isAdmin, function(req, res) {
+router.get('/admin/gatos', isLoggedIn, isAdmin, function(req, res) {
     Cat.find({}, function(err, cats) {
         if (err) {
             req.flash('error', 'Hubo un error, por favor, intente más tarde.');
@@ -129,7 +129,7 @@ router.get('/admin/gatos',isLoggedIn,isAdmin, function(req, res) {
 });
 
 /* GET Crear nuevo gato */
-router.get('/admin/gatos/nuevo',isLoggedIn,isAdmin, function(req, res) {
+router.get('/admin/gatos/nuevo', isLoggedIn, isAdmin, function(req, res) {
     res.render('admin/gatoNew', {
         title: 'Agregar nuevo gato - felinorte'
     });
@@ -156,7 +156,7 @@ router.get('/admin/colonias', function(req, res) {
 // POST
 
 /* POST Crear gato */
-router.post('/gato/new',isLoggedIn,isAdmin, function(req, res) {
+router.post('/gato/new', isLoggedIn, isAdmin, function(req, res) {
     var nombref = "";
     //funcion que activa el upload 
     upload(req, res, function(err) {
@@ -171,39 +171,52 @@ router.post('/gato/new',isLoggedIn,isAdmin, function(req, res) {
         // Everything went fine
     });
 
-
-
-    Colony.findOne({
-        name: req.body.colony
-    }, function(err, colony) {
+    Cat.count({
+        nombre: req.body.nombre
+    }, function(err, cat) {
         if (err) {
             req.flash('error', 'Hubo un error al crear el gato, por favor, inténtelo más tarde.');
             res.redirect('/admin/gatos');
         }
 
-
-        var newCat = new Cat({
-            foto: foto,
-            nombre: req.body.nombre,
-            fecha_nacimiento: req.body.fecha_nacimiento,
-            /*colony: colony._id*/
-        });
-
-        newCat.save(function(err, cat) {
+        if (cat > 0) {
+            console.log(cat);
+            req.flash('error', 'Ya existe un gato con el mismo nombre.');
+            res.redirect('/admin/gatos');
+        }
+        
+        Colony.findOne({
+            nombre: req.body.colony
+        }, function(err, colony) {
             if (err) {
                 req.flash('error', 'Hubo un error al crear el gato, por favor, inténtelo más tarde.');
-                res.redirect('/admin');
+                res.redirect('/admin/gatos');
             }
-            console.log(fotoname + "Extension" + foto)
-            fs.rename('uploads/img/' + fotoname, 'uploads/img/' + req.body.nombre + foto);
-            req.flash('info', '¡Gato agregado correctamente!');
-            res.redirect('/admin/gatos');
+
+            var newCat = new Cat({
+                foto: foto,
+                nombre: req.body.nombre,
+                fecha_nacimiento: req.body.fecha_nacimiento,
+                /*colony: colony._id*/
+            });
+
+            newCat.save(function(err, cat) {
+                if (err) {
+                    req.flash('error', 'Hubo un error al crear el gato, por favor, inténtelo más tarde.');
+                    res.redirect('/admin');
+                }
+                console.log(fotoname + "Extension" + foto)
+                fs.rename('uploads/img/' + fotoname, 'uploads/img/' + req.body.nombre + foto);
+                req.flash('info', '¡Gato agregado correctamente!');
+                res.redirect('/admin/gatos');
+            });
         });
     });
+
 });
 
 /* POST Crear colonias */
-router.post('/colony/new',isLoggedIn,isAdmin, function(req, res) {
+router.post('/colony/new', isLoggedIn, isAdmin, function(req, res) {
     // Busco las colonias con el mismo nombre
     Colony.count({
         name: req.body.nombre
@@ -242,24 +255,14 @@ router.post('/colony/new',isLoggedIn,isAdmin, function(req, res) {
 
 // FUNCIONES
 
-/* Contar los elementos de una colección */
-function contarElementos(lista) {
-    var i = 0;
-    lista.forEach(function(elem) {
-        i = i + 1;
-    });
-
-    return i;
-}
-
 function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated())
-    return next();
-  res.redirect('/');
+    if (req.isAuthenticated())
+        return next();
+    res.redirect('/');
 }
 
-function isAdmin(req, res , next){
-    if(req.user.local.userType == "admin")
+function isAdmin(req, res, next) {
+    if (req.user.local.userType == "admin")
         return next();
     res.redirect('/home');
 }
