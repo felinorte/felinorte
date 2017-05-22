@@ -54,17 +54,17 @@ block content
                 table(id="datatable" class="table table-striped table-bordered")
                   thead
                     tr
-                      // th ID
                       th Nombre
                       th # de gatos
                   // end thead
 
                   tbody
+                  - var i = 0;
                   each colony in colonies
                     tr
-                      // td #[a(href="") ]
                       td #{colony.name}
-                      td 5
+                      td #{cats[i]}
+                      - i = i + 1
                   // end tbody
                 // end table
               // end class="table-responsive m-b-20"

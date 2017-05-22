@@ -32,3 +32,32 @@ div.topbar
               form(role="search" class="navbar-left app-search pull-left")
                 a(href='/logout' class="btn btn-danger") #[i(class="ti-power-off")] Salir
                 
+                    
+    // Page content start
+    div.page-contentbar
+        
+      // left navigation start
+      aside.sidebar-navigation
+        div.scrollbar-wrapper
+          div
+            button(type="button" class="button-menu-mobile btn-mobile-view visible-xs visible-sm")
+              i(class="mdi mdi-close")
+            // User Detail box
+            div.user-details
+              div.pull-left
+                img(src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male-128.png" alt="" class="thumb-md img-circle")
+              div.user-info   
+                - if(user.local.name.nombre != '{}' && user.local.name.apellidos != '{}')
+                    a #{user.local.name.nombre} #{user.local.name.apellidos}                    
+                - if (user.google.name)
+                    a #{user.google.name}
+                p(class="text-muted m-0") #{user.local.userType}
+            
+            // Left Menu Start
+            ul(class="metisMenu nav" id="side-menu")
+              li
+                a(href="/profile") #[i(class="ti-home")] Inicio
+              li
+                a(href="/profile/update") #[i(class="ti-id-badge")] Actualizar datos
+              li
+                a(href="/profile/adopciones") #[i(class="ti-layout-list-thumb-alt")] Procesos de adopción 

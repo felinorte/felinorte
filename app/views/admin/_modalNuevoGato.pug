@@ -11,38 +11,93 @@ div(id="add-contact" class="modal fade" tabindex="-1" role="dialog" aria-labelle
             h5(class="m-t-0 header-title") Información básica
 
             div.row
-              div.col-md-5
-                div.form-group
-                  label(for="userName") Nombre
-                  input(type="text" name="nombre" parsley-trigger="change" placeholder="Nombre del gato" class="form-control" required="true")
-              div.col-md-5
+              div.col-md-4
+                label(for="userName") Nombre
+                input(type="text" name="nombre" parsley-trigger="change" placeholder="Nombre del gato" class="form-control" required="true")
+             
+              div.col-md-4
                 div.form-group
                   label(for="fechaNacimiento") Fecha de nacimiento
                   div
                     div.input-group
                       input(type="text" class="form-control" placeholder="mm/dd/yyyy" name="fecha_nacimiento" id="datepicker-autoclose" required="true")
                       span(class="input-group-addon bg-custom b-0") #[i(class="mdi mdi-calendar text-white")]
-
-              div.col-md-7
+              
+              div.col-md-3
+                div.form-group
+                  label(for="sexo") Sexo
+                  select(class="form-control" name="sexo")
+                    option F - Femenine
+                    option M - Masculine
+                    option U - Unknown
+              
+              div.col-md-3 
+                div.form-group
+                  label(for="edad") Edad
+                  select(class="form-control" name="edad")
+                    option A - Adult
+                    option J - Juvenile
+                    option K - Kitten
+                        
+              div.col-md-5
                 div.form-group
                   label(for="colonia") Colonia
-                  div.input-group
-                    select(class="form-control" name="colony")
-                      each colony in colonies
-                        option #{ colony.name }
+                  select(class="form-control" name="colony")
+                    each colony in colonies
+                      option #{ colony.name }
 
-            h5(class="m-t-0 header-title") Información biológica
+            br
+            h5(class="m-t-0 header-title") e
             div.row
-              div.col-md-4
+                    
+              div.col-md-6
                 div.form-group
-                  label(for="example-input1-group1") Peso
-                  div(class="input-group")
-                    span.input-group-addon #[i(class="mdi mdi-basket-fill")]
-                    input(type="text" id="example-input3-group1" name="peso" class="form-control" placeholder=".." required="true")
-                    span.input-group-addon Kgs
+                  label(for="desp") Feline-alities
+                  select(class="form-control select2" name="desp")
+                    optgroup(label="P - Purple")
+                      option(value="PI") Private Investigator
+                      option(value="SA") Secret Admirer
+                      option(value="LB") Love Bug
+                    optgroup(label="O - Orange")
+                      option(value="TE") The Executive
+                      option(value="S") Sidekick
+                      option(value="PA") Personal Assistant
+                    optgroup(label="G - Green")
+                      option(value="MVP") MVP
+                      option(value="PA") Party Animal
+                      option(value="LoB") Leader of the Band
+                    optgroup(label="R - Feral")
+                      option(value="MC") Makes Contact
+                      option(value="SFF") Seen from far distance
+                      option(value="MC + A")  Makes contact and aggresive
+                    
+              div.col-md-3
+                div.form-group
+                  label(for="sterilization") Sterilization 
+                  select(class="form-control" name="sterilization")
+                    option Y - Yes
+                    option N - Not
+                    option U - Unknown
+            
+              div.col-md-3
+                div.form-group
+                  label(for="vacc") Vacc
+                  select(class="form-control" name="vacc")
+                    option Y - Yes
+                    option N - Not
+                    option U - Unknown
+                    
+              div.col-md-3
+                div.form-group
+                  label(for="desp") Desp
+                  select(class="form-control" name="desp")
+                    option Y - Yes
+                    option N - Not
+                    
+            br
             h5(class="m-t-0 header-title") Fotografía
             div.row
-              div.col-md-8
+              div.col-md-12
                 div.form-group
                   labe(class="control-label") Seleccione la fotografía del gato
                   input(type="file" name="foto" class="filestyle" data-buttonname="btn-default" required="true")

@@ -8,23 +8,31 @@ var CatSchema = new Schema({
   foto: String,
   nombre: {
     type: String,
-    required: true
-  },
-  fecha_nacimiento: {
-    type: Date,
-    required: true
+    required: true,
+    trim: true
   },
   colony: {
     type: Schema.ObjectId,
     ref: "Colony"
   },
+  fecha_nacimiento: {
+    type: Date,
+    default: Date.now
+  },
+  edad: String,
+  colores_patrones: String,
+  sterilization: String,
+  vacc: String,
+  desp: Boolean,
+  adopted: Boolean,
+  adoptable: String,
+  socializacion: String,
+  felinealities: String,
   sexo: String,
-  raza: String,
-  peso: Number,
-  tipo_personalidad: String,
-  sociable: Boolean,
-  adoptable: Boolean,
-  observaciones: String
+  observaciones: {
+    type: String,
+    default: "No comments."
+  }
 });
 
 /* Método para buscar la colonia a la que pertenece el gato */

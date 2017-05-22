@@ -1,0 +1,47 @@
+extends ../admin/default
+
+block content
+  
+  div#page-wrapper
+    
+    include _topBar 
+    
+    // START PAGE CONTENT
+    div(id="page-right-content" style="min-height: 600px;")
+      - if (messages.info)
+          div(class="alert alert-icon alert-success alert-dismissible fade in" role="alert")
+            button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+              span(aria-hidden="true") x
+            i(class="mdi mdi-check-all")
+            strong ¡Éxito!
+            p #{messages.info}
+      - if (messages.error)
+          div(class="alert alert-icon alert-danger alert-dismissible fade in" role="alert")
+            button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+              span(aria-hidden="true") x
+            i(class="mdi mdi-block-error")
+            strong ¡Error!
+            p #{messages.error}
+    
+      div.container
+        div.row
+          div.col-sm-12
+            h4(class="m-t-0 header-title") Gatos de Felinorte
+        
+        - if(!messages.error)
+            div.row
+              table(style="width: 100%; font-size: 110%" class="table-striped")
+                thead
+                  tr
+                    th Name
+                    th Item Name
+                    th Item Price
+                tbody                   
+                  tr
+                    td Alvin
+                    td Eclair
+                    td $0.87  
+                    
+      div.footer
+        div
+          <strong>felinorte</strong> - Copyright &copy; 2017

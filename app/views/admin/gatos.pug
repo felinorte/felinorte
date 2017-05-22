@@ -16,12 +16,7 @@ block content
             button(type="button" class="button-menu-mobile btn-mobile-view visible-xs visible-sm")
               i(class="mdi mdi-close")
             // User Detail box
-            div.user-details
-              div.pull-left
-                img(src="https://scontent.xx.fbcdn.net/v/t31.0-8/s960x960/17493155_1427647903947280_1316763995182102963_o.jpg?oh=2ce49976e48e991fcc90683ee9dc6270&oe=59B5DD10" alt="" class="thumb-md img-circle")
-              div.user-info
-                a Usuario
-                p(class="text-muted m-0") Administrador
+            include _userInfo
             
             // Left Menu Start
             include _navigation
@@ -63,13 +58,13 @@ block content
                 div.clearfix
                   div.member-card
                     span(class="user-badge bg-warning") En proceso
-                    div(class="thumb-xl member-thumb m-b-10 center-block")
-                      img(src="./uploads/img/#{cat.nombre}.#{cat.foto}" class="img-circle img-thumbnail" alt="profile-image")
+                    div(class="thumb-xl member-thumb m-b-10 center-block") 
+                      img(src=`/img/${cat.nombre}${cat.foto}` class="img-circle img-thumbnail" alt="profile-image" style="width: 100%; height: 100%; display: block;")
                       i(class="mdi mdi-information-outline member-star text-muted" title="No adoptado")
 
                     div
                       h4.m-b-5 #{cat.nombre}
-                      p(class="text-muted") #{ cat.nombre } #[span | ] #{cat.sexo}
+                      p(class="text-muted") #{ cat.colony.name } #[span | ] #{cat.fecha_nacimiento.getDay() + 1}/#{cat.fecha_nacimiento.getMonth() + 1}/#{cat.fecha_nacimiento.getFullYear()}
               
       div.row
         div(class="col-sm-12 text-center")

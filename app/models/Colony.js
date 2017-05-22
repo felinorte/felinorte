@@ -8,7 +8,8 @@ var mongoose = require('mongoose'),
 var ColonySchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   cats: [{
     type: Schema.ObjectId,

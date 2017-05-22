@@ -24,10 +24,10 @@ router.get('/', function(req, res, next) {
 router.get('/home', function(req, res){
   res.render('index');
 });
-router.get('/sobregatos', function(req, res){
+router.get('/cats', function(req, res){
   res.render('sobregatos');
 });
-router.get('/nosotros', function(req, res){
+router.get('/about', function(req, res){
   res.render('sobrenosotros');
 });
 /* GET Página de contacto */
@@ -43,7 +43,7 @@ router.get('/registro', function(req, res){ res.redirect('/signup'); });
 router.get('/perfil', function(req, res){ res.redirect('/profile'); });
 router.get('/salir', function(req, res){ res.redirect('/logout'); });
 router.get('/uploads', function(req, res){ res.redirect('/') });
-router.get('/uploads/img', function(req, res){ res.redirect('/') });
+router.get('/img', function(req, res){ res.redirect('/') });
 
 router.get('/favicon.ico', function(req, res){
   res.end();

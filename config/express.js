@@ -22,6 +22,7 @@ module.exports = function(app, config) {
 
   app.set('views', path.join(process.cwd() + '/views'));
   app.use(express.static(path.join(process.cwd() + '/public')));
+  app.use(express.static('uploads'));
   app.set('views', config.root + '/app/views');
   app.set('view engine', 'pug');
 

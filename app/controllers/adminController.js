@@ -1,3 +1,4 @@
+
 /*
   Controlador de todo lo relacionado con los administradores.
 */
@@ -13,14 +14,12 @@ var Cat = mongoose.model('Cat');
 var Colony = mongoose.model('Colony');
 var User = mongoose.model('User');
 
-
 // copias el storage y el  upload cambias el destino y el input que no se te olvido que en el form a donde envias los datos al server necesita un enctype
 var destino = './uploads/img/';
 var input = 'foto';
 var foto = "";
 var fotoname = "";
 // se establece la ruta donde se guardara la imagen 
-
 
 var storage = multer.diskStorage({ //multers disk storage settings
     destination: function(req, file, cb) {
@@ -31,11 +30,11 @@ var storage = multer.diskStorage({ //multers disk storage settings
         cb(null, file.originalname)
     }
 });
+
 // objeto que permite validaciones 
 var upload = multer({ //multer settings
     storage: storage,
     fileFilter: function(req, file, callback) {
-        console.log(file)
         var ext = "." + file.originalname.split(".").pop();
         foto = ext;
         fotoname = file.originalname;
@@ -51,7 +50,6 @@ var upload = multer({ //multer settings
     // nombre del input type file de donde proviene la imagen
 }).single(input);
 
-
 module.exports = function(app, passport) {
     app.use('/', router);
 }
@@ -65,8 +63,11 @@ router.get('/admin/usuarios', isLoggedIn, isAdmin, function(req, res) {
             req.flash('error', 'Ha ocurrido un problema, por favor, intentelo de nuevo.');
             res.redirect('/admin');
         }
-
-        res.end()
+      
+        res.render('', {
+          title: 'Administrar usuarios - felinorte',
+          users: users
+        });
     });
 });
 
@@ -92,7 +93,8 @@ router.get('/admin', isLoggedIn, isAdmin, function(req, res) {
                     title: 'Panel de administración - felinorte',
                     cats: cats,
                     colonies: colonies,
-                    users: users
+                    user: req.user,
+                    users:  users
                 });
             });
         });
@@ -100,7 +102,7 @@ router.get('/admin', isLoggedIn, isAdmin, function(req, res) {
 });
 
 /* GET Ver todos los gatos */
-router.get('/admin/gatos', isLoggedIn, isAdmin, function(req, res) {
+router.get('/admin/gatos', function(req, res) {
     Cat.find({}, function(err, cats) {
         if (err) {
             req.flash('error', 'Hubo un error, por favor, intente más tarde.');
@@ -119,20 +121,14 @@ router.get('/admin/gatos', isLoggedIn, isAdmin, function(req, res) {
                 res.render('admin/gatos', {
                     title: 'Administrar gatos - felinorte',
                     cats: cats,
-                    colonies: colonies
+                    colonies: colonies,
+                    user: req.user
                 });
             });
 
         });
     });
 
-});
-
-/* GET Crear nuevo gato */
-router.get('/admin/gatos/nuevo', isLoggedIn, isAdmin, function(req, res) {
-    res.render('admin/gatoNew', {
-        title: 'Agregar nuevo gato - felinorte'
-    });
 });
 
 /* GET Ver todas las colonias */
@@ -142,10 +138,16 @@ router.get('/admin/colonias', function(req, res) {
             req.flash('error', 'Hubo un error al obtener las colonias. Por favor, intentelo más tarde.');
             res.redirect('/admin');
         }
-
+        
+        var cats = new Array(colonies.length);
+        for (var i = 0; i < colonies.length; i++) {
+          cats[i] = colonies[i].cats.length
+        }
+      
         res.render('admin/colonias', {
             colonies: colonies,
-            title: 'Administrar colonias - felinorte'
+            title: 'Administrar colonias - felinorte',
+            cats: cats
         });
     });
 
@@ -156,7 +158,7 @@ router.get('/admin/colonias', function(req, res) {
 // POST
 
 /* POST Crear gato */
-router.post('/gato/new', isLoggedIn, isAdmin, function(req, res) {
+router.post('/gato/new', function(req, res) {
     var nombref = "";
     //funcion que activa el upload 
     upload(req, res, function(err) {
@@ -165,28 +167,24 @@ router.post('/gato/new', isLoggedIn, isAdmin, function(req, res) {
             res.render('error', {
                 error: err
             });
-
         }
-        console.log("exito");
-        // Everything went fine
     });
 
     Cat.count({
-        nombre: req.body.nombre
-    }, function(err, cat) {
+        nombre: req.body.nombre.trim()
+    }, function(err, c) {
         if (err) {
             req.flash('error', 'Hubo un error al crear el gato, por favor, inténtelo más tarde.');
             res.redirect('/admin/gatos');
         }
 
-        if (cat > 0) {
-            console.log(cat);
+        if (c > 0) {
             req.flash('error', 'Ya existe un gato con el mismo nombre.');
             res.redirect('/admin/gatos');
         }
-        
+
         Colony.findOne({
-            nombre: req.body.colony
+            name: req.body.colony.trim()
         }, function(err, colony) {
             if (err) {
                 req.flash('error', 'Hubo un error al crear el gato, por favor, inténtelo más tarde.');
@@ -197,7 +195,7 @@ router.post('/gato/new', isLoggedIn, isAdmin, function(req, res) {
                 foto: foto,
                 nombre: req.body.nombre,
                 fecha_nacimiento: req.body.fecha_nacimiento,
-                /*colony: colony._id*/
+                colony: colony._id
             });
 
             newCat.save(function(err, cat) {
@@ -205,10 +203,22 @@ router.post('/gato/new', isLoggedIn, isAdmin, function(req, res) {
                     req.flash('error', 'Hubo un error al crear el gato, por favor, inténtelo más tarde.');
                     res.redirect('/admin');
                 }
-                console.log(fotoname + "Extension" + foto)
-                fs.rename('uploads/img/' + fotoname, 'uploads/img/' + req.body.nombre + foto);
-                req.flash('info', '¡Gato agregado correctamente!');
-                res.redirect('/admin/gatos');
+
+                Colony.update({
+                        name: req.body.colony
+                    }, {
+                        $push: {
+                            cats: cat._id
+                        }
+                    },
+                    function(err) {
+                        if (err) return res.redirect('/admin/gatos');
+
+                        fs.rename('uploads/img/' + fotoname, 'uploads/img/' + req.body.nombre + foto);
+                        req.flash('info', '¡Gato agregado correctamente!');
+                        res.redirect('/admin/gatos');
+                    }
+                );
             });
         });
     });
@@ -216,14 +226,14 @@ router.post('/gato/new', isLoggedIn, isAdmin, function(req, res) {
 });
 
 /* POST Crear colonias */
-router.post('/colony/new', isLoggedIn, isAdmin, function(req, res) {
+router.post('/colony/new', function(req, res) {
     // Busco las colonias con el mismo nombre
     Colony.count({
-        name: req.body.nombre
+        name: req.body.nombre.trim()
     }, function(err, c) {
+      
         // Si hay algún error
         if (err) {
-            console.log(err);
             req.flash('error', '¡No se ha podido crear la colonia! Por favor, intentelo más tarde.'); // Enviar un mensaje de error
             return res.redirect('/admin/colonias');
         }
@@ -240,7 +250,6 @@ router.post('/colony/new', isLoggedIn, isAdmin, function(req, res) {
         }, function(err) {
             // Si hay algún error
             if (err) {
-                console.log(err); // Escribir en consola el error
                 req.flash('error', '¡No se ha podido crear la colonia! Por favor, intentelo más tarde.'); // Enviar un mensaje de error
                 return res.redirect('/admin/colonias/');
             }
@@ -249,20 +258,45 @@ router.post('/colony/new', isLoggedIn, isAdmin, function(req, res) {
             res.redirect('/admin/colonias/');
         });
     });
-
 });
 
+
+// DELETE
+
+router.delete('/gato/delete', function(req, res){
+    Cat.remove({ _id: req.param.id }, function(err){
+        if (err) res.redirect('/admin/gatos');
+        
+        Colony.update(
+            { _id: req.cat.id },
+            { $pull: { cats: req.param.id } },
+            function(err) {
+                if (err) res.redirect('/admin/gatos');
+                
+                req.flash('info', '¡Gato eliminado exitosamente!');
+                res.redirect('/admin/gatos');
+            }
+        );
+    });
+});
+
+router.delete('/colony/delete', function(req, res){
+  Colony.remove({ _id: req.param.id }, function(err){
+    if (err) res.redirect('/admin/colonias');
+    
+    req.flash('info', '¡Colonia eliminada correctamente!');
+    res.redirect('/admin/colonias');
+  });
+});
 
 // FUNCIONES
 
 function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated())
-        return next();
+    if (req.isAuthenticated()) return next();
     res.redirect('/');
 }
 
 function isAdmin(req, res, next) {
-    if (req.user.local.userType == "admin")
-        return next();
+    if (req.user.local.userType == "admin") return next();
     res.redirect('/home');
 }
