@@ -54,22 +54,8 @@ module.exports = function(app, passport) {
     app.use('/', router);
 }
 
+
 // GET
-
-/* GET Ver todos los usuarios registrados */
-router.get('/admin/usuarios', isLoggedIn, isAdmin, function(req, res) {
-    User.find({}, function(err, users) {
-        if (err) {
-            req.flash('error', 'Ha ocurrido un problema, por favor, intentelo de nuevo.');
-            res.redirect('/admin');
-        }
-
-        res.render('', {
-            title: 'Administrar usuarios - felinorte',
-            users: users
-        });
-    });
-});
 
 /* GET Login del panel de administración */
 router.get('/admin/login', isLoggedIn, isAdmin, function(req, res) {
@@ -97,6 +83,21 @@ router.get('/admin', isLoggedIn, isAdmin, function(req, res) {
                     users: users
                 });
             });
+        });
+    });
+});
+
+/* GET Ver todos los usuarios registrados */
+router.get('/admin/usuarios', isLoggedIn, isAdmin, function(req, res) {
+    User.find({}, function(err, users) {
+        if (err) {
+            req.flash('error', 'Ha ocurrido un problema, por favor, intentelo de nuevo.');
+            res.redirect('/admin');
+        }
+
+        res.render('', {
+            title: 'Administrar usuarios - felinorte',
+            users: users
         });
     });
 });
@@ -154,6 +155,61 @@ router.get('/admin/colonias', function(req, res) {
 
 });
 
+/* GET Ver procesos de adopción */
+router.get('/admin/procesos', function(req, res) {
+    Adopcion.find({}, function(err, procesos) {
+        if (err) {
+            req.flash('error', 'Ha ocurrido un error. Por favor, inténtelo de nuevo.');
+            req.redirect('/admin');
+        }
+
+        User.populate(procesos, {
+            path: "user"
+        }, function(err, procesos) {
+            if (err) {
+                req.flash('error', 'Ha ocurrido un error. Por favor, inténtelo de nuevo.');
+                req.redirect('/admin');
+            }
+
+            Cat.populate(procesos, {
+                path: 'cat'
+            }, function(err, procesos) {
+                if (err) {
+                    req.flash('error', 'Ha ocurrido un error. Por favor, inténtelo de nuevo.');
+                    req.redirect('/admin');
+                }
+
+                console.log(procesos);
+                res.render('admin/procesos', {
+                    title: 'Administrar procesos de adopción - felinorte',
+                    procesos: procesos
+                });
+            });
+        });
+
+
+    });
+});
+
+/* GET Ver gato */
+router.get('/admin/gato/:id', function(req, res){
+    Cat.findOne({ nombre: req.param('id') }, function(err, cat){
+        if (err) {
+            req.flash('error', 'Hubo un error al tratar de mostrar a #' + req.param('id'));
+            res.redirect('/admin/gatos');
+        }
+        
+        if (!cat) { // Si no se encontraron gatos con el id
+            res.redirect('/admin/gatos');
+        }
+        
+        res.render('admin/gato', {
+            title: 'Ver gato - Panel de administración',
+            cat: cat
+        });
+    });
+});
+
 
 // POST
 
@@ -163,10 +219,8 @@ router.post('/gato/new', function(req, res) {
     //funcion que activa el upload 
     upload(req, res, function(err) {
         if (err) {
-            // An error occurred when uploading
-            res.render('error', {
-                error: err
-            });
+            req.flash('error', 'Hubo un error al subir la foto, por favor, inténtelo más tarde.')
+            res.redirect('/admin/gatos');
         }
     });
 
@@ -195,7 +249,12 @@ router.post('/gato/new', function(req, res) {
                 foto: foto,
                 nombre: req.body.nombre,
                 fecha_nacimiento: req.body.fecha_nacimiento,
-                colony: colony._id
+                colony: colony._id,
+                sexo: req.body.sexo,
+                edad: req.body.edad,
+                sterilization: req.body.sterilization,
+                vacc: req.body.vacc,
+                desp: req.body.desp
             });
 
             newCat.save(function(err, cat) {
@@ -205,7 +264,7 @@ router.post('/gato/new', function(req, res) {
                 }
 
                 Colony.update({
-                        name: req.body.colony
+                        name: req.body.colony.trim()
                     }, {
                         $push: {
                             cats: cat._id
@@ -227,28 +286,23 @@ router.post('/gato/new', function(req, res) {
 
 /* POST Crear colonias */
 router.post('/colony/new', function(req, res) {
-    // Busco las colonias con el mismo nombre
     Colony.count({
         name: req.body.nombre.trim()
     }, function(err, c) {
 
-        // Si hay algún error
         if (err) {
             req.flash('error', '¡No se ha podido crear la colonia! Por favor, intentelo más tarde.'); // Enviar un mensaje de error
             return res.redirect('/admin/colonias');
         }
 
-        // Si ya hay una colonia con ese nombre
         if (c > 0) {
             req.flash('error', '¡La colonia que está intentando crear ya existe!'); // Enviar un mensaje de error
             return res.redirect('/admin/colonias');
         }
 
-        // Creo la nueva colonia
         Colony.create({
             name: req.body.nombre
         }, function(err) {
-            // Si hay algún error
             if (err) {
                 req.flash('error', '¡No se ha podido crear la colonia! Por favor, intentelo más tarde.'); // Enviar un mensaje de error
                 return res.redirect('/admin/colonias/');
@@ -262,7 +316,7 @@ router.post('/colony/new', function(req, res) {
 
 /* POST Crear nuevo proceso de adopción */
 // TODO Completar
-router.post('/adoptar/:id', isLoggedIn, function(req, res) {
+router.post('/adoptar/:id', function(req, res) {
     Cat.findOne({
         _id: req.param('id')
     }, function(err, cat) {
@@ -295,7 +349,7 @@ router.post('/comentar/:id', isLoggedIn, isAdmin, function(req, res) {
                 contenido: req.body.comentario
             }, function(err, comment) {
                 if (err) res.redirect('/admin');
-                
+
                 proceso.comentarios.push(comment._id);
                 proceso.save(function(err) {
                     res.redirect('/admin');
@@ -341,6 +395,7 @@ router.delete('/colony/delete', function(req, res) {
         res.redirect('/admin/colonias');
     });
 });
+
 
 // FUNCIONES
 
