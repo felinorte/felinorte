@@ -1,6 +1,7 @@
 var express = require('express');
 var glob = require('glob');
 
+var compression = require('compression');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -20,6 +21,7 @@ module.exports = function(app, config) {
 
   var path = require('path');
 
+  app.use(compression());
   app.set('views', path.join(process.cwd() + '/views'));
   app.use(express.static(path.join(process.cwd() + '/public')));
   app.use(express.static('uploads'));
