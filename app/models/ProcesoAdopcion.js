@@ -3,11 +3,12 @@ var mongoose = require('mongoose'),
 
 var Cat = require('./Cat');
 var User = require('./User');
+var Comment = require('./Comment');
 
 var AdopcionSchema = new Schema({
     usuario: {
         type: Schema.ObjectId,
-        ref: "User"
+        ref: "User",
     },
     gato: {
         type: Schema.ObjectId,
@@ -25,7 +26,11 @@ var AdopcionSchema = new Schema({
     aprobado: {
         type: Boolean,
         default: false
-    }
+    },
+    comentarios: [{
+        type: Schema.ObjectId,
+        ref: 'Comment'
+    }]
 });
 
 mongoose.model('Adopcion', AdopcionSchema);
