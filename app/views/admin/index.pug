@@ -64,33 +64,26 @@ block content
             div.col-lg-12
               div.card-box
                 h4.m-t-0 Procesos de adopción
-                div.table-responsive
-                  table(class="table table-hover mails m-0 table table-actions-bar")
-                    thead
-                      tr
-                        th(style="min-width: 90px;")
-                          div(class="checkbox checkbox-primary checkbox-single m-r-15")
-                            input(id="action-checkbox" type="checkbox")
-                            label(for="action-checkbox")
-                        th(style="max-width: 20px;") ID
-                        th Nombre
-                        th Correo electrónico
-                        th Fecha inicio
-                        th Estado
-                    tbody
-                      tr
-                        td
-                          div(class="checkbox checkbox-primary m-r-15")
-                            input(id="checkbox2" type="checkbox")
-                            label(for="checkbox2")
-                          img(src="https://scontent.xx.fbcdn.net/v/t1.0-9/14183915_10208997577791207_2178186576038298670_n.jpg?oh=f681c316af2eb0f22520aba7e558a97b&oe=598AEC7C" alt="contact-img" title="contact-img" class="img-circle thumb-sm")
-                        td
-                          a FEL234
-                        td Wilson Tovar
-                        td
-                          a(href="#" class="text-muted") twilson@uninorte.edu.co
-                        td 13/01/2015
-                        td Terminado
+                - if (adopciones.length > 0)
+                  div.table-responsive
+                    table(class="table table-hover mails m-0 table table-actions-bar")
+                      thead
+                        tr
+                          th(style="max-width: 20px;") ID
+                          th Usuario
+                          th Correo electrónico
+                          th Fecha inicio
+                          th Estado
+                      tbody
+                      each adop in adopciones
+                        tr
+                          td
+                            a #{adop._id}
+                          td #{adop.usuario.google.name || ( adop.usuario.local.name.nombre + " " + adop.usuario.local.name.apellidos )}
+                          td
+                            a(href="#" class="text-muted") #{ adop.usuario.local.email || adop.usuario.google.email }
+                          td #{adop.fecha_inicio.getDate()} / #{adop.fecha_inicio.getMonth() + 1} / #{adop.fecha_inicio.getFullYear()}
+                          td #{adop.estado}
                        
                        
         div.footer

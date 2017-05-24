@@ -75,17 +75,26 @@ router.get('/admin', isLoggedIn, isAdmin, function(req, res) {
             User.count({}, function(err, users) {
                 if (err) res.redirect('/');
 
-                Adopcion.count({}, function(err, procesos) {
+                Adopcion.find({}, function(err, procesos) {
                     if (err) res.redirect('/');
-
-                    res.render('admin/index', {
-                        title: 'Panel de administración - felinorte',
-                        cats: cats,
-                        colonies: colonies,
-                        user: req.user,
-                        users: users,
-                        procesos: procesos
-                    });
+                    
+                    Cat.populate(procesos, { path: 'gato' }, function(err, procesos){
+                        if (err) res.redirect('/');
+                        
+                        User.populate(procesos, { path: 'usuario' }, function(err, procesos){
+                            if (err) res.redirect('/');
+                            
+                            res.render('admin/index', {
+                                title: 'Panel de administración - felinorte',
+                                cats: cats,
+                                colonies: colonies,
+                                user: req.user,
+                                users: users,
+                                procesos: procesos.length,
+                                adopciones: procesos
+                            });
+                        });
+                    })
                 });
             });
         });
@@ -483,10 +492,10 @@ router.delete('/admin/colony/:id', isLoggedIn, isAdmin, function(req, res) {
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) return next();
-    res.redirect('/');
+    res.redirect('/login');
 }
 
 function isAdmin(req, res, next) {
     if (req.user.local.userType == "admin") return next();
-    res.redirect('/home');
+    res.redirect('/login');
 }

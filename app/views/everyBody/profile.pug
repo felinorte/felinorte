@@ -46,7 +46,7 @@ block content
                               i(class="mdi mdi-information member-star text-muted" title="No disponible")
                         div
                           h4.m-b-5 #{cat.nombre}
-                          p(class="text-muted") #{ cat.nombre } #[span | ] #{cat.sexo}  
+                          p(class="text-muted") #{ cat.colony.name } #[span | ] #{cat.sexo}  
                           button(class="btn btn-default btn-sm m-t-10") Ver gato  
                           
                           - if(cat.adoptable)

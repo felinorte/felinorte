@@ -27,6 +27,10 @@ module.exports = function(app, passport) {
     }));
 
     app.get('/profile', isLoggedIn, function(req, res) {
+        if (isAdmin) {
+            res.redirect('/admin');
+        }
+        
         Cat.find({}, function(err, cats) {
             if (err) {
                 req.flash('error', 'Hubo un error al cargar los gatos, por favor, intente más tarde.');
@@ -159,8 +163,10 @@ module.exports = function(app, passport) {
 };
 
 function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated())
+    if (req.isAuthenticated()) {
         return next();
+    }
+    
     res.redirect('/login');
 }
 
@@ -173,11 +179,11 @@ function isntLoggedIn(req, res, next) {
 function isAdmin(req, res, next) {
     if (req.user.userType.equals("admin"))
         return next();
-    res.redirect('/home')
+    res.redirect('/login')
 }
 
 function isUser(req, res, next) {
     if (req.user.userType.equals("user"))
         return next();
-    res.redirect('/admin')
+    res.redirect('/login')
 }
