@@ -21,7 +21,7 @@ var foto = "";
 var fotoname = "";
 // se establece la ruta donde se guardara la imagen 
 
-var storage = multer.diskStorage({ //multers disk storage settings
+var storage = multer.diskStorage({ // multers disk storage settings
     destination: function(req, file, cb) {
         cb(null, destino)
     },
@@ -40,9 +40,9 @@ var upload = multer({ //multer settings
         fotoname = file.originalname;
         if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
             req.flash('error', '¡Formato no valido!');
-
         }
-        callback(null, true)
+
+        callback(null, true);
     },
     limits: {
         fileSize: 1024 * 1024
@@ -57,14 +57,14 @@ module.exports = function(app, passport) {
 
 // GET
 
-/* GET Login del panel de administración */
+/* GET Login del panel de administración */ // TERMINADA
 router.get('/admin/login', isLoggedIn, isAdmin, function(req, res) {
     res.render('admin/login', {
         title: 'Entrar - Panel de administración'
     });
 });
 
-/* GET Dashboard de administración */
+/* GET Dashboard de administración */ // TERMINADA
 router.get('/admin', isLoggedIn, isAdmin, function(req, res) {
     Cat.count({}, function(err, cats) {
         if (err) res.redirect('/');
@@ -75,19 +75,24 @@ router.get('/admin', isLoggedIn, isAdmin, function(req, res) {
             User.count({}, function(err, users) {
                 if (err) res.redirect('/');
 
-                res.render('admin/index', {
-                    title: 'Panel de administración - felinorte',
-                    cats: cats,
-                    colonies: colonies,
-                    user: req.user,
-                    users: users
+                Adopcion.count({}, function(err, procesos) {
+                    if (err) res.redirect('/');
+
+                    res.render('admin/index', {
+                        title: 'Panel de administración - felinorte',
+                        cats: cats,
+                        colonies: colonies,
+                        user: req.user,
+                        users: users,
+                        procesos: procesos
+                    });
                 });
             });
         });
     });
 });
 
-/* GET Ver todos los usuarios registrados */
+/* GET Ver todos los usuarios registrados */ // TERMINADA
 router.get('/admin/usuarios', isLoggedIn, isAdmin, function(req, res) {
     User.find({}, function(err, users) {
         if (err) {
@@ -95,45 +100,56 @@ router.get('/admin/usuarios', isLoggedIn, isAdmin, function(req, res) {
             res.redirect('/admin');
         }
 
-        res.render('', {
+        res.render('admin/users', {
             title: 'Administrar usuarios - felinorte',
-            users: users
+            users: users,
+            user: req.user
         });
     });
 });
 
-/* GET Ver todos los gatos */
-router.get('/admin/gatos', function(req, res) {
-    Cat.find({}, function(err, cats) {
-        if (err) {
-            req.flash('error', 'Hubo un error, por favor, intente más tarde.');
-            return res.redirect('/admin');
-        }
+/* GET Ver todos los gatos */ // TERMINADA
+router.get('/admin/gatos', isLoggedIn, isAdmin, function(req, res) {
+    Colony.count({}, function(err, colonies) {
+        if (err) res.redirect('/admin');
 
-        Colony.populate(cats, {
-            path: "colony"
-        }, function(err, cats) {
-            if (err) {
-                req.flash('error', 'Hubo un error, por favor, intente más tarde.');
-                return res.redirect('/admin');
-            }
+        if (colonies > 0) {
+            Cat.find({}, function(err, cats) {
+                if (err) {
+                    req.flash('error', 'Hubo un error, por favor, intente más tarde.');
+                    res.redirect('/admin');
+                }
 
-            Colony.find({}, function(err, colonies) {
-                res.render('admin/gatos', {
-                    title: 'Administrar gatos - felinorte',
-                    cats: cats,
-                    colonies: colonies,
-                    user: req.user
+                Colony.populate(cats, {
+                    path: "colony"
+                }, function(err, cats) {
+                    if (err) {
+                        req.flash('error', 'Hubo un error, por favor, intente más tarde.');
+                        res.redirect('/admin');
+                    }
+
+                    Colony.find({}, function(err, colonies) {
+                        res.render('admin/gatos', {
+                            title: 'Administrar gatos - felinorte',
+                            cats: cats,
+                            colonies: colonies,
+                            user: req.user
+                        });
+                    });
+
                 });
             });
-
-        });
+        } else {
+            req.flash('error', '¡Primero debes agregar colonias a la plataforma.');
+            res.redirect('/admin/colonias');
+        }
     });
+
 
 });
 
-/* GET Ver todas las colonias */
-router.get('/admin/colonias', function(req, res) {
+/* GET Ver todas las colonias */ // TERMINADA
+router.get('/admin/colonias', isLoggedIn, isAdmin, function(req, res) {
     Colony.find({}, function(err, colonies) {
         if (err) {
             req.flash('error', 'Hubo un error al obtener las colonias. Por favor, intentelo más tarde.');
@@ -148,7 +164,8 @@ router.get('/admin/colonias', function(req, res) {
         res.render('admin/colonias', {
             colonies: colonies,
             title: 'Administrar colonias - felinorte',
-            cats: cats
+            cats: cats,
+            user: req.user
         });
     });
 
@@ -156,7 +173,7 @@ router.get('/admin/colonias', function(req, res) {
 });
 
 /* GET Ver procesos de adopción */
-router.get('/admin/procesos', function(req, res) {
+router.get('/admin/procesos', isLoggedIn, isAdmin, function(req, res) {
     Adopcion.find({}, function(err, procesos) {
         if (err) {
             req.flash('error', 'Ha ocurrido un error. Por favor, inténtelo de nuevo.');
@@ -179,10 +196,10 @@ router.get('/admin/procesos', function(req, res) {
                     req.redirect('/admin');
                 }
 
-                console.log(procesos);
                 res.render('admin/procesos', {
                     title: 'Administrar procesos de adopción - felinorte',
-                    procesos: procesos
+                    procesos: procesos,
+                    user: req.user
                 });
             });
         });
@@ -192,21 +209,54 @@ router.get('/admin/procesos', function(req, res) {
 });
 
 /* GET Ver gato */
-router.get('/admin/gato/:id', function(req, res){
-    Cat.findOne({ nombre: req.param('id') }, function(err, cat){
+router.get('/admin/gato/:id', isLoggedIn, isAdmin, function(req, res) {
+    Cat.findOne({
+        id: req.param('id')
+    }, function(err, cat) {
         if (err) {
             req.flash('error', 'Hubo un error al tratar de mostrar a #' + req.param('id'));
             res.redirect('/admin/gatos');
         }
-        
+
         if (!cat) { // Si no se encontraron gatos con el id
             res.redirect('/admin/gatos');
         }
-        
+
         res.render('admin/gato', {
             title: 'Ver gato - Panel de administración',
-            cat: cat
+            cat: cat,
+            user: req.user
         });
+    });
+});
+
+/* GET Ver colonia */
+router.get('/admin/colonia/:id', isLoggedIn, isAdmin, function(req, res) {
+    res.end();
+});
+
+/* GET Ver proceso de adopción */
+router.get('/admin/proceso:id', isLoggedIn, isAdmin, function(req, res) {
+    var idProceso = req.params.id;
+    Adopcion.count({
+        _id: idProceso
+    }, function(err, n) {
+        if (err) return res.redirect('/admin/procesos');
+
+        if (n > 0) {
+            Adopcion.findOne({
+                _id: idProceso
+            }, function(err, proceso) {
+                if (err) res.redirect('/admin/procesos');
+
+                res.render('admin/proceso', {
+                    title: 'Ver proceso - felinorte',
+                    proceso: proceso
+                });
+            });
+        } else {
+            res.redirect('/admin/procesos');
+        }
     });
 });
 
@@ -214,30 +264,33 @@ router.get('/admin/gato/:id', function(req, res){
 // POST
 
 /* POST Crear gato */
-router.post('/gato/new', function(req, res) {
+router.post('/gato/new', isLoggedIn, isAdmin, function(req, res) {
     var nombref = "";
     //funcion que activa el upload 
     upload(req, res, function(err) {
         if (err) {
-            req.flash('error', 'Hubo un error al subir la foto, por favor, inténtelo más tarde.')
-            res.redirect('/admin/gatos');
+            // An error occurred when uploading
+            res.render('error', {
+                error: err
+            });
         }
     });
 
-    Cat.count({
-        nombre: req.body.nombre.trim()
-    }, function(err, c) {
+
+    Cat.count({ // Contar que no hayan más gatos con el mismo nombre
+        nombre: req.body.nombre
+    }, function(err, cat) {
         if (err) {
             req.flash('error', 'Hubo un error al crear el gato, por favor, inténtelo más tarde.');
             res.redirect('/admin/gatos');
         }
 
-        if (c > 0) {
+        if (cat > 0) { // Si ya existe el gato, ir a admin/gatos
             req.flash('error', 'Ya existe un gato con el mismo nombre.');
             res.redirect('/admin/gatos');
         }
 
-        Colony.findOne({
+        Colony.findOne({ // Buscar la colonia que se seleccionó
             name: req.body.colony.trim()
         }, function(err, colony) {
             if (err) {
@@ -245,48 +298,46 @@ router.post('/gato/new', function(req, res) {
                 res.redirect('/admin/gatos');
             }
 
-            var newCat = new Cat({
+            var newCat = new Cat({ // Crear nuevo gato
                 foto: foto,
-                nombre: req.body.nombre,
+                nombre: req.body.nombre.trim(),
                 fecha_nacimiento: req.body.fecha_nacimiento,
                 colony: colony._id,
                 sexo: req.body.sexo,
                 edad: req.body.edad,
+                felinealities: req.body.feline_cualities,
                 sterilization: req.body.sterilization,
                 vacc: req.body.vacc,
-                desp: req.body.desp
+                desp: req.body.desp,
+                adoptable: req.body.adoptable
             });
 
-            newCat.save(function(err, cat) {
+            newCat.save(function(err, cat) { // Guardar gato creado
                 if (err) {
                     req.flash('error', 'Hubo un error al crear el gato, por favor, inténtelo más tarde.');
                     res.redirect('/admin');
                 }
 
-                Colony.update({
-                        name: req.body.colony.trim()
-                    }, {
-                        $push: {
-                            cats: cat._id
-                        }
-                    },
-                    function(err) {
-                        if (err) return res.redirect('/admin/gatos');
-
-                        fs.rename('uploads/img/' + fotoname, 'uploads/img/' + req.body.nombre + foto);
-                        req.flash('info', '¡Gato agregado correctamente!');
-                        res.redirect('/admin/gatos');
+                Colony.update({ // Agregar el nuevo gato a la colonia
+                    _id: colony._id
+                }, {
+                    $push: {
+                        cats: cat._id
                     }
-                );
+                }, function(err) {
+                    if (err) return redirect('/admin/gatos');
+
+                    fs.rename('uploads/img/' + fotoname, 'uploads/img/' + req.body.nombre + foto);
+                    req.flash('info', '¡Gato agregado correctamente!');
+                    res.redirect('/admin/gato/' + cat._id);
+                });
             });
         });
     });
-
 });
 
-/* POST Crear colonias */
-router.post('/colony/new', function(req, res) {
-    Colony.count({
+router.post('/admin/colony', isLoggedIn, isAdmin, function(req, res) {
+    Colony.count({ // Contar las conolonias con el mismo nombre
         name: req.body.nombre.trim()
     }, function(err, c) {
 
@@ -295,12 +346,12 @@ router.post('/colony/new', function(req, res) {
             return res.redirect('/admin/colonias');
         }
 
-        if (c > 0) {
+        if (c > 0) { // Si ya existe, ir a colonias
             req.flash('error', '¡La colonia que está intentando crear ya existe!'); // Enviar un mensaje de error
             return res.redirect('/admin/colonias');
         }
 
-        Colony.create({
+        Colony.create({ // Crear nueva colonia (se guarda automáticamente)
             name: req.body.nombre
         }, function(err) {
             if (err) {
@@ -314,37 +365,57 @@ router.post('/colony/new', function(req, res) {
     });
 });
 
-/* POST Crear nuevo proceso de adopción */
-// TODO Completar
-router.post('/adoptar/:id', function(req, res) {
-    Cat.findOne({
+/* POST Crear nuevo proceso de adopción */ // TERMINADO
+router.post('/adoptar/:id', isLoggedIn, isAdmin, function(req, res) {
+    Cat.count({ // Verificar que ya existan colonias
         _id: req.param('id')
-    }, function(err, cat) {
-        if (err) res.redirect('/');
+    }, function(err, n) {
+        if (err) return res.redirect('/profile');
 
-        if (cat && cat.adoptable == 'Y - Yes') {
-            Adopcion.create({
-                gato: cat
-            }, function(err) {
-                if (err) res.redirect('/');
+        if (n > 0) { // Si hay por lo menos una colonia
+            Cat.findOne({ // Verificar que no exista un gato con el mismo nombre
+                _id: req.param('id')
+            }, function(err, cat) {
+                if (err) return res.redirect('/profile');
 
-                res.redirect('/profile');
+                Adopcion.find({ // Verificar que no haya un proceso de adopción con el mismo usuario y gato
+                    $and: [{
+                        gato: req.param('id'),
+                        usuario: req.user._id
+                    }]
+                }, function(err, adopciones) {
+                    if (err) return res.redirect('/profile');
+
+                    if (adopciones.length > 0) {
+                        req.flash('error', '¡Ya tiene un proceso de adopción con ' + cat.nombre);
+                        res.redirect('/profile/adopciones');
+                    } else {
+                        Adopcion.create({ // Crear proceso de adopción
+                            gato: cat._id,
+                            usuario: req.user._id
+                        }, function(err) {
+                            if (err) res.redirect('/');
+
+                            req.flash('info', '¡Felicitaciones! El proceso de adopción para ' + cat.nombre + ' ha iniciado.');
+                            res.redirect('/profile/adopciones');
+                        });
+                    }
+                });
             });
         }
     });
 });
 
-/* POST Agregar comentario a proceso de adopción */
-// TODO Completar
+/* POST Agregar comentario a proceso de adopción */ // TERMINADO
 router.post('/comentar/:id', isLoggedIn, isAdmin, function(req, res) {
-    Adopcion.findOne({
-        _id: req.param('id')
+    Adopcion.findOne({ // Encontrar el proceso de adopción
+        _id: req.params.id
     }, function(err, proceso) {
         if (err) res.redirect('/admin');
 
-        if (proceso) {
-            Comment.create({
-                admin: req.user,
+        if (proceso.length == 1) {
+            Comment.create({ // Crear comentario
+                admin: req.user._id,
                 fecha_creacion: Date.now,
                 contenido: req.body.comentario
             }, function(err, comment) {
@@ -362,7 +433,7 @@ router.post('/comentar/:id', isLoggedIn, isAdmin, function(req, res) {
 
 // DELETE
 
-router.delete('/gato/delete', function(req, res) {
+router.delete('/gato/delete', isLoggedIn, isAdmin, function(req, res) {
     Cat.remove({
         _id: req.param.id
     }, function(err) {
@@ -385,15 +456,26 @@ router.delete('/gato/delete', function(req, res) {
     });
 });
 
-router.delete('/colony/delete', function(req, res) {
-    Colony.remove({
-        _id: req.param.id
-    }, function(err) {
+router.delete('/admin/colony/:id', isLoggedIn, isAdmin, function(req, res) {
+    Colony.findOne({
+        _id: req.id
+    }, function(err, colony) {
         if (err) res.redirect('/admin/colonias');
 
-        req.flash('info', '¡Colonia eliminada correctamente!');
-        res.redirect('/admin/colonias');
+        for (var i = 0; i < colony.cats.length; i++) {
+            colony.cats[i].colony = '';
+        }
+
+        Colony.remove({
+            _id: req.id
+        }, function(err) {
+            if (err) res.redirect('/admin/colonias');
+
+            req.flash('info', '¡Colonia eliminada correctamente!');
+            res.redirect('/admin/colonias');
+        });
     });
+
 });
 
 

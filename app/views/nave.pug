@@ -5,14 +5,25 @@
     <ul class="sf-menu" id="fh5co-primary-menu">
       <li><a class="active" href="/home">Inicio</a></li>
       <li><a href="/about">Sobre nosotros</a></li>
-      <li><a href="/">Catálogo</a></li>
-      <li><a href="/cats">Sobre gatos</a></li>
-      <li><a href="#">Contácto</a></li>
+      <li><a href="/gatos">Sobre gatos</a></li>
+      <li><a href="/footer">Contácto</a></li>
       <li>
-        <a href="#" class="fh5co-sub-ddown">Login</a>
-        <ul class="fh5co-sub-menu">
-          <li><a href="/entrar">Iniciar sesión</a></li>
-        </ul>
+        - if(typeof(user) == 'undefined')
+          <a href="#" class="fh5co-sub-ddown">Login</a>
+        - else
+          - if(user.local.name.nombre != '{}' && user.local.name.apellidos != '{}')
+            a #{user.local.name.nombre} #{user.local.name.apellidos}                    
+          - else if (user.google.name)
+            a #{user.google.name}          
+        ul(class="fh5co-sub-menu" style="text-align:center;")
+          - if(typeof(user) != 'undefined')              
+              li
+                img(src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male-128.png" alt="" class="thumb-md img-circle")
+                a(href="/profile") Ver perfil
+                a(href="/logout") Salir
+          - else 
+              li
+                a(href="/entrar") Inciar sesión        
       </li>
     </ul>
   </nav>

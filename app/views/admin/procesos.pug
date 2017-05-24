@@ -1,0 +1,65 @@
+extends default
+
+block content
+  
+  div#page-wrapper
+    
+    include _topbar
+    
+    // Page content start
+    div.page-contentbar
+        
+      // left navigation start
+      aside.sidebar-navigation
+        div.scrollbar-wrapper
+          div
+            button(type="button" class="button-menu-mobile btn-mobile-view visible-xs visible-sm")
+              i(class="mdi mdi-close")
+            // User Detail box
+            include _userInfo
+            
+            // Left Menu Start
+            include _navigation
+    
+    // START PAGE CONTENT
+    div#page-right-content
+      - if (messages.info)
+        div(class="alert alert-icon alert-success alert-dismissible fade in" role="alert")
+          button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+            span(aria-hidden="true") x
+          i(class="mdi mdi-check-all")
+          strong ¡Éxito!
+          p #{messages.info}
+      - if (messages.error)
+        div(class="alert alert-icon alert-danger alert-dismissible fade in" role="alert")
+          button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+            span(aria-hidden="true") x
+          i(class="mdi mdi-block-error")
+          strong ¡Error!
+          p #{messages.error}
+    
+      div.container
+        div.row
+          div.col-sm-12
+            h4(class="m-t-0 header-title") Procesos de adopción
+        
+        div.row
+          each proceso in procesos
+            div.col-md-4
+              div(class="text-center card-box")
+                div(class="dropdown pull-right")
+                  a(href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false")
+                    h3(class="m-0 text-muted") #[i(class="mdi mdi-dots-horizontal")]
+
+                  ul(class="dropdown-menu" role="menu")
+                    li #[a Ver]
+                    li #[a Editar]
+
+                div.clearfix
+                  div.member-card
+                    span(class="user-badge bg-warning") En proceso
+                    div
+                      br
+                      h4.m-b-5 #{proceso._id}
+                      p(class="text-muted") #[span | ]
+                                 

@@ -17,15 +17,11 @@ var AdopcionSchema = new Schema({
     // Información
     fecha_inicio: {
         type: Date,
-        Default: Date.now
+        default: Date.now()
     },
-    en_proceso: {
-        type: Boolean,
-        default: true
-    },
-    aprobado: {
-        type: Boolean,
-        default: false
+    estado: {
+      type: String,
+      default: 'En proceso'
     },
     comentarios: [{
         type: Schema.ObjectId,

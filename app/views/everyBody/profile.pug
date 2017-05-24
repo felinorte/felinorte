@@ -26,44 +26,20 @@ block content
       div.container
         div.row
           div.col-sm-12
-            h4(class="m-t-0 header-title") Perfil Felinorte
-            <li style="background-image: url(principal/images/Banner_todos.jpg);">
-              <div class="overlay-gradient"></div>
-              <div class="container">
-                <div class="col-md-312 col-md-offset-0 text-center slider-text">
-                  <div class="slider-text-inner js-fullheight">
-                    <div class="desc">
-                      <p><span>Felinorte</span></p>
-                      <h2>Adopta un amigo</h2>
-                      <p>
-                        <a href="#" class="btn btn-primary btn-lg"> Iniciar proceso</a>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-        
+            h4(class="m-t-0 header-title") Gatos de Felinorte           
+  
         - if(!messages.error)
             div.row
               each cat in cats
                 div.col-md-4
                   div(class="text-center card-box")
-                    div(class="dropdown pull-right")
-                      a(href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false")
-                        h3(class="m-0 text-muted") #[i(class="mdi mdi-dots-horizontal")]
-
-                      ul(class="dropdown-menu" role="menu")
-                        li #[a Ver]
-                        - if(cat.adoptable)
-                          li #[a Adoptar]
 
                     div.clearfix
                       div.member-card
                         - if(cat.adoptable)
-                            span(class="user-badge bg-warning") Adoptable
+                            span(class="user-badge bg-info") Adoptable
                         div(class="thumb-xl member-thumb m-b-10 center-block")
-                          img(src=`/img/${cat.nombre}${cat.foto}` class="img-circle img-thumbnail" alt="profile-image")
+                          img(src=`/img/${cat.nombre}${cat.foto}` class="img-circle img-thumbnail" alt="profile-image" style="width: 100%; height: 100%; display: block;")
                           - if(cat.adoptable)
                               i(class="mdi mdi-information-outline member-star text-muted" title="Disponible")
                           - else
@@ -71,6 +47,11 @@ block content
                         div
                           h4.m-b-5 #{cat.nombre}
                           p(class="text-muted") #{ cat.nombre } #[span | ] #{cat.sexo}  
+                          button(class="btn btn-default btn-sm m-t-10") Ver gato  
+                          
+                          - if(cat.adoptable)
+                            form(method="post" action=`/adoptar/${cat._id}` style="display: inline;")      #[button(type="submit" class="btn btn-info btn-sm m-t-10") Adoptar]
+
         div.footer
             div
                 <strong>felinorte</strong> - Copyright &copy; 2017

@@ -97,10 +97,10 @@ Login Form
 .card-wrapper .title {
   position: relative;
   z-index: 1;
-  border-left: 5px solid #03a9f4;
+  border-left: 5px solid rgb(61, 88, 127);
   margin: 0 0 35px;
   padding: 10px 0 10px 50px;
-  color: #03a9f4;
+  color: rgb(61, 88, 127);
   font-size: 32px;
   font-weight: 500;
   text-transform: uppercase;
@@ -212,7 +212,7 @@ Login Form
 }
 .card-wrapper.alt .toggle {
   position: relative;
-  background: #ed2553;
+  background: #988f91;
   width: 120px;
   height: 120px;
   border-radius: 100%;
@@ -308,6 +308,7 @@ Login Form
   background: rgba(255, 255, 255, 0.8);
 }
 .card-wrapper.alt .button-container a.btn {
+  background: rgb(61, 88, 127);
   position: relative;
   z-index: 10;
 }

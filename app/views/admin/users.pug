@@ -1,0 +1,92 @@
+extends default
+
+block content
+  
+  div#page-wrapper
+    
+    include _topbar
+    
+    // Page content start
+    div.page-contentbar
+        
+      // left navigation start
+      aside.sidebar-navigation
+        div.scrollbar-wrapper
+          div
+            button(type="button" class="button-menu-mobile btn-mobile-view visible-xs visible-sm")
+              i(class="mdi mdi-close")
+            // User Detail box
+            include _userInfo
+            
+            // Left Menu Start
+            include _navigation
+    
+    // START PAGE CONTENT
+    div(id="page-right-content" style="min-height: 600px;")
+      - if (messages.info)
+          div(class="alert alert-icon alert-success alert-dismissible fade in" role="alert")
+            button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+              span(aria-hidden="true") x
+            i(class="mdi mdi-check-all")
+            strong ¡Éxito!
+            p #{messages.info}
+      - if (messages.error)
+          div(class="alert alert-icon alert-danger alert-dismissible fade in" role="alert")
+            button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+              span(aria-hidden="true") x
+            i(class="mdi mdi-block-error")
+            strong ¡Error!
+            p #{messages.error}
+    
+      div.container
+        div.row
+          div.col-sm-12
+            h4(class="m-t-0 header-title") Gatos de Felinorte           
+  
+        - if(!messages.error)
+            div.row
+              each user in users                
+                div.col-md-4
+                  div(class="text-center card-box")
+                    //div(class="dropdown pull-right")
+                      a(href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false")
+                        h3(class="m-0 text-muted") #[i(class="mdi mdi-dots-horizontal")]
+                    
+                      //ul(class="dropdown-menu" role="menu")
+                        li(class="btn" data-toggle="modal" data-target="#myModal") Ver  
+                        
+                    //div(id="myModal" class="modal fade" role="dialog")
+                      div(class="modal-dialog")
+                        div(class="modal-content")
+                          div(class="modal-header")
+                            button(type="button" class="close" data-dismiss="modal") &times;
+                            h4(class="modal-title") Perfil
+                          div(class="modal-body")
+                            div(class="form-group" style="margin: auto; padding: 0px 0px 0px 0px;")         
+                              p #{user.local.name.nombre}
+                            div(class="form-group" style="margin: auto; padding: 10px 0px 0px 0px;")                  
+                              p #{user.local.name.apellidos}
+                            div(class="form-group" style="margin: 0px; padding: 10px 0px 0px 0px;")
+                              p #{user.local.email}
+                            div(class="form-group" style="margin: auto; padding: 10px 0px 0px 0px;")
+                              p #{user.local.fechaNacimiento}
+                            div(class="form-group" style="margin: auto; padding: 10px 0px 0px 0px;")
+                              p #{user.local.ocupacion}      
+                          div(class="modal-body2")
+                            div(class="form-group" style="margin: auto; padding: 0px 0px 0px 0px;")         
+                              p #{user.google.name}
+                            div(class="form-group" style="margin: auto; padding: 10px 0px 0px 0px;")                  
+                              p #{user.google.email}
+                          div( class="modal-footer")
+                            button( type="button" class="btn btn-default" data-dismiss="modal") Close 
+                        
+                    div.clearfix
+                      div.member-card
+                        img(src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male-128.png" alt="" class="thumb-md img-circle")
+                      div.user-info   
+                        p(class="text-muted") #{user.local.name.nombre} #{user.local.name.apellidos}
+                        p(class="text-muted m-0") #{user.local.userType}
+                      
+        div.footer
+            div
+                <strong>felinorte</strong> - Copyright &copy; 2017

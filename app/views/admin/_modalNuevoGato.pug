@@ -1,108 +1,148 @@
-div(id="add-contact" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-contactLabel" aria-hidden="true")
-  form(method="POST" action="/gato/new" class="form-validation" novalidate enctype="multipart/form-data")
-    div.modal-dialog
-      div.modal-content
-        div.modal-header
-          button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
-          h4(class="modal-title" id="add-contactLabel") Añadir gato
+<div id="add-contact" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-contactLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form action="/gato/new" method="POST" class="form-validation" enctype="multipart/form-data">
+      <div class="modal-content">
+        <!-- header -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+          <h4 class="modal-title" id="add-contactLabel">Añadir gato</h4>
+        </div>
+        <!-- body -->
+        <div class="modal-body">
 
-        div.modal-body
-          div.card-box
-            h5(class="m-t-0 header-title") Información básica
+          <h5 class="m-t-0 header-title">Información básica</h5>
+          <div class="row">
+            <div class="col-md-4">
+              <label for="userName">Nombre</label>
+              <input type="text" name="nombre" parsley-trigger="change" placeholder="Nombre del gato" class="form-control" required="true">
+            </div>
 
-            div.row
-              div.col-md-4
-                label(for="userName") Nombre
-                input(type="text" name="nombre" parsley-trigger="change" placeholder="Nombre del gato" class="form-control" required="true")
-             
-              div.col-md-4
-                div.form-group
-                  label(for="fechaNacimiento") Fecha de nacimiento
-                  div
-                    div.input-group
-                      input(type="text" class="form-control" placeholder="mm/dd/yyyy" name="fecha_nacimiento" id="datepicker-autoclose" required="true")
-                      span(class="input-group-addon bg-custom b-0") #[i(class="mdi mdi-calendar text-white")]
-              
-              div.col-md-3
-                div.form-group
-                  label(for="sexo") Sexo
-                  select(class="form-control" name="sexo")
-                    option F - Femenine
-                    option M - Masculine
-                    option U - Unknown
-              
-              div.col-md-3 
-                div.form-group
-                  label(for="edad") Edad
-                  select(class="form-control" name="edad")
-                    option A - Adult
-                    option J - Juvenile
-                    option K - Kitten
-                        
-              div.col-md-5
-                div.form-group
-                  label(for="colonia") Colonia
-                  select(class="form-control" name="colony")
-                    each colony in colonies
-                      option #{ colony.name }
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="fechaNacimiento">Fecha de nacimiento</label>
+                <div>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="mm/dd/yyyy" name="fecha_nacimiento" id="datepicker-autoclose" required="true">
+                    <span class="input-group-addon bg-custom b-0">
+                      <i class="mdi mdi-calendar text-white"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-            br
-            h5(class="m-t-0 header-title") e
-            div.row
-                    
-              div.col-md-6
-                div.form-group
-                  label(for="desp") Feline-alities
-                  select(class="form-control select2" name="desp")
-                    optgroup(label="P - Purple")
-                      option(value="PI") Private Investigator
-                      option(value="SA") Secret Admirer
-                      option(value="LB") Love Bug
-                    optgroup(label="O - Orange")
-                      option(value="TE") The Executive
-                      option(value="S") Sidekick
-                      option(value="PA") Personal Assistant
-                    optgroup(label="G - Green")
-                      option(value="MVP") MVP
-                      option(value="PA") Party Animal
-                      option(value="LoB") Leader of the Band
-                    optgroup(label="R - Feral")
-                      option(value="MC") Makes Contact
-                      option(value="SFF") Seen from far distance
-                      option(value="MC + A")  Makes contact and aggresive
-                    
-              div.col-md-3
-                div.form-group
-                  label(for="sterilization") Sterilization 
-                  select(class="form-control" name="sterilization")
-                    option Y - Yes
-                    option N - Not
-                    option U - Unknown
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="sexo">Sexo</label>
+                <select name="sexo" class="form-control">
+                  <option value="F">Femenine</option>
+                  <option value="M">Masculine</option>
+                  <option value="U">Unknown</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="edad">Edad</label>
+                <select name="edad" class="form-control">
+                  <option value="A">Adult</option>
+                  <option value="J">Adult</option>
+                  <option value="K">Kitten</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-5">
+              <div class="form-group">
+                <label for="colonia">Colonia</label>
+                select(class="form-control" name="colony")
+                  each colony in colonies
+                    option #{ colony.name }
+              </div>
+            </div>
             
-              div.col-md-3
-                div.form-group
-                  label(for="vacc") Vacc
-                  select(class="form-control" name="vacc")
-                    option Y - Yes
-                    option N - Not
-                    option U - Unknown
-                    
-              div.col-md-3
-                div.form-group
-                  label(for="desp") Desp
-                  select(class="form-control" name="desp")
-                    option Y - Yes
-                    option N - Not
-                    
-            br
-            h5(class="m-t-0 header-title") Fotografía
-            div.row
-              div.col-md-12
-                div.form-group
-                  labe(class="control-label") Seleccione la fotografía del gato
-                  input(type="file" name="foto" class="filestyle" data-buttonname="btn-default" required="true")
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="adoptable">Adoptable</label><br>
+                <input type="checkbox" checked data-plugin="switchery" data-color="#039cfd" name="adoptable"/>
+              </div>
+            </div>
+          </div>
 
-        div.modal-footer
-          button(type="button" class="btn btn-default " data-dismiss="modal") Cancelar
-          button(type="submit" class="btn btn-primary ") Guardar
-        
+          <br>
+
+          <h5 class="m-t-0 header-title">Información importante</h5>
+          <div class="row">
+            <div class="col-md-8">
+              <div class="form-group">
+                <label for="desp">Feline-alities</label>
+                select(class="form-control select2" name="feline_cualities")
+                      optgroup(label="P - Purple")
+                        option(value="PI") Private Investigator
+                        option(value="SA") Secret Admirer
+                        option(value="LB") Love Bug
+                      optgroup(label="O - Orange")
+                        option(value="TE") The Executive
+                        option(value="S") Sidekick
+                        option(value="PA") Personal Assistant
+                      optgroup(label="G - Green")
+                        option(value="MVP") MVP
+                        option(value="PA") Party Animal
+                        option(value="LoB") Leader of the Band
+                      optgroup(label="R - Feral")
+                        option(value="MC") Makes Contact
+                        option(value="SFF") Seen from far distance
+                        option(value="MC + A")  Makes contact and aggresive
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="sterilization">Sterilization</label>
+                select(class="form-control" name="sterilization")
+                      option(value='Y') Yes
+                      option(value='N') Not
+                      option(value='U') Unknown
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="vacc">Vacc</label>
+                select(class="form-control" name="vacc")
+                      option(value='Y') Yes
+                      option(value='N') Not
+                      option(value='U') Unknown
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="desp">Desp</label><br>
+                <input type="checkbox" checked data-plugin="switchery" data-color="#039cfd" name="desp"/>
+              </div>
+            </div>
+          </div>
+
+          <br>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="control-label">Seleccione la fotografía del gato</label>
+                <input type="file" name="foto" class="filestyle" data-buttonname="btn-default" required="true">
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default " data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>        

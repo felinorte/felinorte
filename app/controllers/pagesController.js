@@ -22,7 +22,14 @@ router.get('/', function(req, res, next) {
 
 /* GET Página de inicio */
 router.get('/home', function(req, res){
-  res.render('index');
+  if(req.user != 'undefined'){
+    res.render('index',{
+    user: req.user
+    });
+  }else{
+    res.render('index');
+  }
+  
 });
 router.get('/cats', function(req, res){
   res.render('sobregatos');

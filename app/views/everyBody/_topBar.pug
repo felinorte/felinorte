@@ -22,16 +22,16 @@ div.topbar
           // Top nav left menu
           ul(class="nav navbar-nav hidden-sm hidden-xs top-navbar-items")
             li
-              a(class="btn") Acerca de
+              a(href='/about' class="btn") Acerca de
             li
-              a(class="btn") Ayuda
+              a(class="/help") Ayuda
             
           // Top nav Right menu
           ul(class="nav navbar-nav navbar-right top-navbar-items-right pull-right")
             li.hidden-xs
-              form(role="search" class="navbar-left app-search pull-left")
-                a(href='/logout' class="btn btn-danger") #[i(class="ti-power-off")] Salir
-                
+              form(class="navbar-left pull-left" style="padding-top:12%;")
+                a(href='/home' class="btn btn-primary" style="padding-rigth:2%;") #[i(class="ti-home")] Inicio
+                a(href='/logout' class="btn btn-danger") #[i(class="ti-power-off")] Salir 
                     
     // Page content start
     div.page-contentbar
@@ -47,10 +47,7 @@ div.topbar
               div.pull-left
                 img(src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male-128.png" alt="" class="thumb-md img-circle")
               div.user-info   
-                - if(user.local.name.nombre != '{}' && user.local.name.apellidos != '{}')
-                    a #{user.local.name.nombre} #{user.local.name.apellidos}                    
-                - if (user.google.name)
-                    a #{user.google.name}
+                a #{user.local.name.nombre} #{user.local.name.apellidos}                    
                 p(class="text-muted m-0") #{user.local.userType}
             
             // Left Menu Start
