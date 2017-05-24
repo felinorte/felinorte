@@ -3,12 +3,12 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var Colony = require('./Colony');
+
 var CatSchema = new Schema({
     foto: String,
     nombre: {
         type: String,
-        required: true,
-        trim: true
+        required: true
     },
     colony: {
         type: Schema.ObjectId,

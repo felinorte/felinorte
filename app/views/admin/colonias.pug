@@ -56,6 +56,7 @@ block content
                     tr
                       th Nombre
                       th # de gatos
+                      th Acciones
                   // end thead
 
                   tbody
@@ -64,6 +65,7 @@ block content
                     tr
                       td #{colony.name}
                       td #{cats[i]}
+                      td #[form(action=`/admin/colony/delete/${colony._id}` method="post" style="display: inline;") #[button(type="submit" class="btn btn-danger btn-sm m-t-10") Eliminar]]     #[button(type="button" class="btn btn-default btn-sm m-t-10") Ver]
                       - i = i + 1
                   // end tbody
                 // end table

@@ -27,10 +27,6 @@ module.exports = function(app, passport) {
     }));
 
     app.get('/profile', isLoggedIn, function(req, res) {
-        if (isAdmin) {
-            res.redirect('/admin');
-        }
-        
         Cat.find({}, function(err, cats) {
             if (err) {
                 req.flash('error', 'Hubo un error al cargar los gatos, por favor, intente más tarde.');

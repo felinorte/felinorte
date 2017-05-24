@@ -84,6 +84,8 @@ block content
                             a(href="#" class="text-muted") #{ adop.usuario.local.email || adop.usuario.google.email }
                           td #{adop.fecha_inicio.getDate()} / #{adop.fecha_inicio.getMonth() + 1} / #{adop.fecha_inicio.getFullYear()}
                           td #{adop.estado}
+                - else
+                  h5(class="text-muted") ¡No hay procesos de adopción!
                        
                        
         div.footer

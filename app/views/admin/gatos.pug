@@ -47,24 +47,28 @@ block content
           each cat in cats
             div.col-md-4
               div(class="text-center card-box")
-                div(class="dropdown pull-right")
-                  a(href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false")
-                    h3(class="m-0 text-muted") #[i(class="mdi mdi-dots-horizontal")]
-
-                  ul(class="dropdown-menu" role="menu")
-                    li #[a Ver]
-                    li #[a Editar]
 
                 div.clearfix
                   div.member-card
-                    span(class="user-badge bg-warning") En proceso
+                    - if(cat.adoptable)
+                      span(class="user-badge bg-info") Adoptable
+                    - else
+                      span(class="user-badge bg-warning") No adoptable
                     div(class="thumb-xl member-thumb m-b-10 center-block") 
                       img(src=`/img/${cat.nombre}${cat.foto}` class="img-circle img-thumbnail" alt="profile-image" style="width: 100%; height: 100%; display: block;")
-                      i(class="mdi mdi-information-outline member-star text-muted" title="No adoptado")
+                      - if (cat.adoptable)
+                        - if (cat.adopted)
+                          i(class="mdi mdi-information-outline member-star text-success" title="Adoptado")
+                        - else
+                          i(class="mdi mdi-information-outline member-star text-muted" title="No adoptado")
 
                     div
                       h4.m-b-5 #{cat.nombre}
                       p(class="text-muted") #{ cat.colony.name } #[span | ] #{cat.fecha_nacimiento.getDay() + 1}/#{cat.fecha_nacimiento.getMonth() + 1}/#{cat.fecha_nacimiento.getFullYear()}
+                      
+                      br
+                      button(class="btn btn-default btn-sm m-t-10") Ver gato  
+                      form(method="post" action=`/admin/gato/delete/${cat._id}` style="display: inline;")      #[button(type="submit" class="btn btn-danger btn-sm m-t-10") Eliminar]
               
       div.row
         div(class="col-sm-12 text-center")

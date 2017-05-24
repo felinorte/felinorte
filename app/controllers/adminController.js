@@ -101,7 +101,7 @@ router.get('/admin', isLoggedIn, isAdmin, function(req, res) {
     });
 });
 
-/* GET Ver todos los usuarios registrados */ // TERMINADA
+/* GET Ver todos los usuarios registrados */ //
 router.get('/admin/usuarios', isLoggedIn, isAdmin, function(req, res) {
     User.find({}, function(err, users) {
         if (err) {
@@ -285,16 +285,19 @@ router.post('/gato/new', isLoggedIn, isAdmin, function(req, res) {
         }
     });
 
-
-    Cat.count({ // Contar que no hayan más gatos con el mismo nombre
+    
+    
+    Cat.count({
         nombre: req.body.nombre
     }, function(err, cat) {
         if (err) {
             req.flash('error', 'Hubo un error al crear el gato, por favor, inténtelo más tarde.');
             res.redirect('/admin/gatos');
         }
-
-        if (cat > 0) { // Si ya existe el gato, ir a admin/gatos
+    
+        console.log(req.body.nombre.trim());
+        console.log("GATOS: " + cat);
+        if (cat > 0) {
             req.flash('error', 'Ya existe un gato con el mismo nombre.');
             res.redirect('/admin/gatos');
         }
@@ -375,21 +378,21 @@ router.post('/admin/colony', isLoggedIn, isAdmin, function(req, res) {
 });
 
 /* POST Crear nuevo proceso de adopción */ // TERMINADO
-router.post('/adoptar/:id', isLoggedIn, isAdmin, function(req, res) {
+router.post('/adoptar/:id', isLoggedIn, function(req, res) {
     Cat.count({ // Verificar que ya existan colonias
-        _id: req.param('id')
+        _id: req.params.id
     }, function(err, n) {
         if (err) return res.redirect('/profile');
 
         if (n > 0) { // Si hay por lo menos una colonia
             Cat.findOne({ // Verificar que no exista un gato con el mismo nombre
-                _id: req.param('id')
+                _id: req.params.id
             }, function(err, cat) {
                 if (err) return res.redirect('/profile');
 
                 Adopcion.find({ // Verificar que no haya un proceso de adopción con el mismo usuario y gato
                     $and: [{
-                        gato: req.param('id'),
+                        gato: req.params.id,
                         usuario: req.user._id
                     }]
                 }, function(err, adopciones) {
@@ -439,52 +442,70 @@ router.post('/comentar/:id', isLoggedIn, isAdmin, function(req, res) {
     });
 });
 
-
-// DELETE
-
-router.delete('/gato/delete', isLoggedIn, isAdmin, function(req, res) {
-    Cat.remove({
-        _id: req.param.id
-    }, function(err) {
-        if (err) res.redirect('/admin/gatos');
-
-        Colony.update({
-                _id: req.cat.id
-            }, {
-                $pull: {
-                    cats: req.param.id
-                }
-            },
-            function(err) {
-                if (err) res.redirect('/admin/gatos');
-
-                req.flash('info', '¡Gato eliminado exitosamente!');
+/* POST Eliminar gato */
+router.post('/admin/gato/delete/:id', isLoggedIn, isAdmin, function(req, res) {
+    Cat.findOne({
+        _id: req.params.id
+    }, function(err, cat){
+        if (err) return res.redirect('/admin/gatos');
+        
+        var colony = cat.colony;
+        Adopcion.find({ gato: cat._id }, function(err, procesos){
+            if (err) res.redirect('/admin/gatos');
+            
+            if (procesos.length > 0) {
+                req.flash('error', 'En estos momentos hay procesos de adopción con ' + cat.nombre);
                 res.redirect('/admin/gatos');
+            } else {
+                Cat.remove({
+                    _id: req.params.id
+                }, function(err){
+                    if (err) return res.redirect('/admin/gatos');
+                    
+                    Colony.update(
+                        { _id: colony },
+                        { $pull: { cats: req.params.id } },
+                        function(err) {
+                            if (err) res.redirect('/admin/gatos');
+                            
+                            req.flash('info', '¡Gato eliminado exitosamente!');
+                            res.redirect('/admin/gatos');
+                        }
+                    );
+                });
             }
-        );
+        });
     });
 });
 
-router.delete('/admin/colony/:id', isLoggedIn, isAdmin, function(req, res) {
+/* POST Eliminar colonia */ // TERMINADO
+router.post('/admin/colony/delete/:id', isLoggedIn, isAdmin, function(req, res) {
     Colony.findOne({
-        _id: req.id
+        _id: req.params.id
     }, function(err, colony) {
         if (err) res.redirect('/admin/colonias');
+        
+        if (colony.cats.length === 0) {
+            for (var i = 0; i < colony.cats.length; i++) {
+                colony.cats[i].colony = '';
+            }
 
-        for (var i = 0; i < colony.cats.length; i++) {
-            colony.cats[i].colony = '';
+            Colony.remove({
+                _id: req.params.id
+            }, function(err) {
+                if (err) res.redirect('/admin/colonias');
+
+                req.flash('info', '¡Colonia eliminada correctamente!');
+                res.redirect('/admin/colonias');
+            });
+        } else {
+            if (colony.cats.length > 0) {
+                req.flash('error', '¡No se puede eliminar la colonia porque hay más de un gato en ella!');
+                res.redirect('/admin/colonias');
+            } else
+                res.redirect('/admin/colonias');
         }
-
-        Colony.remove({
-            _id: req.id
-        }, function(err) {
-            if (err) res.redirect('/admin/colonias');
-
-            req.flash('info', '¡Colonia eliminada correctamente!');
-            res.redirect('/admin/colonias');
-        });
     });
-
 });
 
 
