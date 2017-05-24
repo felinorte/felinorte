@@ -29,9 +29,8 @@ div.topbar
           // Top nav Right menu
           ul(class="nav navbar-nav navbar-right top-navbar-items-right pull-right")
             li.hidden-xs
-              form(class="navbar-left pull-left" style="padding-top:12%;")
-                a(href='/home' class="btn btn-primary" style="padding-rigth:2%;") #[i(class="ti-home")] Inicio
-                a(href='/logout' class="btn btn-danger") #[i(class="ti-power-off")] Salir 
+              div(class="navbar-left pull-left" style="padding-top:12%; display: inline;")
+                a(href='/home' class="btn btn-primary" style="padding-rigth:2%;") #[i(class="ti-home")] Inicio #[a(href='/logout' class="btn btn-danger") #[i(class="ti-power-off")] Salir ]
                     
     // Page content start
     div.page-contentbar

@@ -46,7 +46,7 @@ block content
       div.container
         div.row
           div.col-sm-12
-            h4(class="m-t-0 header-title") Gatos
+            h4(class="m-t-0 header-title") Usuarios registrados
         
         div.row
           each cat in cats
@@ -68,9 +68,4 @@ block content
                     div
                       h4.m-b-5 #{}
                       p(class="text-muted") #{} #[span | ] #{}
-              
-      div.row
-        div(class="col-sm-12 text-center")
-          // button(class="btn btn-primary btn-rounded btn-lg m-b-30" data-toggle="modal" data-target="#add-contact") Añadir gato
                     
-  include _modalNuevoGato 

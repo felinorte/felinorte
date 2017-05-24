@@ -1,7 +1,6 @@
 extends default
 
 block content
-  
   div#page-wrapper
     
     include _topbar
@@ -16,12 +15,17 @@ block content
             button(type="button" class="button-menu-mobile btn-mobile-view visible-xs visible-sm")
               i(class="mdi mdi-close")
             // User Detail box
-            include _userInfo
+            div.user-details
+              div.pull-left
+                img(src="https://scontent.xx.fbcdn.net/v/t31.0-8/s960x960/17493155_1427647903947280_1316763995182102963_o.jpg?oh=2ce49976e48e991fcc90683ee9dc6270&oe=59B5DD10" alt="" class="thumb-md img-circle")
+              div.user-info
+                a Wilson Tovar
+                p(class="text-muted m-0") Administrador
             
             // Left Menu Start
             include _navigation
-    
-    // START PAGE CONTENT
+            
+    // PAGE CLONIAS START
     div#page-right-content
       - if (messages.info)
         div(class="alert alert-icon alert-success alert-dismissible fade in" role="alert")
@@ -37,29 +41,39 @@ block content
           i(class="mdi mdi-block-error")
           strong ¡Error!
           p #{messages.error}
-    
+      
       div.container
         div.row
           div.col-sm-12
             h4(class="m-t-0 header-title") Procesos de adopción
-        
-        div.row
-          each proceso in procesos
-            div.col-md-4
-              div(class="text-center card-box")
-                div(class="dropdown pull-right")
-                  a(href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false")
-                    h3(class="m-0 text-muted") #[i(class="mdi mdi-dots-horizontal")]
+            
+            - if (procesos.length > 0)
+              div(class="table-responsive m-b-20")
 
-                  ul(class="dropdown-menu" role="menu")
-                    li #[a Ver]
-                    li #[a Editar]
+                table(id="datatable" class="table table-striped table-bordered")
+                  thead
+                    tr
+                      th ID
+                      th Usuario
+                      th Gato
+                      th Correo electrónico
+                      th Estado
+                      th Acciones
+                  // end thead
 
-                div.clearfix
-                  div.member-card
-                    span(class="user-badge bg-warning") En proceso
-                    div
-                      br
-                      h4.m-b-5 #{proceso._id}
-                      p(class="text-muted") #[span | ]
-                                 
+                  tbody
+                  - var i = 0;
+                  each proceso in procesos
+                    tr
+                      td #[a #{proceso._id}]
+                      td #{ proceso.usuario.local.name.nombre || proceso.usuario.google.name }
+                      th #{ proceso.gato.nombre }
+                      th #{ proceso.usuario.local.email || proceso.usuario.google.email }
+                      th #{ proceso.estado }
+                      td #[form(action=`/admin/proceso/delete/${proceso._id}` method="post" style="display: inline;") #[button(type="submit" class="btn btn-danger btn-sm m-t-10") Eliminar]]     #[button(type="button" class="btn btn-default btn-sm m-t-10") Ver]
+                  // end tbody
+                // end table
+              // end class="table-responsive m-b-20"
+          // end col-sm-12
+        // end row
+    

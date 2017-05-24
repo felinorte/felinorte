@@ -19,7 +19,10 @@ var UserSchema = new mongoose.Schema({
             trim: true
         },
         fechaNacimiento: Date,
-        ocupacion: String,
+        ocupacion: {
+          type: String,
+          default: ''
+        },
         userType: {
             type: String,
             enum: ['admin', 'user']

@@ -20,9 +20,8 @@ div.topbar
             span.clearfix
             
           // Top nav Right menu
+          // Top nav Right menu
           ul(class="nav navbar-nav navbar-right top-navbar-items-right pull-right")
             li.hidden-xs
-              form(role="search" class="navbar-left app-search pull-left")
-                input(type="text" placeholder="Buscar..." class="form-control")
-                a
-                  i(class="fa fa-search")
+              div(class="navbar-left pull-left" style="padding-top:12%;")
+                a(href='/logout' class="btn btn-danger btn-xs") #[i(class="ti-power-off")] Salir

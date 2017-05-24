@@ -101,7 +101,7 @@ router.get('/admin', isLoggedIn, isAdmin, function(req, res) {
     });
 });
 
-/* GET Ver todos los usuarios registrados */ //
+/* GET Ver todos los usuarios registrados */ // TERMINADO
 router.get('/admin/usuarios', isLoggedIn, isAdmin, function(req, res) {
     User.find({}, function(err, users) {
         if (err) {
@@ -190,7 +190,7 @@ router.get('/admin/procesos', isLoggedIn, isAdmin, function(req, res) {
         }
 
         User.populate(procesos, {
-            path: "user"
+            path: 'usuario'
         }, function(err, procesos) {
             if (err) {
                 req.flash('error', 'Ha ocurrido un error. Por favor, inténtelo de nuevo.');
@@ -198,7 +198,7 @@ router.get('/admin/procesos', isLoggedIn, isAdmin, function(req, res) {
             }
 
             Cat.populate(procesos, {
-                path: 'cat'
+                path: 'gato'
             }, function(err, procesos) {
                 if (err) {
                     req.flash('error', 'Ha ocurrido un error. Por favor, inténtelo de nuevo.');
@@ -272,7 +272,7 @@ router.get('/admin/proceso:id', isLoggedIn, isAdmin, function(req, res) {
 
 // POST
 
-/* POST Crear gato */
+/* POST Crear gato */ // TERMINADO
 router.post('/gato/new', isLoggedIn, isAdmin, function(req, res) {
     var nombref = "";
     //funcion que activa el upload 
@@ -321,7 +321,8 @@ router.post('/gato/new', isLoggedIn, isAdmin, function(req, res) {
                 sterilization: req.body.sterilization,
                 vacc: req.body.vacc,
                 desp: req.body.desp,
-                adoptable: req.body.adoptable
+                adoptable: req.body.adoptable,
+                observaciones: req.body.observaciones
             });
 
             newCat.save(function(err, cat) { // Guardar gato creado
@@ -348,6 +349,7 @@ router.post('/gato/new', isLoggedIn, isAdmin, function(req, res) {
     });
 });
 
+/* */
 router.post('/admin/colony', isLoggedIn, isAdmin, function(req, res) {
     Colony.count({ // Contar las conolonias con el mismo nombre
         name: req.body.nombre.trim()
@@ -504,6 +506,33 @@ router.post('/admin/colony/delete/:id', isLoggedIn, isAdmin, function(req, res) 
     });
 });
 
+router.post('/admin/user/delete/:id', isLoggedIn, isAdmin, function(req, res){
+  User.findOne({
+    _id: req.params.id
+  }, function(err, user){
+    if (err) res.redirect('/admin/usuarios');
+    
+    Adopcion.count({
+      usuario: user._id
+    }, function(err, procesos){
+      if (err) res.redirect('/admin/usuarios'); 
+      
+      if (procesos > 0) {
+        req.flash('error', 'El usuario no puede ser eliminado debido a que tiene procesos de adopción');
+          res.redirect('/admin/usuarios');
+      } else {
+        User.remove({
+          _id: req.params.id
+        }, function(err){
+          if (err) res.redirect('/admin/usuarios'); 
+          
+          req.flash('info', 'El usuario ha sido eliminado con éxito');
+          res.redirect('/admin/usuarios');
+        });
+      }
+    });
+  });
+});
 
 // FUNCIONES
 
