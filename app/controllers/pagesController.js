@@ -21,21 +21,25 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET Página de inicio */
-router.get('/home', function(req, res){
-  if(req.user != 'undefined'){
-    res.render('index',{
-    user: req.user
+router.get('/home', function(req, res) {
+    if (req.user != 'undefined') {
+        res.render('index', {
+            user: req.user
+        });
+    } else {
+        res.render('index');
+    }
+
+});
+router.get('/cats', function(req, res) {
+    res.render('sobregatos',{
+        user: req.user
     });
-  }else{
-    res.render('index');
-  }
-  
 });
-router.get('/cats', function(req, res){
-  res.render('sobregatos');
-});
-router.get('/about', function(req, res){
-  res.render('sobrenosotros');
+router.get('/about', function(req, res) {
+    res.render('sobrenosotros', {
+        user: req.user
+    });
 });
 /* GET Página de contacto */
 router.get('/contacto', function(req, res, next) {
@@ -45,13 +49,25 @@ router.get('/contacto', function(req, res, next) {
 });
 
 /* Redirecciones */
-router.get('/entrar', function(req, res){ res.redirect('/login'); });
-router.get('/registro', function(req, res){ res.redirect('/signup'); });
-router.get('/perfil', function(req, res){ res.redirect('/profile'); });
-router.get('/salir', function(req, res){ res.redirect('/logout'); });
-router.get('/uploads', function(req, res){ res.redirect('/') });
-router.get('/img', function(req, res){ res.redirect('/') });
+router.get('/entrar', function(req, res) {
+    res.redirect('/login');
+});
+router.get('/registro', function(req, res) {
+    res.redirect('/signup');
+});
+router.get('/perfil', function(req, res) {
+    res.redirect('/profile');
+});
+router.get('/salir', function(req, res) {
+    res.redirect('/logout');
+});
+router.get('/uploads', function(req, res) {
+    res.redirect('/')
+});
+router.get('/img', function(req, res) {
+    res.redirect('/')
+});
 
-router.get('/favicon.ico', function(req, res){
-  res.end();
+router.get('/favicon.ico', function(req, res) {
+    res.end();
 });

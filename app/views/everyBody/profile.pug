@@ -30,6 +30,7 @@ block content
   
         - if(!messages.error)
             div.row
+            - if (cats.length > 0)
               each cat in cats
                 div.col-md-4
                   div(class="text-center card-box")
@@ -51,6 +52,8 @@ block content
                           
                           - if(cat.adoptable)
                             form(method="post" action=`/adoptar/${cat._id}` style="display: inline;")      #[button(type="submit" class="btn btn-info btn-sm m-t-10") Adoptar]
+            - else
+              h4 Oops. Aún no tenemos gatos agregados D:
 
         div.footer
             div

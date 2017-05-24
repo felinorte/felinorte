@@ -442,7 +442,7 @@ router.post('/comentar/:id', isLoggedIn, isAdmin, function(req, res) {
     });
 });
 
-/* POST Eliminar gato */
+/* POST Eliminar gato */ // TERMINADO
 router.post('/admin/gato/delete/:id', isLoggedIn, isAdmin, function(req, res) {
     Cat.findOne({
         _id: req.params.id
@@ -486,10 +486,6 @@ router.post('/admin/colony/delete/:id', isLoggedIn, isAdmin, function(req, res) 
         if (err) res.redirect('/admin/colonias');
         
         if (colony.cats.length === 0) {
-            for (var i = 0; i < colony.cats.length; i++) {
-                colony.cats[i].colony = '';
-            }
-
             Colony.remove({
                 _id: req.params.id
             }, function(err) {
